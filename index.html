@@ -1492,6 +1492,309 @@
       letter-spacing: 0.06em;
       line-height: 1.9;
     }
+
+    /* ── 流年運程 Section ─────────────────────────── */
+    #liuNianSection { display: none; animation: fadeIn 0.45s ease; }
+    #liuNianSection.active { display: block; }
+
+    .ln-container { max-width: 860px; margin: 0 auto; padding: 0 1.2rem 5rem; }
+
+    /* No-profile prompt */
+    .ln-no-profile {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      color: var(--text-dim);
+      font-size: 0.82rem;
+      letter-spacing: 0.15em;
+      line-height: 2.2;
+    }
+    .ln-no-profile-icon { font-size: 2.5rem; margin-bottom: 1rem; opacity: 0.5; }
+
+    /* Year banner */
+    .ln-year-banner {
+      text-align: center;
+      padding: 1.5rem 1rem 1rem;
+      margin-bottom: 1.4rem;
+      position: relative;
+    }
+    .ln-year-title {
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-weight: 900;
+      color: var(--gold);
+      letter-spacing: 0.45em;
+      text-shadow: 0 0 22px rgba(201,168,76,0.35);
+    }
+    .ln-year-sub {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      letter-spacing: 0.35em;
+      margin-top: 0.35rem;
+    }
+    .ln-profile-badge {
+      display: inline-block;
+      margin-top: 0.65rem;
+      padding: 0.22rem 0.9rem;
+      background: rgba(201,168,76,0.07);
+      border: 1px solid rgba(201,168,76,0.28);
+      border-radius: 20px;
+      font-size: 0.7rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+    }
+
+    /* Overall overview cards */
+    .ln-overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 0.85rem;
+      margin-bottom: 1.4rem;
+    }
+    .ln-ov-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--gold-dim);
+      border-left: 3px solid var(--gold);
+      border-radius: 7px;
+      padding: 1rem 1.1rem;
+    }
+    .ln-ov-card.caution { border-left-color: #c44; }
+    .ln-ov-card.good    { border-left-color: var(--wood); }
+    .ln-ov-icon  { font-size: 1.3rem; line-height: 1; margin-bottom: 0.35rem; }
+    .ln-ov-label { font-size: 0.6rem; color: var(--text-dim); letter-spacing: 0.3em; margin-bottom: 0.22rem; }
+    .ln-ov-value { font-size: 0.88rem; font-weight: 700; color: var(--text); line-height: 1.7; }
+    .ln-ov-sub   { font-size: 0.65rem; color: var(--text-dim); margin-top: 0.22rem; line-height: 1.7; }
+
+    /* Half-year direction */
+    .ln-halves {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin-bottom: 1.4rem;
+    }
+    .ln-half-card {
+      background: rgba(255,255,255,0.018);
+      border: 1px solid var(--gold-dim);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+    }
+    .ln-half-label {
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 0.35em;
+      margin-bottom: 0.55rem;
+      font-weight: 700;
+    }
+    .ln-half-body {
+      font-size: 0.8rem;
+      color: var(--text);
+      line-height: 1.9;
+      letter-spacing: 0.04em;
+    }
+
+    /* Month timeline */
+    .ln-timeline-title {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      letter-spacing: 0.4em;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .ln-month-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.55rem;
+      margin-bottom: 0.7rem;
+    }
+    .ln-month-card {
+      border-radius: 8px;
+      padding: 0.75rem 0.4rem 0.65rem;
+      text-align: center;
+      border: 1px solid;
+      position: relative;
+      cursor: default;
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+    .ln-month-card:hover { transform: translateY(-2px); }
+
+    /* Color variants */
+    .ln-month-card.fortune-high {
+      background: rgba(201,168,76,0.09);
+      border-color: rgba(201,168,76,0.45);
+    }
+    .ln-month-card.fortune-mid {
+      background: rgba(120,110,100,0.08);
+      border-color: rgba(150,130,110,0.25);
+    }
+    .ln-month-card.fortune-low {
+      background: rgba(180,50,50,0.07);
+      border-color: rgba(180,50,50,0.35);
+    }
+
+    .ln-month-num {
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.3rem;
+    }
+    .fortune-high .ln-month-num { color: var(--gold); }
+    .fortune-mid  .ln-month-num { color: var(--text-dim); }
+    .fortune-low  .ln-month-num { color: #c66; }
+
+    .ln-month-branch {
+      font-size: 1.15rem;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 0.28rem;
+    }
+    .fortune-high .ln-month-branch { color: var(--gold-light); text-shadow: 0 0 8px rgba(201,168,76,0.4); }
+    .fortune-mid  .ln-month-branch { color: #888; }
+    .fortune-low  .ln-month-branch { color: #c55; }
+
+    .ln-month-tag {
+      font-size: 0.5rem;
+      letter-spacing: 0.05em;
+      padding: 0.1rem 0.35rem;
+      border-radius: 10px;
+      display: inline-block;
+    }
+    .fortune-high .ln-month-tag { background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+    .fortune-mid  .ln-month-tag { background: rgba(150,130,110,0.1); color: #888; border: 1px solid rgba(150,130,110,0.2); }
+    .fortune-low  .ln-month-tag { background: rgba(180,50,50,0.1);   color: #c66; border: 1px solid rgba(180,50,50,0.28); }
+
+    .ln-month-lock {
+      position: absolute;
+      top: 4px; right: 5px;
+      font-size: 0.6rem;
+      opacity: 0.45;
+    }
+
+    /* Legend */
+    .ln-legend {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      margin-bottom: 1.4rem;
+      flex-wrap: wrap;
+    }
+    .ln-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+    }
+    .ln-legend-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .ln-legend-dot.gold { background: var(--gold); }
+    .ln-legend-dot.gray { background: #666; }
+    .ln-legend-dot.red  { background: #c44; }
+
+    /* Paid locked section */
+    .ln-paid-section {
+      background: linear-gradient(135deg, rgba(10,5,20,0.9), rgba(20,10,35,0.9));
+      border: 1px solid rgba(201,168,76,0.22);
+      border-radius: 10px;
+      padding: 1.4rem 1.5rem;
+      margin-bottom: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .ln-paid-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 20px,
+        rgba(201,168,76,0.012) 20px,
+        rgba(201,168,76,0.012) 21px
+      );
+      pointer-events: none;
+    }
+    .ln-paid-head {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin-bottom: 0.85rem;
+    }
+    .ln-paid-lock { font-size: 1.3rem; opacity: 0.65; }
+    .ln-paid-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.38em;
+    }
+    .ln-paid-sub {
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      letter-spacing: 0.12em;
+      margin-top: 0.1rem;
+    }
+
+    /* Blurred preview of monthly detail */
+    .ln-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+      gap: 0.65rem;
+      margin-bottom: 1.1rem;
+      filter: blur(4px);
+      user-select: none;
+      pointer-events: none;
+      -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+      mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+      max-height: 160px;
+      overflow: hidden;
+    }
+    .ln-preview-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 7px;
+      padding: 0.85rem 1rem;
+    }
+    .ln-preview-month { font-size: 0.65rem; color: var(--gold); letter-spacing: 0.25em; margin-bottom: 0.45rem; }
+    .ln-preview-dim   { font-size: 0.72rem; color: var(--text); line-height: 1.9; }
+
+    .ln-unlock-btn {
+      display: block;
+      width: 100%;
+      padding: 0.88rem;
+      background: linear-gradient(135deg, #3d1a04, #6b3010 50%, #3d1a04);
+      border: 1px solid rgba(201,168,76,0.55);
+      color: var(--gold-light);
+      font-family: 'Noto Serif TC', serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 0.38em;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.28s;
+      position: relative;
+    }
+    .ln-unlock-btn:hover {
+      border-color: var(--gold);
+      box-shadow: 0 0 20px rgba(201,168,76,0.18);
+      color: var(--gold);
+    }
+    .ln-disclaimer {
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      text-align: center;
+      letter-spacing: 0.07em;
+      line-height: 1.9;
+      opacity: 0.5;
+      margin-top: 0.75rem;
+    }
+
+    @media (max-width: 640px) {
+      .ln-month-grid { grid-template-columns: repeat(4, 1fr); }
+      .ln-halves { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 420px) {
+      .ln-month-grid { grid-template-columns: repeat(3, 1fr); }
+    }
   </style>
 </head>
 <body>
@@ -1499,7 +1802,8 @@
 <nav>
   <a class="nav-brand" href="index.html">風 生 水 起<span class="nav-brand-sub">FengShui Oracle</span></a>
   <div class="nav-tabs">
-    <a class="nav-tab active" id="tab-bazi"   href="#" onclick="switchMainTab('bazi');return false">八 字 命 盤</a>
+    <a class="nav-tab active" id="tab-bazi"     href="#" onclick="switchMainTab('bazi');return false">八 字 命 盤</a>
+    <a class="nav-tab"        id="tab-liuNian" href="#" onclick="switchMainTab('liuNian');return false">流 年 運 程</a>
     <a class="nav-tab"        id="tab-match"   href="#" onclick="switchMainTab('match');return false">合 婚 配 對</a>
     <a class="nav-tab"        id="tab-rename"  href="#" onclick="switchMainTab('rename');return false">改 名 系 統</a>
     <a class="nav-tab"        id="tab-oracle"  href="oracle.html">求 簽 問 事</a>
@@ -1715,6 +2019,26 @@
 
   </main>
 </div>
+
+<!-- ── 流年運程 Section ───────────────────────────── -->
+<div id="liuNianSection">
+  <div class="ln-container">
+
+    <div class="card">
+      <div class="cc tl"></div><div class="cc tr"></div>
+      <div class="cc bl"></div><div class="cc br"></div>
+      <p class="card-title">流 年 運 程 · 2026 丙 午 年</p>
+      <div id="lnContent">
+        <div class="ln-no-profile">
+          <div class="ln-no-profile-icon">🔮</div>
+          請先在「八字命盤」頁面儲存並計算命盤<br>
+          本頁將自動讀取您的八字進行流年分析
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div><!-- end liuNianSection -->
 
 <!-- ── 合婚配對 Section ──────────────────────────── -->
 <div id="matchSection">
@@ -2695,7 +3019,7 @@ function renderAIResult(text) {
 
 // ── Tab switching ───────────────────────────────────────
 function switchMainTab(tab) {
-  const sections = { bazi: 'baziLayout', match: 'matchSection', rename: 'renameSection' };
+  const sections = { bazi: 'baziLayout', match: 'matchSection', rename: 'renameSection', liuNian: 'liuNianSection' };
   Object.entries(sections).forEach(([key, id]) => {
     const el = document.getElementById(id);
     if (!el) return;
@@ -2705,18 +3029,287 @@ function switchMainTab(tab) {
       tab === key ? el.classList.add('active') : el.classList.remove('active');
     }
   });
-  ['bazi','match','rename'].forEach(k => {
+  ['bazi','match','rename','liuNian'].forEach(k => {
     document.getElementById('tab-' + k)?.classList.toggle('active', k === tab);
   });
-  const titles    = { bazi:'八 字 命 盤', match:'合 婚 配 對', rename:'改 名 系 統' };
-  const subtitles = { bazi:'Four Pillars of Destiny', match:'Compatibility Analysis', rename:'Name & Fortune Analysis' };
+  const titles    = { bazi:'八 字 命 盤', match:'合 婚 配 對', rename:'改 名 系 統', liuNian:'流 年 運 程' };
+  const subtitles = { bazi:'Four Pillars of Destiny', match:'Compatibility Analysis', rename:'Name & Fortune Analysis', liuNian:'Annual Fortune · 2026 丙午年' };
   document.getElementById('pageTitle').textContent    = titles[tab]    || titles.bazi;
   document.getElementById('pageSubtitle').textContent = subtitles[tab] || subtitles.bazi;
   // Sync mobile bottom tab bar
-  const mobMap = { bazi:'mobTabBazi', match:'mobTabMatch', rename:'mobTabRename' };
-  ['bazi','match','rename'].forEach(k => {
+  const mobMap = { bazi:'mobTabBazi', match:'mobTabMatch', rename:'mobTabRename', liuNian:'mobTabLiuNian' };
+  ['bazi','match','rename','liuNian'].forEach(k => {
     document.getElementById(mobMap[k])?.classList.toggle('active', k === tab);
   });
+  // Render liuNian when switching to it
+  if (tab === 'liuNian') renderLiuNian();
+}
+
+// ── 流年運程 ─────────────────────────────────────────────
+const LN_YEAR       = 2026;
+const LN_YEAR_STEM  = '丙'; // index 2 → 火
+const LN_YEAR_BR    = '午'; // index 6 → 火
+const LN_YEAR_EL    = '火';
+
+// Month branches Jan–Dec for a typical year (寅月 = Feb-ish, but we use 1=Jan index)
+const LN_MONTH_BRANCHES = ['丑','寅','卯','辰','巳','午','未','申','酉','戌','亥','子'];
+const LN_MONTH_ELEMENTS = LN_MONTH_BRANCHES.map(b => BRAN_EL[BRANCHES.indexOf(b)]);
+
+// Element relations (same as match, defined locally for clarity)
+const LN_GEN = {'木':'火','火':'土','土':'金','金':'水','水':'木'};
+const LN_RES = {'木':'土','土':'水','水':'火','火':'金','金':'木'};
+
+const LN_MONTH_CAREER  = [
+  '事業整體穩定，宜守不宜進，適合整理工作流程與人際關係。',
+  '有貴人出現，把握機遇，可主動出擊洽談合作。',
+  '工作壓力略增，同事間易有摩擦，保持冷靜為上。',
+  '發展順利，升職調薪機會出現，宜積極表現。',
+  '創意旺盛，適合開展新項目，靈感豐富。',
+  '勿輕易更換工作，現職仍有潛力可挖掘。',
+  '有小人暗中阻礙，說話謹慎，勿輕信流言。',
+  '事業運大旺，是全年最適合推進大計的月份。',
+  '業務擴展順利，對外洽談有佳音。',
+  '略感疲憊，適合放慢腳步整頓內部。',
+  '年尾衝刺，適合完成未竟事宜，為明年打好基礎。',
+  '低調行事，不宜輕舉妄動，以穩為主。'
+];
+const LN_MONTH_ROMANCE = [
+  '感情平穩，單身者宜主動拓展社交圈。',
+  '桃花運旺，有機會邂逅心儀對象，把握機緣。',
+  '與伴侶易有口角，宜多溝通，避免冷戰。',
+  '感情甜蜜，適合二人出行或共度浪漫時光。',
+  '舊情人可能出現，保持清醒，免影響現有關係。',
+  '感情需要耐心經營，勿急於求成。',
+  '夫妻宮稍有波動，宜互相體諒包容。',
+  '單身者桃花極旺，有機會確立戀愛關係。',
+  '感情運佳，適合進一步發展如訂婚或同居。',
+  '感情出現小考驗，宜冷靜面對，切勿意氣用事。',
+  '關係趨向穩定，共同規劃未來為上。',
+  '感情溫馨，適合向對方表達心意。'
+];
+const LN_MONTH_WEALTH  = [
+  '財運平穩，量入為出，避免衝動消費。',
+  '偏財有機，可適度參與投資，惟切勿重注。',
+  '財務壓力出現，宜謹慎理財，減少不必要開支。',
+  '正財旺盛，薪酬收入理想，有額外獎金可期。',
+  '財運上升，投資回報漸豐，是理財佳機。',
+  '守財為主，不宜大額借貸或擔保他人。',
+  '財運略見波動，留意合同細節，避免被人拖欠。',
+  '財運大旺，是全年最佳收穫期，把握機會。',
+  '財源廣進，正偏財齊旺，適合開闢副業。',
+  '財運趨穩，整頓賬目，做好年終財務規劃。',
+  '有意外之財可期，但勿貪圖不切實際的高回報。',
+  '理財宜保守，為農曆新年開支預留充裕預算。'
+];
+const LN_MONTH_HEALTH  = [
+  '注意保暖，呼吸系統及腸胃需多留意。',
+  '運動量可適量增加，有助提升體力及精神。',
+  '壓力較大，注意睡眠質素，避免過度疲勞。',
+  '整體健康良好，保持規律作息。',
+  '天氣炎熱，注意防暑補水，心臟血壓需關注。',
+  '腸胃易出問題，飲食宜清淡，少吃生冷。',
+  '濕熱之氣重，皮膚及關節需多保養。',
+  '精力充沛，是運動健身的好時機。',
+  '注意呼吸道健康，早晚溫差大，記得添衣。',
+  '勿過度勞累，適時休息，防止積勞成疾。',
+  '免疫力略降，注意預防感冒及流感。',
+  '年末歡慶，注意飲食節制，保持良好生活習慣。'
+];
+const LN_MONTH_REMEDY  = [
+  '宜佩戴木質飾物，多接觸大自然以穩定氣場。',
+  '可於室內擺放綠植，有助迎接貴人運。',
+  '少說話多做事，佩戴玉石護身有助化解口舌。',
+  '方位上宜多往東南方，有助開運。',
+  '心態樂觀積極，可點香祈福，增強正氣。',
+  '多接觸水元素，如近水而居或多飲水，以降火氣。',
+  '拜關帝或黃大仙，有助化解小人是非。',
+  '穿金色或咖啡色衣物，有助鎖住旺氣。',
+  '與貴人多往來，可藉社交活動擴大人脈。',
+  '整理居家風水，清除雜物，有助氣場流通。',
+  '適度行善積德，如捐助慈善，有助提升整體運勢。',
+  '歲晚大掃除，清舊迎新，為來年引入好運。'
+];
+
+function generateLiuNianData(pillars) {
+  const dayEl = STEM_EL[pillars[2].stem];
+
+  // Count elements
+  const cnt = {'木':0,'火':0,'土':0,'金':0,'水':0};
+  pillars.forEach(p => { cnt[STEM_EL[p.stem]]++; cnt[BRAN_EL[p.branch]]++; });
+
+  // Determine each month's fortune relative to day master
+  const months = LN_MONTH_BRANCHES.map((br, i) => {
+    const mEl = LN_MONTH_ELEMENTS[i];
+    let level;
+    // Year element always present in background
+    if (LN_GEN[mEl] === dayEl || mEl === dayEl || LN_GEN[LN_YEAR_EL] === dayEl && LN_GEN[mEl] === dayEl) {
+      level = 'high';
+    } else if (LN_RES[mEl] === dayEl || LN_RES[LN_YEAR_EL] === dayEl && LN_RES[mEl] === dayEl) {
+      level = 'low';
+    } else {
+      level = 'mid';
+    }
+    // Refine: if year element generates day el, upgrade mids slightly
+    if (LN_GEN[LN_YEAR_EL] === dayEl && level === 'mid') {
+      // 2026 丙午 (fire) benefits certain day masters
+      if (Math.abs(i - 3) <= 1) level = 'high'; // spring-ish peak
+    }
+    return { month: i + 1, branch: br, element: mEl, level };
+  });
+
+  const highMonths = months.filter(m => m.level === 'high').map(m => m.month);
+  const lowMonths  = months.filter(m => m.level === 'low').map(m => m.month);
+
+  // Overall year tone
+  let yearTone;
+  if (LN_GEN[LN_YEAR_EL] === dayEl || LN_YEAR_EL === dayEl) yearTone = 'good';
+  else if (LN_RES[LN_YEAR_EL] === dayEl) yearTone = 'caution';
+  else yearTone = 'neutral';
+
+  // Element-specific year overview
+  const overviewMap = {
+    '木': { summary:'丙午火年，木生火洩耗，宜穩步推進，勿過度消耗自身能量，貴人在南方。', h1:'上半年春木得令，可主動出擊，把握春季帶來的新機遇，人際關係有改善。', h2:'下半年火炎土燥，宜沉澱蓄力，注意健康調節，秋冬收成漸豐。' },
+    '火': { summary:'丙午年比劫旺，競爭增加，需提防同行搶機。惟火旺之年創意佳，宜發展個人品牌。', h1:'上半年火勢旺盛，衝勁十足，可積極拓展事業，惟勿意氣用事。', h2:'下半年宜收斂鋒芒，守成為主，錢財管理需謹慎，防破財漏財。' },
+    '土': { summary:'丙午火生土，食神傷官旺，創意表達能力提升，藝術、創作、教育方面有所發揮。', h1:'上半年創意大爆發，適合展示才華，口才出眾，社交活躍。', h2:'下半年財運轉佳，辛勤付出得回報，適合拓展副業或兼職。' },
+    '金': { summary:'丙午火剋金，偏官正官年，有升職機會但壓力亦大，需展現實力方能突圍而出。', h1:'上半年面對挑戰，宜低調應對，做好本份，贏得上司信任。', h2:'下半年局勢趨緩，工作穩定，感情運較佳，婚戀有進展。' },
+    '水': { summary:'丙午火剋水為財星旺，財運良好，惟財多身弱，需量力而為，勿過度投機。', h1:'上半年財源滾滾，偏財正財均佳，把握投資機遇。', h2:'下半年財運持續，但需防財來財去，注意守財理財。' }
+  };
+
+  const ov = overviewMap[dayEl] || overviewMap['土'];
+
+  return { months, highMonths, lowMonths, yearTone, dayEl, ov };
+}
+
+function renderLiuNian() {
+  const profiles = loadProfiles();
+  const el = document.getElementById('lnContent');
+  if (!el) return;
+
+  // Find active profile or first profile
+  let profile = null;
+  if (activeId) profile = profiles.find(p => p.id === activeId);
+  if (!profile && profiles.length) profile = profiles[0];
+
+  if (!profile) {
+    el.innerHTML = `<div class="ln-no-profile">
+      <div class="ln-no-profile-icon">🔮</div>
+      請先在「八字命盤」頁面儲存並計算命盤<br>
+      本頁將自動讀取您的八字進行流年分析
+    </div>`;
+    return;
+  }
+
+  const pillars = computePillars(profile.year, profile.month, profile.day, profile.shichen);
+  const data    = generateLiuNianData(pillars);
+  const dStem   = STEMS[pillars[2].stem];
+  const dBranch = BRANCHES[pillars[2].branch];
+
+  const levelLabel = { high:'旺', mid:'平', low:'留意' };
+  const monthNames = ['一','二','三','四','五','六','七','八','九','十','十一','十二'];
+
+  // Best/worst month text
+  const bestText   = data.highMonths.length ? data.highMonths.map(m => monthNames[m-1]+'月').join('、') : '運勢均衡';
+  const worstText  = data.lowMonths.length  ? data.lowMonths.map(m => monthNames[m-1]+'月').join('、') : '全年平穩';
+
+  const toneIcon = { good:'🌟', caution:'⚡', neutral:'☯️' };
+  const toneText = { good:'整體旺年，把握機遇', caution:'謹慎應對，化挑戰為機', neutral:'平穩務實，積累為主' };
+
+  el.innerHTML = `
+    <!-- Year banner -->
+    <div class="ln-year-banner">
+      <div class="ln-year-title">二○二六 · 丙 午 年</div>
+      <div class="ln-year-sub">Annual Fortune Analysis · 流年大運</div>
+      <div class="ln-profile-badge">📖 ${profile.name} · 日主 ${dStem}${dBranch}（${data.dayEl}）</div>
+    </div>
+
+    <!-- Overview cards -->
+    <div class="ln-overview-grid">
+      <div class="ln-ov-card ${data.yearTone === 'caution' ? 'caution' : data.yearTone === 'good' ? 'good' : ''}">
+        <div class="ln-ov-icon">${toneIcon[data.yearTone]}</div>
+        <div class="ln-ov-label">全 年 整 體 運 勢</div>
+        <div class="ln-ov-value">${toneText[data.yearTone]}</div>
+        <div class="ln-ov-sub">${data.ov.summary}</div>
+      </div>
+      <div class="ln-ov-card good">
+        <div class="ln-ov-icon">✨</div>
+        <div class="ln-ov-label">最 旺 月 份</div>
+        <div class="ln-ov-value">${bestText}</div>
+        <div class="ln-ov-sub">以上月份五行配合最佳，宜把握行動</div>
+      </div>
+      <div class="ln-ov-card caution">
+        <div class="ln-ov-icon">⚠️</div>
+        <div class="ln-ov-label">需 留 意 月 份</div>
+        <div class="ln-ov-value">${worstText}</div>
+        <div class="ln-ov-sub">以上月份宜謹慎，避免重大決策</div>
+      </div>
+    </div>
+
+    <!-- Half-year direction -->
+    <div class="ln-halves">
+      <div class="ln-half-card">
+        <div class="ln-half-label">上 半 年 大 方 向（一月至六月）</div>
+        <div class="ln-half-body">${data.ov.h1}</div>
+      </div>
+      <div class="ln-half-card">
+        <div class="ln-half-label">下 半 年 大 方 向（七月至十二月）</div>
+        <div class="ln-half-body">${data.ov.h2}</div>
+      </div>
+    </div>
+
+    <!-- Month timeline -->
+    <div class="ln-timeline-title">十 二 月 逐 月 運 勢 概 覽</div>
+    <div class="ln-month-grid">
+      ${data.months.map((m, i) => `
+        <div class="ln-month-card fortune-${m.level}">
+          <div class="ln-month-lock">🔒</div>
+          <div class="ln-month-num">${monthNames[i]}月</div>
+          <div class="ln-month-branch">${m.branch}</div>
+          <div class="ln-month-tag">${levelLabel[m.level]}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <!-- Legend -->
+    <div class="ln-legend">
+      <div class="ln-legend-item"><div class="ln-legend-dot gold"></div>金色 = 運旺</div>
+      <div class="ln-legend-item"><div class="ln-legend-dot gray"></div>灰色 = 平穩</div>
+      <div class="ln-legend-item"><div class="ln-legend-dot red"></div>紅色 = 留意</div>
+    </div>
+
+    <!-- Paid locked section -->
+    <div class="ln-paid-section">
+      <div class="ln-paid-head">
+        <div class="ln-paid-lock">🔐</div>
+        <div>
+          <div class="ln-paid-title">逐 月 詳 細 分 析</div>
+          <div class="ln-paid-sub">事業 · 感情 · 財運 · 健康 · 化解建議</div>
+        </div>
+      </div>
+
+      <!-- Blurred preview -->
+      <div class="ln-preview-grid">
+        ${data.months.slice(0,4).map((m, i) => `
+          <div class="ln-preview-card">
+            <div class="ln-preview-month">${monthNames[i]}月 · ${m.branch}月</div>
+            <div class="ln-preview-dim">
+              💼 ${LN_MONTH_CAREER[i]}<br>
+              💕 ${LN_MONTH_ROMANCE[i]}<br>
+              💰 ${LN_MONTH_WEALTH[i]}<br>
+              🌿 ${LN_MONTH_HEALTH[i]}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+
+      <button class="ln-unlock-btn" onclick="alert('付費功能開發中，敬請期待！')">
+        🔓 &nbsp; HKD$28 / 月 &nbsp; 解 鎖 完 整 流 年
+      </button>
+      <div class="ln-disclaimer">
+        解鎖後即可查看全年12個月詳細運程分析，包括事業、感情、財運、健康及每月化解建議<br>
+        所有分析基於您的八字命格，僅供娛樂及參考，不構成專業命理建議
+      </div>
+    </div>
+  `;
 }
 
 // ── Match Analysis ──────────────────────────────────────
@@ -3145,7 +3738,7 @@ function analyzeRename(scene) {
 renderProfileList();
 // Auto-switch tab if navigated from oracle.html
 const _initTab = sessionStorage.getItem('tab');
-if (_initTab === 'match' || _initTab === 'rename') {
+if (_initTab === 'match' || _initTab === 'rename' || _initTab === 'liuNian') {
   sessionStorage.removeItem('tab');
   switchMainTab(_initTab);
 }
@@ -3269,6 +3862,10 @@ function showNotifEnabled(btn, status) {
     <span class="mob-tab-icon">☯</span>
     <span class="mob-tab-label">命盤</span>
   </a>
+  <a class="mob-tab-item" id="mobTabLiuNian" href="#" onclick="switchMainTab('liuNian');return false">
+    <span class="mob-tab-icon">年</span>
+    <span class="mob-tab-label">流年</span>
+  </a>
   <a class="mob-tab-item" id="mobTabMatch" href="#" onclick="switchMainTab('match');return false">
     <span class="mob-tab-icon">♡</span>
     <span class="mob-tab-label">合婚</span>
@@ -3277,13 +3874,20 @@ function showNotifEnabled(btn, status) {
     <span class="mob-tab-icon">文</span>
     <span class="mob-tab-label">改名</span>
   </a>
-  <a class="mob-tab-item" href="oracle.html">
-    <span class="mob-tab-icon">籤</span>
-    <span class="mob-tab-label">求簽</span>
+  <button class="mob-tab-item mob-more-btn" id="mobMoreTrigger" onclick="toggleMobMore(event)">
+    <span class="mob-tab-icon">···</span>
+    <span class="mob-tab-label">更多</span>
+  </button>
+</nav>
+
+<!-- 更多 backdrop + slide-up menu -->
+<div id="mobMoreOverlay" class="mob-more-overlay" onclick="closeMobMore()"></div>
+<nav id="mobMoreMenu" class="mob-more-menu">
+  <a class="mob-more-item" href="oracle.html" onclick="closeMobMore()">
+    <span class="mob-more-icon">籤</span>求 簽 問 事
   </a>
-  <a class="mob-tab-item" href="calendar.html">
-    <span class="mob-tab-icon">曆</span>
-    <span class="mob-tab-label">神曆</span>
+  <a class="mob-more-item" href="calendar.html" onclick="closeMobMore()">
+    <span class="mob-more-icon">曆</span>神 明 曆
   </a>
 </nav>
 </body>

@@ -1,5 +1,46 @@
 /* ── FengShui Auth System (localStorage mock) ───── */
 
+/* ── Mobile "更多" menu ─────────────────────────────
+   Shared across index.html / oracle.html / calendar.html
+   Requires: #mobMoreMenu, #mobMoreOverlay, .mob-more-btn
+─────────────────────────────────────────────────── */
+function toggleMobMore(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  const menu    = document.getElementById('mobMoreMenu');
+  const overlay = document.getElementById('mobMoreOverlay');
+  const btn     = document.getElementById('mobMoreTrigger');
+  if (!menu) return;
+  const isOpen = menu.classList.contains('open');
+  if (isOpen) {
+    menu.classList.remove('open');
+    overlay && overlay.classList.remove('open');
+    btn  && btn.classList.remove('menu-open');
+  } else {
+    menu.classList.add('open');
+    overlay && overlay.classList.add('open');
+    btn  && btn.classList.add('menu-open');
+  }
+}
+
+function closeMobMore() {
+  const menu    = document.getElementById('mobMoreMenu');
+  const overlay = document.getElementById('mobMoreOverlay');
+  const btn     = document.getElementById('mobMoreTrigger');
+  if (menu)    menu.classList.remove('open');
+  if (overlay) overlay.classList.remove('open');
+  if (btn)     btn.classList.remove('menu-open');
+}
+
+// Close 更多 menu when tapping any other tab
+document.addEventListener('click', function(e) {
+  const menu = document.getElementById('mobMoreMenu');
+  if (!menu || !menu.classList.contains('open')) return;
+  const trigger = document.getElementById('mobMoreTrigger');
+  if (trigger && trigger.contains(e.target)) return; // handled by toggleMobMore
+  if (!menu.contains(e.target)) closeMobMore();
+});
+
 const AUTH_KEY   = 'fs_auth_user';
 const TOAST_DURATION = 2400;
 

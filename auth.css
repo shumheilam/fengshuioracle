@@ -859,6 +859,74 @@
   .mob-tab-icon { font-size: 1.25rem; line-height: 1; }
   .mob-tab-label { font-size: 10px; letter-spacing: 0.04em; line-height: 1; }
 
+  /* ── 更多 button (same shape as mob-tab-item) ── */
+  .mob-more-btn { /* inherits mob-tab-item layout via HTML class combo */ }
+
+  /* ── 更多 menu overlay (backdrop) ── */
+  .mob-more-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 898;
+    background: transparent;
+  }
+  .mob-more-overlay.open { display: block; }
+
+  /* ── 更多 slide-up panel ── */
+  .mob-more-menu {
+    display: none;
+    position: fixed;
+    bottom: calc(58px + env(safe-area-inset-bottom, 0px));
+    right: 0;
+    min-width: 158px;
+    background: rgba(10,6,6,0.98);
+    border: 1px solid rgba(201,168,76,0.32);
+    border-radius: 10px 10px 0 0;
+    z-index: 899;
+    overflow: hidden;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: -4px -4px 24px rgba(0,0,0,0.55);
+  }
+  .mob-more-menu.open {
+    display: block;
+    animation: mobMoreSlideUp 0.22s ease;
+  }
+  @keyframes mobMoreSlideUp {
+    from { transform: translateY(14px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+
+  /* ── 更多 menu items ── */
+  .mob-more-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.78rem 1.1rem;
+    text-decoration: none;
+    color: #907050;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.2em;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    transition: background 0.18s, color 0.18s;
+    cursor: pointer;
+  }
+  .mob-more-item:last-child { border-bottom: none; }
+  .mob-more-item:hover      { background: rgba(201,168,76,0.07); color: #c9a84c; }
+  .mob-more-item.active     { color: #c9a84c; background: rgba(201,168,76,0.06); }
+  .mob-more-icon {
+    font-size: 1.1rem;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 1.4rem;
+    text-align: center;
+  }
+
+  /* ── 更多 button: arrow indicator ── */
+  .mob-more-btn .mob-tab-icon { transition: transform 0.22s; }
+  .mob-more-btn.menu-open .mob-tab-icon { transform: rotate(180deg); }
+
   /* Push content above tab bar so it's never obscured */
   body { padding-bottom: calc(58px + env(safe-area-inset-bottom, 0px)) !important; }
 

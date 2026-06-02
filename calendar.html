@@ -45,7 +45,7 @@
     .divider-sym { color: var(--gold); font-size: 0.85rem; opacity: 0.65; }
 
     /* ── Layout ── */
-    .cal-layout { display: flex; gap: 1.4rem; max-width: 1080px; margin: 0 auto; padding: 0 1.2rem 5rem; align-items: flex-start; }
+    .cal-layout { display: flex; gap: 1.4rem; max-width: 1080px; margin: 0 auto; padding: 0 1.2rem 1.5rem; align-items: flex-start; }
     .cal-main { flex: 1; min-width: 0; }
     .cal-sidebar { width: 240px; flex-shrink: 0; position: sticky; top: 1rem; }
 
@@ -210,11 +210,138 @@
     footer { text-align: center; color: var(--text-dim); font-size: 0.6rem; letter-spacing: 0.2em;
              padding: 1.5rem 0; opacity: 0.38; line-height: 2; }
 
+    /* ══════════════════════════════════════════
+       擇 日 系 統
+    ══════════════════════════════════════════ */
+    .择日-section {
+      max-width: 1080px; margin: 0 auto 2rem; padding: 0 1.2rem;
+    }
+    .择日-header { text-align: center; padding: 0.8rem 0 1rem; }
+    .择日-title { font-size: clamp(1.4rem,4vw,2rem); font-weight: 900; color: var(--gold);
+                  letter-spacing: 0.35em; text-shadow: 0 0 20px rgba(201,168,76,0.3); }
+    .择日-sub { font-size: 0.7rem; color: var(--text-dim); letter-spacing: 0.45em; margin-top: 0.35rem; }
+
+    /* Event cards */
+    .event-cards { display: flex; flex-wrap: wrap; gap: 0.65rem; justify-content: center; margin-bottom: 1.4rem; }
+    .event-card {
+      display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
+      padding: 0.75rem 0.9rem; border-radius: 10px; cursor: pointer; min-width: 78px;
+      border: 1.5px solid rgba(201,168,76,0.2); background: rgba(255,255,255,0.02);
+      transition: all 0.2s; font-family: 'Noto Serif TC', serif;
+    }
+    .event-card:hover { border-color: rgba(201,168,76,0.5); background: rgba(201,168,76,0.06); }
+    .event-card.selected { border-color: var(--gold); background: rgba(201,168,76,0.12);
+                           box-shadow: 0 0 12px rgba(201,168,76,0.2); }
+    .event-card-icon { font-size: 1.5rem; line-height: 1; }
+    .event-card-label { font-size: 0.65rem; color: var(--text-dim); letter-spacing: 0.12em; }
+    .event-card.selected .event-card-label { color: var(--gold); }
+
+    /* Date range row */
+    .择日-form { background: var(--bg-card); border: 1px solid var(--gold-dim);
+                border-radius: 10px; padding: 1.2rem 1.4rem; margin-bottom: 1.4rem; }
+    .择日-form-row { display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap; }
+    .择日-field { flex: 1; min-width: 140px; }
+    .择日-label { font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.3em;
+                 display: block; margin-bottom: 0.45rem; }
+    .择日-input {
+      width: 100%; background: var(--bg-input); border: 1px solid rgba(201,168,76,0.22);
+      border-radius: 6px; color: var(--text); font-family: 'Noto Serif TC', serif;
+      font-size: 0.82rem; padding: 0.55rem 0.8rem; outline: none; letter-spacing: 0.05em;
+      transition: border-color 0.2s;
+    }
+    .择日-input:focus { border-color: var(--gold); }
+    .择日-input::-webkit-calendar-picker-indicator { filter: invert(0.6) sepia(1) saturate(2) hue-rotate(5deg); cursor: pointer; }
+    .择日-btn {
+      padding: 0.55rem 1.6rem; border-radius: 6px; background: linear-gradient(135deg, #c9a84c 0%, #a07828 100%);
+      color: #1a1000; font-family: 'Noto Serif TC', serif; font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 0.2em; border: none; cursor: pointer; white-space: nowrap;
+      transition: opacity 0.2s, transform 0.15s; flex-shrink: 0;
+    }
+    .择日-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+    .择日-btn:active { transform: translateY(0); }
+
+    /* Results area */
+    .择日-results { display: none; }
+    .择日-results.show { display: block; }
+    .择日-results-label { font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.4em;
+                         margin-bottom: 0.85rem; display: flex; align-items: center; gap: 0.6rem; }
+    .择日-results-label::after { content: ''; flex: 1; height: 1px; background: var(--gold-dim); }
+
+    /* Auspicious day card */
+    .aday-cards { display: flex; flex-direction: column; gap: 0.85rem; }
+    .aday-card {
+      background: linear-gradient(135deg, rgba(201,168,76,0.08) 0%, rgba(14,8,8,0.6) 100%);
+      border: 1px solid rgba(201,168,76,0.35); border-radius: 10px; padding: 1.1rem 1.3rem;
+      position: relative; overflow: hidden;
+    }
+    .aday-card::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%;
+      background: linear-gradient(to bottom, var(--gold), rgba(201,168,76,0.3));
+    }
+    /* Locked group: wraps day 2 + 3 together */
+    .aday-locked-group {
+      position: relative; border: 1px solid rgba(201,168,76,0.25); border-radius: 12px;
+      overflow: hidden; background: rgba(14,8,8,0.5);
+    }
+    .aday-locked-group-inner {
+      filter: blur(4px); user-select: none; pointer-events: none;
+      display: flex; flex-direction: column; gap: 0.85rem;
+      padding: 1rem 1rem 0.5rem;
+    }
+    .aday-locked-group-inner .aday-card {
+      border-radius: 8px; margin: 0;
+    }
+    .aday-locked-group-inner .aday-card::before { display: none; }
+    .aday-lock-footer {
+      padding: 1.1rem 1.2rem 1.2rem; display: flex; flex-direction: column;
+      align-items: center; gap: 0.6rem;
+      background: linear-gradient(to top, rgba(6,4,4,0.95) 70%, rgba(6,4,4,0.75));
+    }
+    .aday-lock-icon { font-size: 1.4rem; }
+    .aday-lock-text { font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.12em; text-align: center; line-height: 1.75; }
+    .unlock-btn {
+      padding: 0.65rem 1.6rem; border-radius: 7px;
+      background: linear-gradient(135deg, #c9a84c 0%, #a07828 100%);
+      color: #1a1000; font-family: 'Noto Serif TC', serif; font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 0.15em; border: none; cursor: pointer; transition: opacity 0.2s, transform 0.15s;
+      width: 100%;
+    }
+    .unlock-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .aday-top { display: flex; align-items: center; justify-content: space-between;
+                margin-bottom: 0.7rem; flex-wrap: wrap; gap: 0.5rem; }
+    .aday-rank { font-size: 0.6rem; color: var(--gold); letter-spacing: 0.25em; background: rgba(201,168,76,0.12);
+                 border: 1px solid rgba(201,168,76,0.3); padding: 0.15rem 0.55rem; border-radius: 20px; }
+    .aday-dates { text-align: right; }
+    .aday-solar { font-size: 1rem; font-weight: 900; color: var(--gold); letter-spacing: 0.1em; }
+    .aday-lunar { font-size: 0.62rem; color: var(--text-dim); margin-top: 0.1rem; letter-spacing: 0.1em; }
+
+    .aday-body { }
+    .aday-row { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 0.6rem; align-items: flex-start; }
+    .aday-section-lbl { font-size: 0.58rem; color: var(--text-dim); letter-spacing: 0.3em;
+                        min-width: 3em; padding-top: 0.15rem; flex-shrink: 0; }
+    .aday-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .aday-tag-good { padding: 0.15rem 0.55rem; border-radius: 20px; font-size: 0.65rem; letter-spacing: 0.06em;
+                     border: 1px solid rgba(90,154,106,0.5); color: var(--wood); background: rgba(90,154,106,0.08); }
+    .aday-tag-bad  { padding: 0.15rem 0.55rem; border-radius: 20px; font-size: 0.65rem; letter-spacing: 0.06em;
+                     border: 1px solid rgba(204,68,34,0.45); color: var(--fire); background: rgba(204,68,34,0.07); }
+    .aday-tag-hour { padding: 0.15rem 0.55rem; border-radius: 20px; font-size: 0.65rem; letter-spacing: 0.06em;
+                     border: 1px solid rgba(201,168,76,0.45); color: var(--gold); background: rgba(201,168,76,0.07); }
+    .aday-reason { font-size: 0.7rem; color: var(--text-dim); letter-spacing: 0.05em; line-height: 1.75;
+                   border-top: 1px solid rgba(201,168,76,0.1); padding-top: 0.6rem; margin-top: 0.3rem; }
+
+    .择日-disclaimer { font-size: 0.6rem; color: var(--text-dim); letter-spacing: 0.1em; line-height: 1.9;
+                      text-align: center; margin-top: 1.1rem; padding: 0.6rem; opacity: 0.65;
+                      border-top: 1px solid rgba(255,255,255,0.05); }
+
+    .择日-empty { text-align: center; padding: 2rem; font-size: 0.78rem; color: var(--text-dim);
+                 letter-spacing: 0.12em; line-height: 2; }
+
     @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
 
     @media (max-width: 700px) {
       nav { padding: 0.7rem 1rem; }
-      .cal-layout { flex-direction: column; padding: 0 0.6rem 4rem; }
+      .cal-layout { flex-direction: column; padding: 0 0.6rem 1.5rem; }
       .cal-sidebar { width: 100%; position: static; }
 
       /* Calendar cells: min 44px touch target */
@@ -264,6 +391,7 @@
   <a class="nav-brand" href="index.html">風 生 水 起<span class="nav-brand-sub">FengShui Oracle</span></a>
   <div class="nav-tabs">
     <a class="nav-tab" href="index.html">八 字 命 盤</a>
+    <a class="nav-tab" href="index.html" onclick="sessionStorage.setItem('tab','liuNian')">流 年 運 程</a>
     <a class="nav-tab" href="index.html" onclick="sessionStorage.setItem('tab','match')">合 婚 配 對</a>
     <a class="nav-tab" href="index.html" onclick="sessionStorage.setItem('tab','rename')">改 名 系 統</a>
     <a class="nav-tab" href="oracle.html">求 簽 問 事</a>
@@ -390,9 +518,76 @@
   </div>
 </div>
 
+<!-- ══════════════════════════════════════════
+     擇 日 系 統
+══════════════════════════════════════════ -->
+<section class="择日-section">
+
+  <div class="择日-header">
+    <div class="divider"><span class="divider-sym">✦</span></div>
+    <div class="择日-title">擇 日 系 統</div>
+    <p class="择日-sub">挑選良辰吉日　事半功倍</p>
+  </div>
+
+  <!-- Step 1: Choose event type -->
+  <div class="event-cards" id="eventCards">
+    <div class="event-card" data-event="結婚" onclick="selectEvent(this)">
+      <div class="event-card-icon">💒</div>
+      <div class="event-card-label">結 婚</div>
+    </div>
+    <div class="event-card" data-event="開業" onclick="selectEvent(this)">
+      <div class="event-card-icon">🏪</div>
+      <div class="event-card-label">開 業</div>
+    </div>
+    <div class="event-card" data-event="搬屋" onclick="selectEvent(this)">
+      <div class="event-card-icon">🏠</div>
+      <div class="event-card-label">搬 屋</div>
+    </div>
+    <div class="event-card" data-event="動土" onclick="selectEvent(this)">
+      <div class="event-card-icon">🏗</div>
+      <div class="event-card-label">動 土</div>
+    </div>
+    <div class="event-card" data-event="出行" onclick="selectEvent(this)">
+      <div class="event-card-icon">✈️</div>
+      <div class="event-card-label">出 行</div>
+    </div>
+    <div class="event-card" data-event="簽約" onclick="selectEvent(this)">
+      <div class="event-card-icon">📝</div>
+      <div class="event-card-label">簽 約</div>
+    </div>
+    <div class="event-card" data-event="剖腹產" onclick="selectEvent(this)">
+      <div class="event-card-icon">👶</div>
+      <div class="event-card-label">剖腹產</div>
+    </div>
+  </div>
+
+  <!-- Step 2: Date range + search -->
+  <div class="择日-form">
+    <div class="择日-form-row">
+      <div class="择日-field">
+        <label class="择日-label">開 始 日 期</label>
+        <input class="择日-input" type="date" id="zdStartDate">
+      </div>
+      <div class="择日-field">
+        <label class="择日-label">結 束 日 期</label>
+        <input class="择日-input" type="date" id="zdEndDate">
+      </div>
+      <button class="择日-btn" onclick="findAuspiciousDays()">推 薦 吉 日</button>
+    </div>
+  </div>
+
+  <!-- Step 3: Results -->
+  <div class="择日-results" id="zdResults">
+    <div class="择日-results-label">推 薦 吉 日</div>
+    <div class="aday-cards" id="adayCards"></div>
+  </div>
+
+</section>
+
 <footer>
-  <p>風生水起 · FengShui Oracle · 神明曆</p>
+  <p>風生水起 · FengShui Oracle</p>
   <p style="margin-top:0.4rem">本 App 所有分析僅供娛樂及參考，不構成專業命理建議。如需完整分析請諮詢專業命理師。</p>
+  <p style="margin-top:0.3rem">擇日僅供參考，請結合個人實際情況決定。</p>
 </footer>
 
 <script>
@@ -897,6 +1092,215 @@ function changeMonth(delta) {
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 renderCalendar();
+
+// ══════════════════════════════════════════
+// 擇 日 系 統
+// ══════════════════════════════════════════
+
+// Set default date range: today → today+60 days
+(function initZdDates() {
+  const t = new Date();
+  const e = new Date(t); e.setDate(e.getDate() + 60);
+  const fmt = d => d.toISOString().slice(0, 10);
+  document.getElementById('zdStartDate').value = fmt(t);
+  document.getElementById('zdEndDate').value   = fmt(e);
+})();
+
+let zdSelectedEvent = null;
+
+function selectEvent(el) {
+  document.querySelectorAll('.event-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  zdSelectedEvent = el.dataset.event;
+}
+
+// Per-event auspicious data
+const EVENT_DATA = {
+  結婚: {
+    yi: ['嫁娶','祈福','納采','安床'],
+    ji: ['動土','移徙','開渠'],
+    hours: ['辰時（07-09時）','午時（11-13時）','未時（13-15時）'],
+    reason: '嫁娶宜取天干地支相合之日，龍鳳呈祥、百年好合。天干合化五行，地支六合，婚姻和諧美滿。',
+  },
+  開業: {
+    yi: ['開市','動土','安門','祭祀'],
+    ji: ['移徙','安葬','嫁娶'],
+    hours: ['卯時（05-07時）','巳時（09-11時）','午時（11-13時）'],
+    reason: '開業宜取五行旺財之日，財星入宮，生意興隆，人財兩旺，日進斗金。',
+  },
+  搬屋: {
+    yi: ['移徙','安床','入宅','祈福'],
+    ji: ['動土','嫁娶','開渠'],
+    hours: ['卯時（05-07時）','辰時（07-09時）','午時（11-13時）'],
+    reason: '搬屋宜取陽氣旺盛之日，天干相生，家宅安泰，諸事順遂，新居福氣滿堂。',
+  },
+  動土: {
+    yi: ['動土','修造','破土','興工'],
+    ji: ['安葬','嫁娶','入宅'],
+    hours: ['辰時（07-09時）','巳時（09-11時）','未時（13-15時）'],
+    reason: '動土宜取土旺之日，戊己干支臨位，興工大吉，地基穩固，工程順利完竣。',
+  },
+  出行: {
+    yi: ['出行','祈福','求財','旅遊'],
+    ji: ['嫁娶','動土','安葬'],
+    hours: ['寅時（03-05時）','卯時（05-07時）','午時（11-13時）'],
+    reason: '出行宜取天德月德合格之日，貴人相助，旅途平安，逢凶化吉，一路順風。',
+  },
+  簽約: {
+    yi: ['訂盟','簽約','納財','開市'],
+    ji: ['動土','移徙','安葬'],
+    hours: ['巳時（09-11時）','午時（11-13時）','申時（15-17時）'],
+    reason: '簽約宜取文昌當令之日，思維清晰，合約順利，互惠互利，長期合作愉快。',
+  },
+  剖腹產: {
+    yi: ['嫁娶','祈福','安床','求嗣'],
+    ji: ['動土','破土','開渠'],
+    hours: ['寅時（03-05時）','辰時（07-09時）','午時（11-13時）'],
+    reason: '剖腹產宜取五行平衡之日，命帶貴人，孩子天資聰穎，母子平安，一生福澤深厚。',
+  },
+};
+
+// Simple auspiciousness scoring: avoid inauspicious SPECIAL_DAYS,
+// prefer days matching event yi tags, weekdays 2-5 boost, month day not 5/14/23
+function scoreDay(date, eventType) {
+  const lunar = solarToLunar(date);
+  const special = SPECIAL_DAYS.find(s => s.m === lunar.month && s.d === lunar.day);
+
+  // Hard exclusions
+  if (special?.type === 'inauspicious') return -999;
+  if ([5, 14, 23].includes(lunar.day)) return -100; // 五路喪門
+
+  let score = 0;
+
+  // Bonus if yi tags match event
+  if (special?.type === 'auspicious') {
+    score += 30;
+    const evData = EVENT_DATA[eventType];
+    if (evData) {
+      const matches = special.yi.filter(t => evData.yi.includes(t)).length;
+      score += matches * 20;
+    }
+  }
+
+  // Deity birthday = extra auspicious energy
+  const deities = DEITY_BIRTHDAYS.filter(db => db.month === lunar.month && db.day === lunar.day);
+  if (deities.length) score += 15;
+
+  // Prefer Tue–Thu (less chaotic)
+  const dow = date.getDay();
+  if (dow >= 2 && dow <= 4) score += 8;
+
+  // Prefer mid-month (15) and first/last auspicious lunar days
+  if ([1, 3, 8, 15, 18].includes(lunar.day)) score += 12;
+
+  // Slight randomness for variety (deterministic per date)
+  score += (date.getDate() * 7 + lunar.month * 13) % 17;
+
+  return score;
+}
+
+function findAuspiciousDays() {
+  if (!zdSelectedEvent) {
+    alert('請先選擇想做嘅事項！');
+    return;
+  }
+
+  const startVal = document.getElementById('zdStartDate').value;
+  const endVal   = document.getElementById('zdEndDate').value;
+  if (!startVal || !endVal) { alert('請輸入日期範圍！'); return; }
+
+  const start = new Date(startVal + 'T00:00:00');
+  const end   = new Date(endVal   + 'T00:00:00');
+  if (end <= start) { alert('結束日期必須晚於開始日期！'); return; }
+
+  // Collect all days in range, score them
+  const scored = [];
+  const cur = new Date(start);
+  while (cur <= end) {
+    const score = scoreDay(new Date(cur), zdSelectedEvent);
+    if (score >= 0) scored.push({ date: new Date(cur), score });
+    cur.setDate(cur.getDate() + 1);
+  }
+
+  scored.sort((a, b) => b.score - a.score);
+  const top3 = scored.slice(0, 3);
+
+  if (top3.length === 0) {
+    document.getElementById('adayCards').innerHTML =
+      '<div class="择日-empty">所選日期範圍內未找到合適吉日，<br>建議擴大日期範圍再試。</div>';
+    document.getElementById('zdResults').classList.add('show');
+    return;
+  }
+
+  const evData = EVENT_DATA[zdSelectedEvent] || EVENT_DATA['出行'];
+  const WEEKDAYS = ['日','一','二','三','四','五','六'];
+  const RANKS = ['第 一 吉 日','第 二 吉 日','第 三 吉 日'];
+
+  // Helper: render a single aday-card (no lock overlay)
+  function renderAdayCard(item, rankLabel) {
+    const d = item ? item.date : null;
+    if (!d) return `<div class="aday-card">
+      <div class="aday-top"><span class="aday-rank">${rankLabel}</span></div>
+      <div class="aday-body"><div class="aday-row"><div class="aday-tags"><span class="aday-tag-good">宜 —</span></div></div></div>
+    </div>`;
+    const lunar  = solarToLunar(d);
+    const lunarStr = `農曆${LUNAR_MONTH_NAMES[lunar.month-1]}月${LUNAR_DAY_NAMES[lunar.day-1]}`;
+    const solarStr = `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日（星期${WEEKDAYS[d.getDay()]}）`;
+    const special = SPECIAL_DAYS.find(s => s.m === lunar.month && s.d === lunar.day);
+    const yiList  = special?.yi?.length ? special.yi : evData.yi;
+    const jiList  = special?.ji?.length ? special.ji : evData.ji.slice(0,2);
+    return `<div class="aday-card">
+      <div class="aday-top">
+        <span class="aday-rank">${rankLabel}</span>
+        <div class="aday-dates">
+          <div class="aday-solar">${solarStr}</div>
+          <div class="aday-lunar">${lunarStr}</div>
+        </div>
+      </div>
+      <div class="aday-body">
+        <div class="aday-row">
+          <span class="aday-section-lbl">宜 事</span>
+          <div class="aday-tags">${yiList.map(t=>`<span class="aday-tag-good">宜 ${t}</span>`).join('')}</div>
+        </div>
+        <div class="aday-row">
+          <span class="aday-section-lbl">忌 事</span>
+          <div class="aday-tags">${jiList.map(t=>`<span class="aday-tag-bad">忌 ${t}</span>`).join('')}</div>
+        </div>
+        <div class="aday-row">
+          <span class="aday-section-lbl">吉 時</span>
+          <div class="aday-tags">${evData.hours.map(h=>`<span class="aday-tag-hour">⏰ ${h}</span>`).join('')}</div>
+        </div>
+        <div class="aday-reason">✦ ${evData.reason}</div>
+      </div>
+    </div>`;
+  }
+
+  // First day: free, shown in full
+  let html = renderAdayCard(top3[0] || null, RANKS[0]);
+
+  // Days 2 & 3: combined into one locked group
+  const day2 = top3[1] || null;
+  const day3 = top3[2] || null;
+  html += `<div class="aday-locked-group">
+    <div class="aday-locked-group-inner">
+      ${renderAdayCard(day2, RANKS[1])}
+      ${renderAdayCard(day3, RANKS[2])}
+    </div>
+    <div class="aday-lock-footer">
+      <div class="aday-lock-icon">🔒</div>
+      <div class="aday-lock-text">解鎖後可獲得第二、三吉日完整分析<br>詳細吉時推算 + 個人化八字分析報告</div>
+      <button class="unlock-btn" onclick="zdUnlock()">HKD$48 解鎖完整擇日報告（第二、三吉日 + 詳細吉時 + 個人化八字分析）</button>
+    </div>
+  </div>`;
+
+  document.getElementById('adayCards').innerHTML = html;
+  document.getElementById('zdResults').classList.add('show');
+  document.getElementById('zdResults').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function zdUnlock() {
+  alert('付費系統開發中，敬請期待！\n解鎖後可獲得：\n• 第二、三吉日詳細分析\n• 個人化八字吉時推算\n• 專屬擇日PDF報告');
+}
 </script>
 
 <!-- ── Auth Modal ──────────────────────────────── -->
@@ -985,10 +1389,15 @@ renderCalendar();
     <span class="mob-tab-icon">籤</span>
     <span class="mob-tab-label">求簽</span>
   </a>
-  <a class="mob-tab-item active" href="calendar.html">
-    <span class="mob-tab-icon">曆</span>
-    <span class="mob-tab-label">神曆</span>
-  </a>
+  <button class="mob-tab-item mob-more-btn active" id="mobMoreTrigger" onclick="toggleMobMore(event)">
+    <span class="mob-tab-icon">···</span>
+    <span class="mob-tab-label">更多</span>
+  </button>
+</nav>
+
+<!-- 更多 backdrop + slide-up menu -->
+<div id="mobMoreOverlay" class="mob-more-overlay" onclick="closeMobMore()"></div>
+<nav id="mobMoreMenu" class="mob-more-menu">
 </nav>
 </body>
 </html>
