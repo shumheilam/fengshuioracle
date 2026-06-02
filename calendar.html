@@ -24,9 +24,9 @@
     /* ── Nav ── */
     nav { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 2rem;
           border-bottom: 1px solid rgba(201,168,76,0.18); }
-    .nav-brand { font-size: 0.95rem; font-weight: 900; color: var(--gold); letter-spacing: 0.35em;
-                 text-decoration: none; display: flex; flex-direction: column; line-height: 1.2; }
-    .nav-brand-sub { font-size: 0.55rem; font-weight: 400; letter-spacing: 0.18em; color: var(--text-dim); margin-top: 0.1rem; }
+    .nav-brand { text-decoration: none; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
+    .nav-brand .brand-name { font-size: 0.95rem; font-weight: 900; color: var(--gold); letter-spacing: 0.35em; line-height: 1.2; }
+    .nav-brand .brand-sub  { font-size: 0.55rem; font-weight: 400; letter-spacing: 0.18em; color: var(--text-dim); line-height: 1.2; margin-top: 0.15rem; }
     .nav-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
     .nav-tab { font-size: 0.75rem; font-family: 'Noto Serif TC', serif; letter-spacing: 0.2em;
                text-decoration: none; padding: 0.38rem 0.88rem; border-radius: 4px;
@@ -388,7 +388,7 @@
 <body>
 
 <nav>
-  <a class="nav-brand" href="index.html">風 生 水 起<span class="nav-brand-sub">FengShui Oracle</span></a>
+  <a class="nav-brand" href="index.html"><span class="brand-name">風 生 水 起</span><span class="brand-sub">FengShui Oracle</span></a>
   <div class="nav-tabs">
     <a class="nav-tab" href="index.html">八 字 命 盤</a>
     <a class="nav-tab" href="index.html" onclick="sessionStorage.setItem('tab','liuNian')">流 年 運 程</a>
@@ -521,7 +521,7 @@
 <!-- ══════════════════════════════════════════
      擇 日 系 統
 ══════════════════════════════════════════ -->
-<section class="择日-section">
+<section class="择日-section" id="zeri">
 
   <div class="择日-header">
     <div class="divider"><span class="divider-sym">✦</span></div>
@@ -1301,6 +1301,14 @@ function findAuspiciousDays() {
 function zdUnlock() {
   alert('付費系統開發中，敬請期待！\n解鎖後可獲得：\n• 第二、三吉日詳細分析\n• 個人化八字吉時推算\n• 專屬擇日PDF報告');
 }
+
+// Smooth scroll to #zeri on page load (from external links)
+window.addEventListener('load', () => {
+  if (location.hash === '#zeri') {
+    const el = document.getElementById('zeri');
+    if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+  }
+});
 </script>
 
 <!-- ── Auth Modal ──────────────────────────────── -->
@@ -1377,6 +1385,10 @@ function zdUnlock() {
     <span class="mob-tab-icon">☯</span>
     <span class="mob-tab-label">命盤</span>
   </a>
+  <a class="mob-tab-item" href="oracle.html">
+    <span class="mob-tab-icon">籤</span>
+    <span class="mob-tab-label">求籤</span>
+  </a>
   <a class="mob-tab-item" href="index.html" onclick="sessionStorage.setItem('tab','match')">
     <span class="mob-tab-icon">♡</span>
     <span class="mob-tab-label">合婚</span>
@@ -1384,10 +1396,6 @@ function zdUnlock() {
   <a class="mob-tab-item" href="index.html" onclick="sessionStorage.setItem('tab','rename')">
     <span class="mob-tab-icon">文</span>
     <span class="mob-tab-label">改名</span>
-  </a>
-  <a class="mob-tab-item" href="oracle.html">
-    <span class="mob-tab-icon">籤</span>
-    <span class="mob-tab-label">求簽</span>
   </a>
   <button class="mob-tab-item mob-more-btn active" id="mobMoreTrigger" onclick="toggleMobMore(event)">
     <span class="mob-tab-icon">···</span>
@@ -1398,6 +1406,15 @@ function zdUnlock() {
 <!-- 更多 backdrop + slide-up menu -->
 <div id="mobMoreOverlay" class="mob-more-overlay" onclick="closeMobMore()"></div>
 <nav id="mobMoreMenu" class="mob-more-menu">
+  <a class="mob-more-item" href="index.html" onclick="sessionStorage.setItem('tab','liuNian');closeMobMore()">
+    <span class="mob-more-icon">年</span>流 年 運 程
+  </a>
+  <a class="mob-more-item active" href="calendar.html" onclick="closeMobMore()">
+    <span class="mob-more-icon">曆</span>神 明 曆
+  </a>
+  <a class="mob-more-item" href="calendar.html#zeri" onclick="closeMobMore()">
+    <span class="mob-more-icon">日</span>擇 日 系 統
+  </a>
 </nav>
 </body>
 </html>

@@ -49,21 +49,26 @@
       border-bottom: 1px solid rgba(201,168,76,0.18);
     }
     .nav-brand {
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .nav-brand .brand-name {
       font-size: 0.95rem;
       font-weight: 900;
       color: var(--gold);
       letter-spacing: 0.35em;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
       line-height: 1.2;
     }
-    .nav-brand-sub {
+    .nav-brand .brand-sub {
       font-size: 0.55rem;
       font-weight: 400;
       letter-spacing: 0.18em;
       color: rgba(144,112,80,0.85);
-      margin-top: 0.1rem;
+      line-height: 1.2;
+      margin-top: 0.15rem;
     }
     .nav-tabs { display: flex; gap: 0.5rem; }
     .nav-tab {
@@ -1126,7 +1131,7 @@
 <body>
 
 <nav>
-  <a class="nav-brand" href="index.html">風 生 水 起<span class="nav-brand-sub">FengShui Oracle</span></a>
+  <a class="nav-brand" href="index.html"><span class="brand-name">風 生 水 起</span><span class="brand-sub">FengShui Oracle</span></a>
   <div class="nav-tabs">
     <a class="nav-tab" href="index.html">八 字 命 盤</a>
     <a class="nav-tab" href="index.html" onclick="sessionStorage.setItem('tab','liuNian')">流 年 運 程</a>
@@ -1850,6 +1855,10 @@ document.getElementById('dailyCount').textContent = Math.min(getDailyCount(), FR
     <span class="mob-tab-icon">☯</span>
     <span class="mob-tab-label">命盤</span>
   </a>
+  <a class="mob-tab-item active" href="oracle.html">
+    <span class="mob-tab-icon">籤</span>
+    <span class="mob-tab-label">求籤</span>
+  </a>
   <a class="mob-tab-item" href="index.html" onclick="sessionStorage.setItem('tab','match')">
     <span class="mob-tab-icon">♡</span>
     <span class="mob-tab-label">合婚</span>
@@ -1857,10 +1866,6 @@ document.getElementById('dailyCount').textContent = Math.min(getDailyCount(), FR
   <a class="mob-tab-item" href="index.html" onclick="sessionStorage.setItem('tab','rename')">
     <span class="mob-tab-icon">文</span>
     <span class="mob-tab-label">改名</span>
-  </a>
-  <a class="mob-tab-item active" href="oracle.html">
-    <span class="mob-tab-icon">籤</span>
-    <span class="mob-tab-label">求簽</span>
   </a>
   <button class="mob-tab-item mob-more-btn" id="mobMoreTrigger" onclick="toggleMobMore(event)">
     <span class="mob-tab-icon">···</span>
@@ -1871,8 +1876,14 @@ document.getElementById('dailyCount').textContent = Math.min(getDailyCount(), FR
 <!-- 更多 backdrop + slide-up menu -->
 <div id="mobMoreOverlay" class="mob-more-overlay" onclick="closeMobMore()"></div>
 <nav id="mobMoreMenu" class="mob-more-menu">
+  <a class="mob-more-item" href="index.html" onclick="sessionStorage.setItem('tab','liuNian');closeMobMore()">
+    <span class="mob-more-icon">年</span>流 年 運 程
+  </a>
   <a class="mob-more-item" href="calendar.html" onclick="closeMobMore()">
     <span class="mob-more-icon">曆</span>神 明 曆
+  </a>
+  <a class="mob-more-item" href="calendar.html#zeri" onclick="closeMobMore()">
+    <span class="mob-more-icon">日</span>擇 日 系 統
   </a>
 </nav>
 </body>
