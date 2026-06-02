@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>風生水起 · 奇門遁甲</title>
+  <meta property="og:title" content="風生水起 · FengShui Oracle">
+  <meta property="og:description" content="奇門遁甲九宮排盤，根據出生年推算宮位，探索命盤玄機">
+  <meta property="og:url" content="https://fengshuioracle.vercel.app/qimen.html">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="auth.css">
+  <style>
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #e8d080;
+      --gold-dim: rgba(201,168,76,0.28);
+      --red-dark: #6b1010;
+      --red-mid: #9b2020;
+      --bg: #060404;
+      --bg-card: #0e0808;
+      --bg-input: rgba(255,255,255,0.04);
+      --text: #e8d5a3;
+      --text-dim: #907050;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Serif TC', serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      background-image: radial-gradient(ellipse 80% 50% at 50% 0%, #1a0808 0%, transparent 65%);
+    }
+
+    /* ── Nav ─────────────────────────────────────────── */
+    nav.top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 2rem;
+      border-bottom: 1px solid rgba(201,168,76,0.18);
+    }
+    .nav-brand {
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .nav-brand .brand-name {
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: var(--gold);
+      letter-spacing: 0.35em;
+      line-height: 1.2;
+    }
+    .nav-brand .brand-sub {
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      color: rgba(144,112,80,0.85);
+      line-height: 1.2;
+      margin-top: 0.15rem;
+    }
+    .nav-tabs { display: flex; gap: 0.5rem; }
+    .nav-tab {
+      font-size: 0.75rem;
+      font-family: 'Noto Serif TC', serif;
+      letter-spacing: 0.2em;
+      text-decoration: none;
+      padding: 0.38rem 0.88rem;
+      border-radius: 4px;
+      border: 1px solid transparent;
+      color: var(--text-dim);
+      transition: color 0.2s, background 0.2s, border-color 0.2s;
+    }
+    .nav-tab.active {
+      color: var(--gold);
+      border-color: rgba(201,168,76,0.4);
+      background: rgba(201,168,76,0.08);
+    }
+    .nav-tab:not(.active):hover { color: var(--text); }
+
+    /* ── Header ──────────────────────────────────────── */
+    header {
+      text-align: center;
+      padding: 2.5rem 1rem 1.5rem;
+    }
+    .page-title {
+      font-size: clamp(1.9rem, 5.5vw, 2.9rem);
+      font-weight: 900;
+      color: var(--gold);
+      letter-spacing: 0.35em;
+      text-shadow: 0 0 28px rgba(201,168,76,0.38);
+    }
+    .page-sub {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      letter-spacing: 0.5em;
+      margin-top: 0.4rem;
+    }
+    .divider {
+      display: flex; align-items: center; gap: 0.7rem;
+      margin: 1rem auto; width: fit-content;
+    }
+    .divider::before, .divider::after {
+      content: ''; display: block; width: 60px; height: 1px;
+    }
+    .divider::before { background: linear-gradient(to right, transparent, var(--gold)); }
+    .divider::after  { background: linear-gradient(to left,  transparent, var(--gold)); }
+    .divider-sym { color: var(--gold); font-size: 0.85rem; opacity: 0.65; }
+
+    /* ── Main ────────────────────────────────────────── */
+    main { max-width: 860px; margin: 0 auto; padding: 0 1.2rem 6rem; }
+
+    /* ── Card ────────────────────────────────────────── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--gold-dim);
+      border-radius: 10px;
+      padding: 2rem;
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+    .cc { position:absolute; width:13px; height:13px; border-color:var(--gold); border-style:solid; opacity:0.38; }
+    .cc.tl { top:7px;    left:7px;  border-width:1px 0 0 1px; border-radius:2px 0 0 0; }
+    .cc.tr { top:7px;    right:7px; border-width:1px 1px 0 0; border-radius:0 2px 0 0; }
+    .cc.bl { bottom:7px; left:7px;  border-width:0 0 1px 1px; border-radius:0 0 0 2px; }
+    .cc.br { bottom:7px; right:7px; border-width:0 1px 1px 0; border-radius:0 0 2px 0; }
+    .card-title {
+      text-align: center; color: var(--gold);
+      font-size: 0.85rem; letter-spacing: 0.55em;
+      margin-bottom: 1.6rem; font-weight: 500;
+    }
+
+    /* ── Form ────────────────────────────────────────── */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.4rem;
+    }
+    @media (max-width: 540px) {
+      .form-row { grid-template-columns: 1fr 1fr; }
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 0.35em;
+      margin-bottom: 0.5rem;
+    }
+    .form-group select, .form-group input {
+      width: 100%;
+      background: rgba(42,30,18,0.8);
+      border: 1px solid rgba(200,146,42,0.3);
+      border-radius: 4px;
+      color: #f5e6c8;
+      font-family: 'Noto Serif TC', serif;
+      font-size: 0.82rem;
+      padding: 0.6rem 0.75rem;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .form-group select option {
+      background: #1a0a00;
+      color: #f5e6c8;
+    }
+    .form-group select:focus, .form-group input:focus {
+      border-color: rgba(201,168,76,0.6);
+    }
+    .btn-calc {
+      display: block;
+      width: 100%;
+      padding: 0.9rem;
+      background: linear-gradient(135deg, var(--red-dark), var(--red-mid) 50%, var(--red-dark));
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Noto Serif TC', serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.5em;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: all 0.28s;
+    }
+    .btn-calc:hover { border-color: var(--gold-light); color: var(--gold-light); box-shadow: 0 0 16px rgba(201,168,76,0.14); }
+
+    /* ── Nine Palace Grid ─────────────────────────────── */
+    #resultSection { display: none; }
+
+    .palace-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 1.5rem 0;
+    }
+    .palace-svg-container {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+    .palace-svg-container svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* palace cell labels */
+    .palace-num { font-size: 13px; font-weight: 900; fill: var(--gold); font-family: 'Noto Serif TC', serif; }
+    .palace-gua { font-size: 11px; fill: #c9a84c; font-family: 'Noto Serif TC', serif; font-weight: 700; }
+    .palace-mean { font-size: 9px; fill: #907050; font-family: 'Noto Serif TC', serif; }
+    .palace-num-active { fill: #060404; }
+    .palace-gua-active { fill: #060404; }
+    .palace-mean-active { fill: rgba(6,4,4,0.75); }
+
+    /* ── Result panel ────────────────────────────────── */
+    .result-palace-name {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--gold);
+      letter-spacing: 0.4em;
+      text-shadow: 0 0 20px rgba(201,168,76,0.5);
+      margin-bottom: 0.3rem;
+    }
+    .result-palace-sub {
+      text-align: center;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      letter-spacing: 0.35em;
+      margin-bottom: 1.5rem;
+    }
+    .result-section-title {
+      font-size: 0.7rem;
+      color: var(--gold);
+      letter-spacing: 0.4em;
+      border-bottom: 1px solid var(--gold-dim);
+      padding-bottom: 0.5rem;
+      margin-bottom: 0.9rem;
+    }
+    .result-text {
+      font-size: 0.82rem;
+      color: var(--text);
+      line-height: 2;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.2rem;
+    }
+
+    /* direction compass */
+    .direction-row {
+      display: flex;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.2rem;
+    }
+    .dir-chip {
+      padding: 0.35rem 0.9rem;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      border: 1px solid;
+    }
+    .dir-chip.auspicious {
+      border-color: rgba(201,168,76,0.5);
+      color: var(--gold);
+      background: rgba(201,168,76,0.08);
+    }
+    .dir-chip.inauspicious {
+      border-color: rgba(155,32,32,0.5);
+      color: #c05050;
+      background: rgba(155,32,32,0.06);
+    }
+
+    /* ── Lock section ────────────────────────────────── */
+    .lock-card {
+      background: rgba(255,255,255,0.015);
+      border: 1px solid var(--gold-dim);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .lock-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(6,4,4,0.55);
+      backdrop-filter: blur(2px);
+      z-index: 1;
+      border-radius: 8px;
+    }
+    .lock-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      gap: 0.6rem;
+      padding: 1rem;
+    }
+    .lock-icon { font-size: 1.8rem; opacity: 0.85; }
+    .lock-label {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      letter-spacing: 0.2em;
+      text-align: center;
+    }
+    .lock-blur-content {
+      filter: blur(4px);
+      user-select: none;
+      pointer-events: none;
+    }
+    .btn-unlock {
+      display: inline-block;
+      padding: 0.65rem 1.6rem;
+      background: linear-gradient(135deg, var(--red-dark), var(--red-mid) 50%, var(--red-dark));
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Noto Serif TC', serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      cursor: pointer;
+      border-radius: 5px;
+      z-index: 3;
+      position: relative;
+      text-decoration: none;
+      transition: all 0.22s;
+    }
+    .btn-unlock:hover { border-color: var(--gold-light); color: var(--gold-light); }
+
+    .lock-items {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 0.5rem 0;
+    }
+    .lock-item {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .lock-item::before { content: '☰'; color: var(--gold); font-size: 0.7rem; opacity: 0.6; }
+
+    /* ── Coming Soon ─────────────────────────────────── */
+    .coming-soon-card {
+      border: 1.5px dashed rgba(201,168,76,0.4);
+      border-radius: 10px;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      position: relative;
+      background: rgba(201,168,76,0.025);
+    }
+    .cs-badge {
+      display: inline-block;
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.4);
+      border-radius: 20px;
+      padding: 0.25rem 1rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .cs-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.4em;
+      margin-bottom: 0.8rem;
+    }
+    .cs-desc {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      line-height: 2;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.4rem;
+      max-width: 380px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cs-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-bottom: 1.4rem;
+    }
+    .cs-feature-chip {
+      padding: 0.3rem 0.8rem;
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 4px;
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+    }
+    .btn-register {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      background: linear-gradient(135deg, rgba(201,168,76,0.12), rgba(201,168,76,0.06));
+      border: 1px solid rgba(201,168,76,0.5);
+      color: var(--gold);
+      font-family: 'Noto Serif TC', serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.35em;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: all 0.22s;
+    }
+    .btn-register:hover { background: rgba(201,168,76,0.15); border-color: var(--gold); }
+    .cs-count {
+      margin-top: 0.8rem;
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 0.15em;
+    }
+    .cs-count span { color: var(--gold); font-weight: 700; }
+
+    /* ── Email Modal ─────────────────────────────────── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.72);
+      z-index: 9000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: #120a0a;
+      border: 1px solid rgba(201,168,76,0.4);
+      border-radius: 10px;
+      padding: 2rem;
+      width: min(380px, 90vw);
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 0.8rem;
+      right: 1rem;
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+    .modal-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.35em;
+      text-align: center;
+      margin-bottom: 0.4rem;
+    }
+    .modal-sub {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 0.15em;
+      text-align: center;
+      margin-bottom: 1.4rem;
+    }
+    .modal-input {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--gold-dim);
+      border-radius: 5px;
+      color: var(--text);
+      font-family: 'Noto Serif TC', serif;
+      font-size: 0.82rem;
+      padding: 0.7rem 0.9rem;
+      outline: none;
+      margin-bottom: 1rem;
+      transition: border-color 0.2s;
+    }
+    .modal-input:focus { border-color: rgba(201,168,76,0.6); }
+    .btn-modal-submit {
+      width: 100%;
+      padding: 0.75rem;
+      background: linear-gradient(135deg, var(--red-dark), var(--red-mid) 50%, var(--red-dark));
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Noto Serif TC', serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.4em;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: all 0.22s;
+    }
+    .btn-modal-submit:hover { border-color: var(--gold-light); color: var(--gold-light); }
+    .modal-success {
+      text-align: center;
+      color: #6aaa6a;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      margin-top: 0.8rem;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Top Nav ──────────────────────────────────────── -->
+<nav class="top-nav">
+  <a class="nav-brand" href="index.html">
+    <span class="brand-name">風 生 水 起</span>
+    <span class="brand-sub">FengShui Oracle</span>
+  </a>
+  <div class="nav-tabs">
+    <a class="nav-tab" href="index.html">八 字 命 盤</a>
+    <a class="nav-tab" href="oracle.html">求 簽 問 事</a>
+    <a class="nav-tab" href="calendar.html">神 明 曆</a>
+    <a class="nav-tab active" href="qimen.html">奇 門 遁 甲</a>
+  </div>
+</nav>
+
+<!-- ── Header ──────────────────────────────────────── -->
+<header>
+  <div class="page-title">奇 門 遁 甲</div>
+  <div class="page-sub">Ancient Cosmic Compass</div>
+  <div class="divider"><span class="divider-sym">☵ ☷ ☳ ☴ ☰ ☱ ☶ ☲</span></div>
+</header>
+
+<main>
+
+  <!-- ── Input Card ─────────────────────────────────── -->
+  <div class="card">
+    <div class="cc tl"></div><div class="cc tr"></div><div class="cc bl"></div><div class="cc br"></div>
+    <div class="card-title">輸 入 出 生 資 料</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>出 生 年</label>
+        <select id="inYear"></select>
+      </div>
+      <div class="form-group">
+        <label>出 生 月</label>
+        <select id="inMonth">
+          <option value="1">一月</option><option value="2">二月</option><option value="3">三月</option>
+          <option value="4">四月</option><option value="5">五月</option><option value="6">六月</option>
+          <option value="7">七月</option><option value="8">八月</option><option value="9">九月</option>
+          <option value="10">十月</option><option value="11">十一月</option><option value="12">十二月</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>出 生 日</label>
+        <select id="inDay"></select>
+      </div>
+      <div class="form-group">
+        <label>出 生 時</label>
+        <select id="inHour">
+          <option value="0">子時 23:00-01:00</option>
+          <option value="1">丑時 01:00-03:00</option>
+          <option value="2">寅時 03:00-05:00</option>
+          <option value="3">卯時 05:00-07:00</option>
+          <option value="4">辰時 07:00-09:00</option>
+          <option value="5">巳時 09:00-11:00</option>
+          <option value="6">午時 11:00-13:00</option>
+          <option value="7">未時 13:00-15:00</option>
+          <option value="8">申時 15:00-17:00</option>
+          <option value="9">酉時 17:00-19:00</option>
+          <option value="10">戌時 19:00-21:00</option>
+          <option value="11">亥時 21:00-23:00</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn-calc" onclick="calculate()">☰ 起 盤 推 算 ☰</button>
+  </div>
+
+  <!-- ── Result Section ──────────────────────────────── -->
+  <div id="resultSection">
+
+    <!-- Nine Palace Grid -->
+    <div class="card">
+      <div class="cc tl"></div><div class="cc tr"></div><div class="cc bl"></div><div class="cc br"></div>
+      <div class="card-title">九 宮 飛 星 盤</div>
+
+      <div class="palace-wrap">
+        <div class="palace-svg-container">
+          <svg id="palaceSvg" viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
+            <!-- Grid lines drawn by JS -->
+          </svg>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:0.6rem">
+        <span style="font-size:0.68rem;color:var(--text-dim);letter-spacing:0.2em">
+          金框高亮 = 您的命宮所在
+        </span>
+      </div>
+    </div>
+
+    <!-- Free result -->
+    <div class="card" id="freeResult">
+      <div class="cc tl"></div><div class="cc tr"></div><div class="cc bl"></div><div class="cc br"></div>
+      <div class="card-title">命 宮 基 本 分 析</div>
+
+      <div class="result-palace-name" id="rPalaceName">坎宮</div>
+      <div class="result-palace-sub" id="rPalaceSub">第一宮 · 坎卦</div>
+
+      <div class="result-section-title">宮 位 主 司</div>
+      <div class="result-text" id="rMeaning">
+        坎卦主水，司智慧、財運與深謀遠慮。命宮居此者，天生心思縝密、善謀多慮，具備化危為機之能。財運方面宜穩健積累，忌冒進投機。
+      </div>
+
+      <div class="result-section-title">今 年 吉 凶 方 位（2026）</div>
+      <div class="direction-row" id="rDirections"></div>
+      <div class="result-text" id="rDirectionDesc"></div>
+    </div>
+
+    <!-- Locked section -->
+    <div class="card" style="padding:0;overflow:hidden">
+      <div class="cc tl"></div><div class="cc tr"></div><div class="cc bl"></div><div class="cc br"></div>
+      <div style="padding:1.5rem 1.5rem 0">
+        <div class="card-title">進 階 完 整 分 析</div>
+      </div>
+      <div class="lock-card">
+        <div class="lock-blur-content lock-items">
+          <div class="lock-item">八門詳細分析：休門旺相，財運大開</div>
+          <div class="lock-item">九星飛佈：天輔星入中宮，文昌大利</div>
+          <div class="lock-item">趨吉方位：東南方出行、東方辦公大利</div>
+          <div class="lock-item">化煞建議：西北方放置金屬風鈴化煞</div>
+        </div>
+        <div class="lock-overlay">
+          <div class="lock-icon">🔒</div>
+          <div class="lock-label">解鎖八門、九星飛佈<br>及趨吉避凶完整方位建議</div>
+          <button class="btn-unlock">HKD$28 / 月 解鎖完整分析</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /resultSection -->
+
+  <!-- ── Coming Soon ───────────────────────────────── -->
+  <div class="coming-soon-card">
+    <div class="cs-badge">即 將 推 出</div>
+    <div class="cs-title">完 整 版 奇 門 遁 甲</div>
+    <div class="cs-desc">
+      真實時盤排列、陰陽遁自動計算、完整九宮八門八神九星飛佈，
+      精確推算每日、每時吉凶，助您把握天時地利人和。
+    </div>
+    <div class="cs-features">
+      <div class="cs-feature-chip">真實時盤排列</div>
+      <div class="cs-feature-chip">陰陽遁計算</div>
+      <div class="cs-feature-chip">八門飛佈</div>
+      <div class="cs-feature-chip">八神定位</div>
+      <div class="cs-feature-chip">九星入宮</div>
+      <div class="cs-feature-chip">每日時盤</div>
+    </div>
+    <button class="btn-register" onclick="openRegisterModal()">登 記 優 先 體 驗</button>
+    <div class="cs-count">已有 <span id="registerCount">88</span> 位用戶登記</div>
+  </div>
+
+</main>
+
+<!-- ── Email Modal ──────────────────────────────────── -->
+<div class="modal-overlay" id="registerModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeRegisterModal()">✕</button>
+    <div class="modal-title">優 先 體 驗 登 記</div>
+    <div class="modal-sub">完整版推出時，您將第一時間獲得通知</div>
+    <input class="modal-input" type="email" id="modalEmail" placeholder="your@email.com"
+      onkeydown="if(event.key==='Enter')submitRegister()">
+    <button class="btn-modal-submit" onclick="submitRegister()">立 即 登 記</button>
+    <div class="modal-success" id="modalSuccess">✓ 登記成功！感謝您的支持，完整版推出時將優先通知您。</div>
+  </div>
+</div>
+
+<!-- ── Mobile bottom tab bar ────────────────────────── -->
+<nav class="mob-tab-bar">
+  <a class="mob-tab-item" href="index.html">
+    <span class="mob-tab-icon">☯</span>
+    <span class="mob-tab-label">命盤</span>
+  </a>
+  <a class="mob-tab-item" href="oracle.html">
+    <span class="mob-tab-icon">籤</span>
+    <span class="mob-tab-label">求籤</span>
+  </a>
+  <a class="mob-tab-item" href="index.html" onclick="sessionStorage.setItem('tab','match')">
+    <span class="mob-tab-icon">♡</span>
+    <span class="mob-tab-label">合婚</span>
+  </a>
+  <a class="mob-tab-item active" href="qimen.html">
+    <span class="mob-tab-icon">☰</span>
+    <span class="mob-tab-label">奇門</span>
+  </a>
+  <button class="mob-tab-item mob-more-btn" id="mobMoreTrigger" onclick="toggleMobMore(event)">
+    <span class="mob-tab-icon">···</span>
+    <span class="mob-tab-label">更多</span>
+  </button>
+</nav>
+
+<div id="mobMoreOverlay" class="mob-more-overlay" onclick="closeMobMore()"></div>
+<nav id="mobMoreMenu" class="mob-more-menu">
+  <a class="mob-more-item" href="index.html" onclick="sessionStorage.setItem('tab','liuNian');closeMobMore()">
+    <span class="mob-more-icon">年</span>流 年 運 程
+  </a>
+  <a class="mob-more-item" href="calendar.html" onclick="closeMobMore()">
+    <span class="mob-more-icon">曆</span>神 明 曆
+  </a>
+  <a class="mob-more-item" href="calendar.html#zeri" onclick="closeMobMore()">
+    <span class="mob-more-icon">日</span>擇 日 系 統
+  </a>
+  <a class="mob-more-item active" href="qimen.html" onclick="closeMobMore()">
+    <span class="mob-more-icon">☰</span>奇 門 遁 甲
+  </a>
+  <a class="mob-more-item" href="compass.html" onclick="closeMobMore()">
+    <span class="mob-more-icon">🧭</span>風 水 羅 盤
+  </a>
+</nav>
+
+<script src="auth.js"></script>
+<script>
+// ── Palace data ──────────────────────────────────────────
+const PALACES = {
+  1: {
+    name: '坎宮', gua: '坎', num: 1, symbol: '☵',
+    meaning: '主智慧財運',
+    desc: '坎卦主水，司智慧、財運與深謀遠慮。命宮居此者，天生心思縝密、善謀多慮，具備化危為機之能。財運方面宜穩健積累，忌冒進投機。處事宜韌不宜剛，以柔克剛方是正道。',
+    auspicious: ['北方', '東北'],
+    inauspicious: ['南方'],
+    dirDesc: '2026年北方旺氣匯聚，坎宮命主出行、求財宜往北方；東北方文昌星照，利學業考試。南方有暗煞，凡事宜謹慎。',
+  },
+  2: {
+    name: '坤宮', gua: '坤', num: 2, symbol: '☷',
+    meaning: '主田宅母親',
+    desc: '坤卦屬土，主田宅、家庭與母親緣分。命宮居此者，性格敦厚踏實，注重家庭倫理，田宅運佳，適合置業投資房產。對母親及長輩有深厚孝道之心。',
+    auspicious: ['西南', '西方'],
+    inauspicious: ['東北'],
+    dirDesc: '2026年西南方土氣旺盛，坤宮命主置業、家事宜往西南方謀劃；西方有吉星臨照，財運可期。東北方有沖犯，家宅事宜多留意。',
+  },
+  3: {
+    name: '震宮', gua: '震', num: 3, symbol: '☳',
+    meaning: '主事業進取',
+    desc: '震卦屬木，主事業、進取與開創精神。命宮居此者，行動力強，敢於突破困境，適合創業或開拓新領域。事業運勢波動中向上，須防急躁衝動。',
+    auspicious: ['東方', '東南'],
+    inauspicious: ['西方'],
+    dirDesc: '2026年東方木氣生旺，震宮命主創業、事業拓展宜往東方發展；東南方有文昌相助，談判签約大利。西方金剋木，商業決策宜三思。',
+  },
+  4: {
+    name: '巽宮', gua: '巽', num: 4, symbol: '☴',
+    meaning: '主文昌姻緣',
+    desc: '巽卦屬木，主文昌、姻緣與遠行。命宮居此者，文思敏捷，學業出眾，姻緣多在遠方或因書緣而結。利於出行、外遊及海外發展。',
+    auspicious: ['東南', '南方'],
+    inauspicious: ['西北'],
+    dirDesc: '2026年東南方巽木旺相，巽宮命主求學、姻緣宜往東南尋覓；南方火木相生，事業名聲大利。西北有阻礙星，遠行需留意行程安全。',
+  },
+  5: {
+    name: '中宮', gua: '中', num: 5, symbol: '⊕',
+    meaning: '主變化轉折',
+    desc: '中宮居五黃，乃九宮核心，主變化、轉折與樞紐之力。命宮居此者，一生起伏較大，但具有極強的轉化能力，危難中常能逢凶化吉。需學習居中守正，勿偏激。',
+    auspicious: ['東南', '北方'],
+    inauspicious: ['中央方位宜靜不宜動'],
+    dirDesc: '2026年中宮五黃流動，中宮命主宜靜守、勿輕易改變格局；東南及北方有輔助吉氣，可藉此方向謀劃新事。家居中央宜整潔明亮，切忌動土。',
+  },
+  6: {
+    name: '乾宮', gua: '乾', num: 6, symbol: '☰',
+    meaning: '主貴人領導',
+    desc: '乾卦屬金，主貴人、領導與上司緣分。命宮居此者，具有天生的領袖氣質，貴人運極旺，常逢高人提攜。適合從事管理、政治或企業高層職位。',
+    auspicious: ['西北', '西方'],
+    inauspicious: ['東方'],
+    dirDesc: '2026年西北方金氣聚旺，乾宮命主求職、升遷宜往西北方向努力；西方有六白金星，財運豐厚。東方木剋金，合作事宜須謹慎選擇伙伴。',
+  },
+  7: {
+    name: '兌宮', gua: '兌', num: 7, symbol: '☱',
+    meaning: '主口才財運',
+    desc: '兌卦屬金，主口才、財運與人際關係。命宮居此者，口才了得，善於交際，適合銷售、傳媒、法律等口才主導行業。偏財運佳，但需防口舌是非。',
+    auspicious: ['西方', '西南'],
+    inauspicious: ['東南'],
+    dirDesc: '2026年西方兌金旺氣臨照，兌宮命主銷售、洽商宜往西方進行；西南方有土生金之氣，人際關係大利。東南方有沖剋，簽約文件須仔細審閱。',
+  },
+  8: {
+    name: '艮宮', gua: '艮', num: 8, symbol: '☶',
+    meaning: '主學業不動產',
+    desc: '艮卦屬土，主學業、不動產與積累。命宮居此者，做事穩重踏實，學習能力強，適合長期投資及置業。在學術研究或需要耐心的專業領域表現出色。',
+    auspicious: ['東北', '北方'],
+    inauspicious: ['西南'],
+    dirDesc: '2026年東北方艮土旺相，艮宮命主置業、考試宜以東北方為吉方；北方有水土相生，財運積累穩定。西南方有沖剋，置業投資需避開此方向。',
+  },
+  9: {
+    name: '離宮', gua: '離', num: 9, symbol: '☲',
+    meaning: '主名聲事業',
+    desc: '離卦屬火，主名聲、事業與才華展現。命宮居此者，才華橫溢，喜愛表現，名聲運極佳，適合演藝、藝術、教育等需要曝光的行業。需防性情急躁。',
+    auspicious: ['南方', '東方'],
+    inauspicious: ['北方'],
+    dirDesc: '2026年南方離火旺氣騰升，離宮命主演出、晉升宜往南方發展；東方木生火，創作靈感豐沛。北方水剋火，感情及健康宜多注意，避免過度勞累。',
+  },
+};
+
+// Nine-palace visual layout (position in 3x3 grid, row/col from top-left)
+// Traditional Lo Shu layout: 4 9 2 / 3 5 7 / 8 1 6
+const GRID_LAYOUT = [
+  [4, 9, 2],
+  [3, 5, 7],
+  [8, 1, 6],
+];
+
+// ── Populate year select ─────────────────────────────────
+(function() {
+  const sel = document.getElementById('inYear');
+  const cur = new Date().getFullYear();
+  for (let y = cur; y >= 1924; y--) {
+    const opt = document.createElement('option');
+    opt.value = y;
+    opt.textContent = y + ' 年';
+    sel.appendChild(opt);
+  }
+  sel.value = 1990;
+
+  // Populate days
+  const daySel = document.getElementById('inDay');
+  for (let d = 1; d <= 31; d++) {
+    const opt = document.createElement('option');
+    opt.value = d;
+    opt.textContent = d + ' 日';
+    daySel.appendChild(opt);
+  }
+  daySel.value = 1;
+})();
+
+// ── Calculate palace from birth year ────────────────────
+function calcPalace(year) {
+  // Standard Xuan Kong method: sum digits until single, then map
+  // For year 19XX or 20XX: sum all 4 digits
+  let s = String(year).split('').reduce((a, c) => a + parseInt(c), 0);
+  while (s >= 10) {
+    s = String(s).split('').reduce((a, c) => a + parseInt(c), 0);
+  }
+  // Palace = 10 - s for males (simplified universal version)
+  // We use a gender-neutral popular simplification: palace = (s === 9) ? 9 : s
+  let palace = s === 0 ? 9 : s;
+  return palace;
+}
+
+// ── Draw SVG nine-palace grid ────────────────────────────
+function drawGrid(activePalace) {
+  const svg = document.getElementById('palaceSvg');
+  const W = 420, H = 420;
+  const cellW = W / 3, cellH = H / 3;
+  const gold = '#c9a84c';
+  const goldDim = 'rgba(201,168,76,0.35)';
+
+  let html = '';
+
+  // Background
+  html += `<rect width="${W}" height="${H}" fill="#0e0808"/>`;
+
+  // Draw cells
+  for (let row = 0; row < 3; row++) {
+    for (let col = 0; col < 3; col++) {
+      const palNum = GRID_LAYOUT[row][col];
+      const pd = PALACES[palNum];
+      const x = col * cellW;
+      const y = row * cellH;
+      const cx = x + cellW / 2;
+      const cy = y + cellH / 2;
+      const isActive = palNum === activePalace;
+
+      if (isActive) {
+        // Gold glow background
+        html += `<rect x="${x+2}" y="${y+2}" width="${cellW-4}" height="${cellH-4}" rx="4"
+          fill="rgba(201,168,76,0.18)" stroke="${gold}" stroke-width="2.5"/>`;
+        // Glow filter effect via nested rects
+        html += `<rect x="${x+4}" y="${y+4}" width="${cellW-8}" height="${cellH-8}" rx="3"
+          fill="rgba(201,168,76,0.08)"/>`;
+      }
+
+      // Palace number
+      html += `<text x="${cx}" y="${cy - 22}" text-anchor="middle"
+        font-family="'Noto Serif TC', serif" font-size="22" font-weight="900"
+        fill="${isActive ? gold : goldDim}"
+        style="text-shadow:none">${palNum}</text>`;
+
+      // Gua symbol + name
+      html += `<text x="${cx}" y="${cy + 2}" text-anchor="middle"
+        font-family="'Noto Serif TC', serif" font-size="14" font-weight="700"
+        fill="${isActive ? gold : 'rgba(201,168,76,0.6)'}">${pd.symbol} ${pd.gua}卦</text>`;
+
+      // Meaning
+      html += `<text x="${cx}" y="${cy + 20}" text-anchor="middle"
+        font-family="'Noto Serif TC', serif" font-size="10"
+        fill="${isActive ? 'rgba(201,168,76,0.85)' : 'rgba(144,112,80,0.7)'}">${pd.meaning}</text>`;
+
+      // Active label
+      if (isActive) {
+        html += `<text x="${cx}" y="${cy + 36}" text-anchor="middle"
+          font-family="'Noto Serif TC', serif" font-size="9"
+          fill="rgba(201,168,76,0.65)">◆ 命 宮 ◆</text>`;
+      }
+    }
+  }
+
+  // Grid lines (draw after cells so they're on top)
+  // Outer border
+  html += `<rect x="1" y="1" width="${W-2}" height="${H-2}" rx="6"
+    fill="none" stroke="${gold}" stroke-width="1.5" opacity="0.5"/>`;
+
+  // Inner lines
+  for (let i = 1; i < 3; i++) {
+    html += `<line x1="${i * cellW}" y1="0" x2="${i * cellW}" y2="${H}"
+      stroke="${gold}" stroke-width="1" opacity="0.38"/>`;
+    html += `<line x1="0" y1="${i * cellH}" x2="${W}" y2="${i * cellH}"
+      stroke="${gold}" stroke-width="1" opacity="0.38"/>`;
+  }
+
+  svg.innerHTML = html;
+}
+
+// ── Main calculate function ──────────────────────────────
+function calculate() {
+  const year = parseInt(document.getElementById('inYear').value);
+  const palace = calcPalace(year);
+  const pd = PALACES[palace];
+
+  // Draw grid
+  drawGrid(palace);
+
+  // Fill result
+  document.getElementById('rPalaceName').textContent = pd.name;
+  document.getElementById('rPalaceSub').textContent = `第${palace}宮 · ${pd.gua}卦 ${pd.symbol}`;
+  document.getElementById('rMeaning').textContent = pd.desc;
+
+  // Directions
+  const dirRow = document.getElementById('rDirections');
+  dirRow.innerHTML = '';
+  pd.auspicious.forEach(d => {
+    const chip = document.createElement('div');
+    chip.className = 'dir-chip auspicious';
+    chip.textContent = '↑ ' + d + '（吉）';
+    dirRow.appendChild(chip);
+  });
+  pd.inauspicious.forEach(d => {
+    const chip = document.createElement('div');
+    chip.className = 'dir-chip inauspicious';
+    chip.textContent = '↓ ' + d + '（凶）';
+    dirRow.appendChild(chip);
+  });
+  document.getElementById('rDirectionDesc').textContent = pd.dirDesc;
+
+  // Show result
+  document.getElementById('resultSection').style.display = 'block';
+
+  // Smooth scroll
+  setTimeout(() => {
+    document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+// ── Register modal ───────────────────────────────────────
+function getRegisterCount() {
+  return parseInt(localStorage.getItem('qimen_reg_count') || '88');
+}
+function updateCountDisplay() {
+  document.getElementById('registerCount').textContent = getRegisterCount();
+}
+updateCountDisplay();
+
+function openRegisterModal() {
+  document.getElementById('registerModal').classList.add('open');
+  document.getElementById('modalEmail').focus();
+  document.getElementById('modalSuccess').style.display = 'none';
+  document.getElementById('modalEmail').value = '';
+}
+function closeRegisterModal() {
+  document.getElementById('registerModal').classList.remove('open');
+}
+
+function submitRegister() {
+  const email = document.getElementById('modalEmail').value.trim();
+  if (!email || !email.includes('@')) {
+    document.getElementById('modalEmail').style.borderColor = 'rgba(155,32,32,0.6)';
+    setTimeout(() => { document.getElementById('modalEmail').style.borderColor = ''; }, 1500);
+    return;
+  }
+
+  // Save to localStorage
+  const regs = JSON.parse(localStorage.getItem('qimen_registrations') || '[]');
+  if (!regs.includes(email)) {
+    regs.push(email);
+    localStorage.setItem('qimen_registrations', JSON.stringify(regs));
+    const newCount = getRegisterCount() + 1;
+    localStorage.setItem('qimen_reg_count', newCount);
+    updateCountDisplay();
+  }
+
+  document.getElementById('modalSuccess').style.display = 'block';
+  setTimeout(() => closeRegisterModal(), 2200);
+}
+
+// ── Mob more menu ────────────────────────────────────────
+function toggleMobMore(e) {
+  e.stopPropagation();
+  document.getElementById('mobMoreMenu').classList.toggle('open');
+  document.getElementById('mobMoreOverlay').classList.toggle('open');
+  document.getElementById('mobMoreTrigger').classList.toggle('menu-open');
+}
+function closeMobMore() {
+  document.getElementById('mobMoreMenu').classList.remove('open');
+  document.getElementById('mobMoreOverlay').classList.remove('open');
+  document.getElementById('mobMoreTrigger').classList.remove('menu-open');
+}
+
+// Close modal on overlay click
+document.getElementById('registerModal').addEventListener('click', function(e) {
+  if (e.target === this) closeRegisterModal();
+});
+</script>
+</body>
+</html>
