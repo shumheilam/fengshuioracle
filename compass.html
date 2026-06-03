@@ -541,6 +541,197 @@
       margin-top: 0.8rem; display: none;
     }
 
+    /* ── AI Consultation ─────────────────────────────── */
+    .ai-intro {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      line-height: 1.9;
+      margin-bottom: 1.4rem;
+    }
+    .free-tag {
+      display: inline-block;
+      padding: 0.18rem 0.6rem;
+      background: rgba(40,120,60,0.15);
+      border: 1px solid rgba(40,160,80,0.35);
+      border-radius: 3px;
+      font-size: 0.62rem;
+      color: #80d080;
+      letter-spacing: 0.2em;
+      margin-bottom: 1rem;
+    }
+    .preset-q {
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 8px;
+      margin-bottom: 0.75rem;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .preset-q.open { border-color: rgba(201,168,76,0.45); }
+    .preset-q-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.9rem 1rem;
+      cursor: pointer;
+      background: rgba(201,168,76,0.04);
+      transition: background 0.18s;
+      user-select: none;
+    }
+    .preset-q-header:hover { background: rgba(201,168,76,0.08); }
+    .preset-q-num {
+      flex-shrink: 0;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.62rem;
+      color: var(--gold);
+      margin-top: 0.05rem;
+    }
+    .preset-q-text {
+      flex: 1;
+      font-size: 0.8rem;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      line-height: 1.65;
+    }
+    .preset-q-arrow {
+      flex-shrink: 0;
+      color: var(--gold);
+      font-size: 0.7rem;
+      transition: transform 0.25s;
+      margin-top: 0.18rem;
+    }
+    .preset-q.open .preset-q-arrow { transform: rotate(180deg); }
+    .preset-q-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.38s ease;
+    }
+    .preset-q.open .preset-q-body { max-height: 700px; }
+    .preset-q-inner {
+      padding: 1rem 1rem 1.2rem;
+      border-top: 1px solid rgba(201,168,76,0.1);
+    }
+    .ans-label {
+      font-size: 0.62rem;
+      color: var(--gold);
+      letter-spacing: 0.45em;
+      margin-bottom: 0.6rem;
+    }
+    .ans-text {
+      font-size: 0.78rem;
+      color: var(--text);
+      letter-spacing: 0.06em;
+      line-height: 2;
+    }
+    .ans-box {
+      margin-top: 0.85rem;
+      padding: 0.75rem 1rem;
+      background: rgba(201,168,76,0.05);
+      border-left: 2px solid var(--gold);
+      border-radius: 0 5px 5px 0;
+    }
+    .ans-box-title {
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 0.35em;
+      margin-bottom: 0.45rem;
+    }
+    .ans-box-text {
+      font-size: 0.74rem;
+      color: var(--text-dim);
+      letter-spacing: 0.06em;
+      line-height: 1.95;
+    }
+    /* Paid consultation */
+    .paid-consult-wrap {
+      margin-top: 1.4rem;
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .paid-consult-blur {
+      padding: 1.2rem;
+      border: 1px dashed rgba(201,168,76,0.25);
+      border-radius: 8px;
+      filter: blur(3.5px);
+      pointer-events: none;
+      user-select: none;
+    }
+    .paid-consult-label {
+      font-size: 0.7rem;
+      color: var(--gold);
+      letter-spacing: 0.4em;
+      margin-bottom: 0.6rem;
+    }
+    .paid-consult-textarea {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--gold-dim);
+      border-radius: 5px;
+      color: var(--text);
+      font-family: 'Noto Serif TC', serif;
+      font-size: 0.8rem;
+      padding: 0.7rem 0.9rem;
+      resize: none;
+      height: 80px;
+      outline: none;
+    }
+    .paid-consult-send {
+      margin-top: 0.6rem;
+      width: 100%;
+      padding: 0.65rem;
+      background: linear-gradient(135deg, var(--red-dark), var(--red-mid));
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Noto Serif TC', serif;
+      font-size: 0.82rem;
+      letter-spacing: 0.35em;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .paid-consult-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(6,4,4,0.7);
+      gap: 0.55rem;
+      padding: 1.2rem;
+      border-radius: 8px;
+    }
+    .paid-lock-sym {
+      font-size: 1.4rem;
+      line-height: 1;
+      color: var(--text-dim);
+    }
+    .paid-lock-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.35em;
+      text-align: center;
+    }
+    .paid-lock-desc {
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      text-align: center;
+      line-height: 1.75;
+    }
+    .paid-api-note {
+      margin-top: 0.3rem;
+      font-size: 0.6rem;
+      color: rgba(144,112,80,0.5);
+      letter-spacing: 0.1em;
+      text-align: center;
+    }
+
     /* ── Mobile bottom tab bar ──────────────────────── */
     .mob-tab-bar {
       display: none;
@@ -766,6 +957,116 @@
         <li>個人化化煞催旺方案</li>
       </ul>
       <button class="btn-unlock">HKD$28/月　解 鎖 完 整 分 析</button>
+    </div>
+  </div>
+
+  <!-- ── AI Consultation Card ─────────────────────── -->
+  <div class="card">
+    <div class="cc tl"></div><div class="cc tr"></div>
+    <div class="cc bl"></div><div class="cc br"></div>
+    <div class="card-title">風 水 問 答 AI 諮 詢</div>
+
+    <p class="ai-intro">常見風水問題，即時解答。以下三條預設問題免費開放，<br>自訂問題需升級月費計劃由 Claude AI 即時解答。</p>
+    <div style="text-align:center"><span class="free-tag">免 費 · 三 條 預 設 問 題</span></div>
+
+    <!-- Q1: 大門煞 -->
+    <div class="preset-q" id="pq1">
+      <div class="preset-q-header" onclick="togglePresetQ('pq1')">
+        <span class="preset-q-num">1</span>
+        <span class="preset-q-text">大門正對電梯、樓梯或廁所，有何風水影響及化解方法？</span>
+        <span class="preset-q-arrow">▾</span>
+      </div>
+      <div class="preset-q-body">
+        <div class="preset-q-inner">
+          <div class="ans-label">風 水 師 解 答</div>
+          <div class="ans-text">大門係住宅納氣之口，正對電梯、樓梯或廁所會形成不同類型的「形煞」，令宅氣難以凝聚、財氣外洩。<br><br>
+          <strong style="color:var(--gold)">大門對電梯：</strong>電梯頻繁升降，氣流不穩，宅氣被抽走，主財來財去、事業不穩。<br><br>
+          <strong style="color:var(--gold)">大門對樓梯：</strong>若樓梯向下斜射，形成「財水直流」之象，財富難聚；若向上，氣流沖射入宅，亦主口舌是非。<br><br>
+          <strong style="color:var(--gold)">大門對廁所：</strong>最為不利，穢氣直入住宅，影響全家健康運勢及財運，需盡快化解。</div>
+          <div class="ans-box">
+            <div class="ans-box-title">化 煞 擺 設 建 議</div>
+            <div class="ans-box-text">
+              · 對電梯：門口掛八卦凸鏡一面，反射沖射之氣；可配合五帝錢（順序串）鋪於門檻<br>
+              · 對樓梯：於門口放置虎地毯（虎頭向外），或懸掛山海鎮，阻擋衝射<br>
+              · 對廁所：廁所門保持常關，門口放屏風或玄關柜遮擋視線；廁所內放六帝錢化穢；門口可放小石獅化煞<br>
+              · 通用化解：大門兩旁各放一盆常青植物，以旺氣填補，招納生氣入宅
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2: 床位擺放 -->
+    <div class="preset-q" id="pq2">
+      <div class="preset-q-header" onclick="togglePresetQ('pq2')">
+        <span class="preset-q-num">2</span>
+        <span class="preset-q-text">睡房床位擺放有什麼風水禁忌？如何選擇最佳位置？</span>
+        <span class="preset-q-arrow">▾</span>
+      </div>
+      <div class="preset-q-body">
+        <div class="preset-q-inner">
+          <div class="ans-label">風 水 師 解 答</div>
+          <div class="ans-text">睡房是休養生息、補充元氣之所，床位擺放直接影響睡眠質素、健康及感情運勢。以下禁忌需特別注意：<br><br>
+          <strong style="color:#d04040">床頭靠窗：</strong>陰氣從窗入侵，睡眠不安穩、多噩夢，長期影響健康。床頭必須靠實牆，方可安穩。<br><br>
+          <strong style="color:#d04040">床腳正對門：</strong>「腳踢棺材」之煞，主健康欠佳、容易生病，感情不順。需移動床位或加裝門帘阻擋。<br><br>
+          <strong style="color:#d04040">橫樑壓床：</strong>睡於橫樑正下方，受壓迫感影響，主頭痛、健康問題。可在橫樑兩端各掛葫蘆化解，或移動床位。<br><br>
+          <strong style="color:#d04040">鏡子正對床：</strong>鏡中反射容易驚魂，影響睡眠，亦主感情生變。鏡子應避免正對床，可用布遮蓋。</div>
+          <div class="ans-box">
+            <div class="ans-box-title">最 佳 床 位 擺 法</div>
+            <div class="ans-box-text">
+              · 床頭靠實牆，不靠窗、不靠廁所牆<br>
+              · 床與門成 45 度角斜放最為理想，睡覺時可看到房門（掌握氣口）<br>
+              · 床兩側留有空間，不可緊貼牆壁（尤其右側），利於陰陽之氣流通<br>
+              · 床頭牆宜素淨，可掛山水畫（山在後方如靠山），忌掛人物畫像<br>
+              · 睡房整體宜整潔，床底勿堆積雜物，以免積聚陰氣影響氣場
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3: 廚廁位置 -->
+    <div class="preset-q" id="pq3">
+      <div class="preset-q-header" onclick="togglePresetQ('pq3')">
+        <span class="preset-q-num">3</span>
+        <span class="preset-q-text">廚房同廁所相鄰或相對，有何風水影響？點樣化解？</span>
+        <span class="preset-q-arrow">▾</span>
+      </div>
+      <div class="preset-q-body">
+        <div class="preset-q-inner">
+          <div class="ans-label">風 水 師 解 答</div>
+          <div class="ans-text">廚房五行屬火（主食祿、財富），廁所五行屬水（主穢氣、陰氣），水火相剋，廚廁相鄰乃住宅常見問題，影響家人健康、夫妻感情及財運。<br><br>
+          <strong style="color:#d04040">廚廁相鄰：</strong>廁所穢氣滲入廚房，影響食物及家人腸胃健康，長期可能有慢性疾病隱患。火水相剋，家人易生矛盾爭執。<br><br>
+          <strong style="color:#d04040">廚廁門相對：</strong>穢氣直衝廚房（食祿之位），主財運受損、飲食健康問題。尤以廁門正對爐灶最為不利。<br><br>
+          <strong style="color:#d04040">廁所在廚房正上方：</strong>（樓上廁所正壓廚房）為大忌，水剋火象，財帛漏失，需做風水化解。</div>
+          <div class="ans-box">
+            <div class="ans-box-title">化 煞 及 日 常 注 意</div>
+            <div class="ans-box-text">
+              · 廚廁門相對：在廁所門掛一串五帝錢或門帘，阻隔穢氣；可在廚廁之間擺放屏風<br>
+              · 廁所保持清潔乾燥，馬桶蓋常關，減少穢氣擴散<br>
+              · 廚房爐灶旁忌放水種植物或魚缸，以免水剋火加重影響<br>
+              · 廁所入口可放粗鹽一碗（每月更換），吸收穢氣及陰氣<br>
+              · 如條件許可，可在廚廁之間加裝實體隔板或改門方向，從根本解決問題
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paid: unlimited consultation -->
+    <div class="paid-consult-wrap">
+      <div class="paid-consult-blur">
+        <div class="paid-consult-label">自 訂 風 水 問 題</div>
+        <textarea class="paid-consult-textarea" placeholder="輸入您的風水問題，例如：我家客廳擺設如何改善財運？"></textarea>
+        <button class="paid-consult-send">發 送 問 題</button>
+      </div>
+      <div class="paid-consult-overlay">
+        <div class="paid-lock-sym">🔒</div>
+        <div class="paid-lock-title">解 鎖 無 限 AI 諮 詢</div>
+        <div class="paid-lock-desc">輸入任何風水問題<br>由 Claude AI 即時提供個人化解答</div>
+        <button class="btn-unlock" style="margin-top:0.4rem">HKD$28/月　立 即 解 鎖</button>
+        <div class="paid-api-note">需要：Anthropic Claude API · Phase 4 接入</div>
+      </div>
     </div>
   </div>
 
@@ -1121,6 +1422,17 @@ function submitRegister() {
   }
   document.getElementById('modalSuccess').style.display = 'block';
   setTimeout(closeRegisterModal, 2200);
+}
+
+// ── Preset Q toggle ──────────────────────────────────────
+function togglePresetQ(id) {
+  const el = document.getElementById(id);
+  const isOpen = el.classList.contains('open');
+  // Close all others
+  ['pq1','pq2','pq3'].forEach(qid => {
+    document.getElementById(qid).classList.remove('open');
+  });
+  if (!isOpen) el.classList.add('open');
 }
 
 // ── Mobile More Menu ──────────────────────────────────────
