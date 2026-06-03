@@ -144,6 +144,7 @@
       position: relative;
       width: 100%;
       max-width: 280px;
+      overflow: hidden;
     }
     .compass-svg-wrap svg {
       width: 100%;
@@ -564,7 +565,7 @@
     .preset-q {
       border: 1px solid rgba(201,168,76,0.2);
       border-radius: 8px;
-      margin-bottom: 0.75rem;
+      margin-bottom: 16px;
       overflow: hidden;
       transition: border-color 0.2s;
     }
@@ -732,77 +733,6 @@
       text-align: center;
     }
 
-    /* ── Mobile bottom tab bar ──────────────────────── */
-    .mob-tab-bar {
-      display: none;
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      height: 56px;
-      background: #0a0505;
-      border-top: 1px solid rgba(201,168,76,0.2);
-      z-index: 5000;
-      justify-content: space-around;
-      align-items: stretch;
-    }
-    @media (max-width: 700px) {
-      .mob-tab-bar { display: flex; }
-      nav.top-nav .nav-tabs { display: none; }
-    }
-    .mob-tab-item {
-      flex: 1;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 2px;
-      text-decoration: none;
-      color: var(--text-dim);
-      background: transparent; border: none;
-      cursor: pointer;
-      font-family: 'Noto Serif TC', serif;
-      transition: color 0.18s;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .mob-tab-item.active, .mob-tab-item:hover { color: var(--gold); }
-    .mob-tab-icon { font-size: 1.25rem; line-height: 1; display:flex; align-items:center; justify-content:center; width:22px; height:22px; }
-    .mob-tab-icon svg { width:22px; height:22px; display:block; }
-    .mob-tab-label { font-size: 0.58rem; letter-spacing: 0.12em; }
-
-    .mob-more-overlay {
-      display: none;
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.45);
-      z-index: 5100;
-    }
-    .mob-more-overlay.open { display: block; }
-    .mob-more-menu {
-      position: fixed;
-      bottom: 56px; left: 0; right: 0;
-      background: #0e0808;
-      border-top: 1px solid rgba(201,168,76,0.25);
-      z-index: 5200;
-      transform: translateY(100%);
-      transition: transform 0.26s cubic-bezier(.4,0,.2,1);
-      border-radius: 14px 14px 0 0;
-      overflow: hidden;
-    }
-    .mob-more-menu.open { transform: translateY(0); }
-    .mob-more-item {
-      display: flex; align-items: center; gap: 1rem;
-      padding: 1rem 1.6rem;
-      text-decoration: none;
-      color: var(--text-dim);
-      font-size: 0.85rem; letter-spacing: 0.2em;
-      border-bottom: 1px solid rgba(201,168,76,0.08);
-      transition: background 0.15s, color 0.15s;
-    }
-    .mob-more-item:hover, .mob-more-item.active { background: rgba(201,168,76,0.07); color: var(--gold); }
-    .mob-more-icon {
-      width: 32px; height: 32px;
-      display: flex; align-items: center; justify-content: center;
-      background: rgba(201,168,76,0.1);
-      border: 1px solid rgba(201,168,76,0.25);
-      border-radius: 8px;
-      font-size: 0.9rem; color: var(--gold);
-    }
   </style>
 </head>
 <body>

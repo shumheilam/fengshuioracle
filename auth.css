@@ -864,37 +864,40 @@
   .mob-more-btn { /* inherits mob-tab-item layout via HTML class combo */ }
 
   /* ── 更多 menu overlay (backdrop) ── */
+  /* z-index 898 < tab bar 900, so tab bar stays on top of overlay */
   .mob-more-overlay {
     display: none;
     position: fixed;
     inset: 0;
+    bottom: calc(58px + env(safe-area-inset-bottom, 0px)); /* don't cover tab bar */
     z-index: 898;
-    background: transparent;
+    background: rgba(0,0,0,0.38);
   }
   .mob-more-overlay.open { display: block; }
 
   /* ── 更多 slide-up panel ── */
+  /* z-index 899 < tab bar 900: tab bar always visible on top */
   .mob-more-menu {
     display: none;
     position: fixed;
     bottom: calc(58px + env(safe-area-inset-bottom, 0px));
-    right: 0;
-    min-width: 158px;
+    left: 0; right: 0;            /* full width, floats above tab bar */
     background: rgba(10,6,6,0.98);
     border: 1px solid rgba(201,168,76,0.32);
-    border-radius: 10px 10px 0 0;
-    z-index: 899;
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+    z-index: 899;                  /* BELOW tab bar z-index 900 */
     overflow: hidden;
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
-    box-shadow: -4px -4px 24px rgba(0,0,0,0.55);
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.55);
   }
   .mob-more-menu.open {
     display: block;
-    animation: mobMoreSlideUp 0.22s ease;
+    animation: mobMoreSlideUp 0.24s cubic-bezier(.4,0,.2,1);
   }
   @keyframes mobMoreSlideUp {
-    from { transform: translateY(14px); opacity: 0; }
+    from { transform: translateY(12px); opacity: 0; }
     to   { transform: translateY(0);    opacity: 1; }
   }
 
