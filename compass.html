@@ -152,11 +152,14 @@
       display: block;
     }
     #compassRing {
-      /* dial is fixed — no rotation */
+      /* dial rotates with device heading */
+      transform-box: fill-box;
+      transform-origin: center;
+      transition: transform 0.15s ease-out;
     }
     #needleGroup {
-      transition: transform 0.15s ease-out;
-      transform-origin: center;
+      /* needle is FIXED — always points to top of screen (South/北 indicator) */
+      /* no transform applied */
     }
     .compass-degree {
       text-align: center;
@@ -1221,11 +1224,16 @@ function updateCompassUI(deg) {
   document.getElementById('dirDesc').textContent = data.desc;
   document.getElementById('dirTip').textContent = '擺設建議：' + data.tip;
 
-  // Dial (compassRing) is FIXED — only the needle rotates.
-  // SVG layout: 南 at top, 北 at bottom, 東 at left, 西 at right.
-  // rotate(180-deg): when deg=0(N) needle tip→bottom(北)✓, deg=90(E) needle→left(東)✓, deg=180(S) needle→top(南)✓
-  const needle = document.getElementById('needleGroup');
-  needle.setAttribute('transform', `rotate(${180 - deg}, 140, 140)`);
+  // Real compass behaviour: DIAL rotates, NEEDLE fixed pointing up.
+  // SVG layout has 南(S) at top → need +180° offset so facing North puts 北 at top.
+  // rotate(-alpha + 180) === rotate(-(alpha - 180)):
+  //   alpha=0  (N): rotate(+180) → 北 comes to top ✓
+  //   alpha=90 (E): rotate(+90)  → 東 comes to top ✓
+  //   alpha=180(S): rotate(0)    → 南 stays at top ✓
+  //   alpha=270(W): rotate(-90)  → 西 comes to top ✓
+  const dial = document.getElementById('compassRing');
+  dial.style.transform = `rotate(${180 - deg}deg)`;
+  // Needle (needleGroup) has NO transform — fixed, always pointing up.
 
   // Personal direction
   showPersonalDir(dir);
