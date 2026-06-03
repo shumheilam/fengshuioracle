@@ -569,7 +569,11 @@
       overflow: hidden;
       transition: border-color 0.2s;
     }
-    .preset-q.open { border-color: rgba(201,168,76,0.45); }
+    .preset-q.open {
+      border-color: rgba(201,168,76,0.45);
+      overflow: visible; /* allow full content to show when expanded */
+      height: auto;
+    }
     .preset-q-header {
       display: flex;
       align-items: flex-start;
@@ -609,9 +613,13 @@
     .preset-q-body {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.38s ease;
+      transition: max-height 0.45s ease;
     }
-    .preset-q.open .preset-q-body { max-height: 700px; }
+    .preset-q.open .preset-q-body {
+      max-height: 2000px; /* large enough for any mobile content */
+      overflow: visible;
+      height: auto;
+    }
     .preset-q-inner {
       padding: 1rem 1rem 1.2rem;
       border-top: 1px solid rgba(201,168,76,0.1);
@@ -770,7 +778,8 @@
     <div class="compass-wrap">
       <!-- SVG compass -->
       <div class="compass-svg-wrap">
-        <svg viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 280 280" width="280" height="280" xmlns="http://www.w3.org/2000/svg"
+             style="width:100%;height:auto;display:block;max-width:280px">
           <!-- Static outer ring -->
           <circle cx="140" cy="140" r="136" fill="none" stroke="rgba(201,168,76,0.3)" stroke-width="1.5"/>
           <circle cx="140" cy="140" r="128" fill="none" stroke="rgba(201,168,76,0.12)" stroke-width="0.8"/>
