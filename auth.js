@@ -290,7 +290,7 @@ function renderSettingsModal(view) {
          <div style="font-size:0.7rem;color:var(--text-dim);letter-spacing:0.06em;line-height:2;">到期日：2026年12月31日<br>自動續期：已開啟</div>
          <button class="subs-upgrade-btn" style="margin-top:0.9rem;border-color:rgba(180,50,50,0.4);color:#cc7777;" onclick="mockCancelSubs()">取消訂閱</button>`
       : `<div class="subs-status">目前：免費版</div>
-         <div style="font-size:0.72rem;color:var(--text-dim);letter-spacing:0.06em;line-height:2;margin-bottom:0.8rem;">玄學娛樂層 HKD$48/月 · 人生決策層 HKD$68/月<br>解鎖深度命盤、流年運程、無限求簽等</div>
+         <div style="font-size:0.72rem;color:var(--text-dim);letter-spacing:0.06em;line-height:2;margin-bottom:0.8rem;">玄學娛樂層 HKD$48/月 · 人生決策層 HKD$98/月<br>解鎖深度命盤、流年運程、無限求簽等</div>
          <button class="subs-upgrade-btn" onclick="mockUpgrade()">✦ 立即升級月費會員</button>`;
 
     body.innerHTML = `
@@ -415,7 +415,7 @@ function injectSubscribeModal() {
           <div class="subs-plan-box" style="margin-top:0.9rem;border-color:rgba(201,168,76,0.55);background:rgba(201,168,76,0.04)">
             <div class="subs-plan-tier-label" style="color:#e8d080;border-color:rgba(232,208,128,0.5)">✦ 推 薦</div>
             <div class="subs-plan-name">人 生 決 策 層</div>
-            <div class="subs-plan-price">HKD$68<span>&nbsp;/月</span></div>
+            <div class="subs-plan-price">HKD$98<span>&nbsp;/月</span></div>
             <div class="subs-plan-desc">包含所有 $48 功能 · 更多深度分析</div>
             <div class="subs-features">
               <div class="subs-feature"><span class="subs-feature-check">✦</span>AI 命盤深度分析</div>
@@ -426,7 +426,7 @@ function injectSubscribeModal() {
               <div class="subs-feature"><span class="subs-feature-check">✦</span>單次報告7折（每月限2次，奇門遁甲豁免）</div>
               <div class="subs-feature"><span class="subs-feature-check">✦</span>無限用戶檔案</div>
             </div>
-            <button class="subs-subscribe-btn" onclick="doMockSubscribe('monthly-68')" style="background:linear-gradient(135deg,#6b1010,#9b2020 50%,#6b1010);border-color:#e8d080;color:#e8d080">訂 閱 · $68/月</button>
+            <button class="subs-subscribe-btn" onclick="doMockSubscribe('monthly-68')" style="background:linear-gradient(135deg,#6b1010,#9b2020 50%,#6b1010);border-color:#e8d080;color:#e8d080">訂 閱 · $98/月</button>
           </div>
 
           <div class="subs-safe-note" style="margin-top:0.8rem">🔒 安全付款 · Mock 示範模式 · 不會扣款</div>
