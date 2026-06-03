@@ -238,11 +238,22 @@
 
     /* Date range row */
     .择日-form { background: var(--bg-card); border: 1px solid var(--gold-dim);
-                border-radius: 10px; padding: 1.2rem 1.4rem; margin-bottom: 1.4rem; }
-    .择日-form-row { display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap; }
-    .择日-field { flex: 1; min-width: 140px; }
+                border-radius: 10px; padding: 1.2rem 1.4rem; margin-bottom: 1.4rem;
+                width: 100%; box-sizing: border-box; overflow: hidden; }
+    .择日-form-row { display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap;
+                    width: 100%; box-sizing: border-box; overflow: hidden; }
+    .择日-field { flex: 1; min-width: 140px; width: 100%; box-sizing: border-box; overflow: hidden; }
+    /* Forceful date input containment */
+    .择日-field,
+    .择日-field input,
+    input[type='date'].择日-input {
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      overflow: hidden !important;
+    }
     /* Mobile: stack date fields vertically, each takes full width */
-    @media (max-width: 480px) {
+    @media (max-width: 600px) {
       .择日-form-row { flex-direction: column; align-items: stretch; }
       .择日-field { flex: none; width: 100%; min-width: unset; }
       .择日-btn { width: 100%; text-align: center; }
@@ -250,7 +261,8 @@
     .择日-label { font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.3em;
                  display: block; margin-bottom: 0.45rem; }
     .择日-input {
-      width: 100%; max-width: 100%; box-sizing: border-box;
+      width: 100% !important; max-width: 100% !important; box-sizing: border-box !important;
+      overflow: hidden !important;
       background: var(--bg-input); border: 1px solid rgba(201,168,76,0.22);
       border-radius: 6px; color: var(--text); font-family: 'Noto Serif TC', serif;
       font-size: 0.82rem; padding: 0.55rem 0.8rem; outline: none; letter-spacing: 0.05em;
