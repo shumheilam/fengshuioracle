@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a0e2e"/>
+      <stop offset="45%" style="stop-color:#0d0a1a"/>
+      <stop offset="100%" style="stop-color:#050308"/>
+    </linearGradient>
+    <radialGradient id="innerGlow" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" style="stop-color:#231545;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#050308;stop-opacity:1"/>
+    </radialGradient>
+    <linearGradient id="goldMain" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5e6a3"/>
+      <stop offset="35%" style="stop-color:#c9a84c"/>
+      <stop offset="70%" style="stop-color:#e8c96e"/>
+      <stop offset="100%" style="stop-color:#8a6420"/>
+    </linearGradient>
+    <linearGradient id="goldRing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8d080"/>
+      <stop offset="50%" style="stop-color:#a07828"/>
+      <stop offset="100%" style="stop-color:#e8c96e"/>
+    </linearGradient>
+    <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#3d2060;stop-opacity:0.9"/>
+      <stop offset="100%" style="stop-color:#050308;stop-opacity:0"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <clipPath id="iconClip">
+      <rect width="1024" height="1024" rx="230" ry="230"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#iconClip)">
+    <rect width="1024" height="1024" fill="url(#bgGrad)"/>
+    <rect width="1024" height="1024" fill="url(#innerGlow)"/>
+
+    <g opacity="0.04" stroke="#c9a84c" stroke-width="1">
+      <line x1="0" y1="256" x2="1024" y2="256"/><line x1="0" y1="512" x2="1024" y2="512"/>
+      <line x1="0" y1="768" x2="1024" y2="768"/><line x1="256" y1="0" x2="256" y2="1024"/>
+      <line x1="512" y1="0" x2="512" y2="1024"/><line x1="768" y1="0" x2="768" y2="1024"/>
+    </g>
+
+    <circle cx="512" cy="455" r="370" fill="url(#centerGlow)"/>
+    <circle cx="512" cy="455" r="385" fill="none" stroke="url(#goldRing)" stroke-width="1.5" opacity="0.3"/>
+    <circle cx="512" cy="455" r="368" fill="none" stroke="url(#goldRing)" stroke-width="0.7" opacity="0.15"/>
+
+    <!-- Corner ornaments -->
+    <g stroke="url(#goldRing)" stroke-width="2.5" fill="none" opacity="0.5">
+      <path d="M 125 180 L 125 125 L 180 125"/>
+      <path d="M 844 180 L 844 125 L 899 125"/>
+      <path d="M 125 844 L 125 899 L 180 899"/>
+      <path d="M 844 844 L 844 899 L 899 899"/>
+    </g>
+
+    <!-- Top diamond -->
+    <polygon points="512,96 522,108 512,120 502,108" fill="url(#goldMain)" opacity="0.9"/>
+    <line x1="200" y1="108" x2="494" y2="108" stroke="url(#goldRing)" stroke-width="1" opacity="0.4"/>
+    <line x1="530" y1="108" x2="824" y2="108" stroke="url(#goldRing)" stroke-width="1" opacity="0.4"/>
+
+    <!--
+      後天八卦正確方位（圖上=南）：
+      中心 cx=512, cy=455, 卦名 r=318
+
+      離  南  = 正上    (512, 455-318)     = (512, 137)
+      坤  西南 = 左下45° (-225, +225)      = (287, 680)
+      兌  西  = 正左    (512-318, 455)     = (194, 455)
+      乾  西北 = 左上45° (-225, -225)      = (287, 230)
+      坎  北  = 正下    (512, 455+318)     = (512, 773)
+      艮  東北 = 右上45° (+225, -225)      = (737, 230)
+      震  東  = 正右    (512+318, 455)     = (830, 455)
+      巽  東南 = 右下45° (+225, +225)      = (737, 680)
+
+      注意：傳統八卦圖上南下北，左東右西
+      但常見 icon 排法（以觀者角度）：
+        上=離(南), 下=坎(北), 左=兌(西), 右=震(東)
+        右上=坤? 不對 — 坤西南=左下, 艮東北=右上
+      
+      正確：
+        上=離, 右上=艮(東北), 右=震(東), 右下=巽(東南)
+        下=坎, 左下=坤(西南), 左=兌(西), 左上=乾(西北)
+    -->
+
+    <!-- 卦名，font-size=34，統一樣式 -->
+    <!-- 離 正上 -->
+    <text x="512" y="152" text-anchor="middle" dominant-baseline="middle"
+      font-family="'Noto Serif TC',serif" font-size="34" fill="#c9a84c" opacity="0.92">離</text>
+
+    <!-- 艮 右上 -->
+    <text x="737" y="242" text-anchor="middle" dominant-baseline="middle"
+      font-family="'Noto Serif TC',serif" font-size="34" fill="#c9a84c" opacity="0.92">艮</text>
+
+    <!-- 震 正右 -->
+    <text x="834" y="455" text-anchor="middle" dominant-baseline="middle"
+      font-family="'Noto Serif TC',serif" font-size="34" fill="#c9a84c" opacity="0.92">震</text>
+
+    <!-- 巽 右下 -->
+    <text x="737" y="668" text-anchor="middle" dominant-baseline="middle"
+      font-family="'Noto Serif TC',serif" font-size="34" fill="#c9a84c" opacity="0.92">巽</text>
+
+    <!-- 坎 正下 -->
+    <text x="512" y="758" text-anchor="middle" dominant-baseline="middle"
+      font-family="'Noto Serif TC',serif" font-size="34" fill="#c9a84c" opacity="0.92">坎</text>
+
+    <!-- 坤 左下 -->
+    <text x="287" y="668" text-anchor="middle" dominant-baseline="middle"
+      font-family="'Noto Serif TC',serif" font-size="34" fill="#c9a84c" opacity="0.92">坤</text>
+
+    <!-- 兌 正左 -->
+    <text x="190" y="455" text-anchor="middle" dominant-baseline="middle"
+      font-family="'Noto Serif TC',serif" font-size="34" fill="#c9a84c" opacity="0.92">兌</text>
+
+    <!-- 乾 左上 -->
+    <text x="287" y="242" text-anchor="middle" dominant-baseline="middle"
+      font-family="'Noto Serif TC',serif" font-size="34" fill="#c9a84c" opacity="0.92">乾</text>
+
+    <!-- ══ 太極 r=195 ══ -->
+    <circle cx="512" cy="455" r="195" fill="#ede8dc"/>
+    <path d="M 512 260 A 195 195 0 0 0 512 650 A 97.5 97.5 0 0 0 512 455 A 97.5 97.5 0 0 1 512 260 Z" fill="#0e0b18"/>
+    <circle cx="512" cy="357" r="36" fill="#ede8dc"/>
+    <circle cx="512" cy="553" r="36" fill="#0e0b18"/>
+    <circle cx="512" cy="357" r="13" fill="#0e0b18"/>
+    <circle cx="512" cy="553" r="13" fill="#ede8dc"/>
+    <circle cx="512" cy="455" r="198" fill="none" stroke="url(#goldMain)" stroke-width="3.5" opacity="0.92" filter="url(#glow)"/>
+    <circle cx="512" cy="455" r="205" fill="none" stroke="url(#goldRing)" stroke-width="1" opacity="0.4"/>
+
+    <!-- 底部文字 -->
+    <line x1="240" y1="812" x2="784" y2="812" stroke="url(#goldRing)" stroke-width="1" opacity="0.3"/>
+    <text x="512" y="854" font-family="'Noto Serif TC','STSong',serif" font-size="56" font-weight="700"
+      text-anchor="middle" fill="url(#goldMain)" letter-spacing="20" opacity="0.92">風生水起</text>
+    <text x="512" y="892" font-family="Georgia,serif" font-size="28" text-anchor="middle"
+      fill="#c9a84c" letter-spacing="6" opacity="0.45">FENGSHUI ORACLE</text>
+    <polygon points="512,916 520,926 512,936 504,926" fill="url(#goldMain)" opacity="0.7"/>
+
+  </g>
+</svg>
