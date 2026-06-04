@@ -394,7 +394,21 @@ function injectSubscribeModal() {
           <div class="subs-header-title">升 級 會 員</div>
           <div class="subs-header-sub">兩個月費層級 · 按需選擇 · 隨時取消</div>
         </div>
-        <div class="subs-tabs">
+
+        <!-- v5.0 Report types chips -->
+        <div style="padding:0.6rem 0.2rem 0.2rem;text-align:center;">
+          <div style="font-size:0.65rem;color:var(--text-dim);letter-spacing:0.15em;margin-bottom:0.45rem;">✦ 6 類 AI 命 理 報 告 ✦</div>
+          <div style="display:flex;flex-wrap:wrap;gap:0.35rem;justify-content:center;">
+            <span class="subs-report-chip">💕 感情運勢</span>
+            <span class="subs-report-chip">💼 事業財運</span>
+            <span class="subs-report-chip">🌿 健康運勢</span>
+            <span class="subs-report-chip">📅 流年逐月</span>
+            <span class="subs-report-chip">💍 合婚配對</span>
+            <span class="subs-report-chip">📆 擇日建議</span>
+          </div>
+        </div>
+
+        <div class="subs-tabs" style="margin-top:0.7rem;">
           <button class="subs-tab active" data-stab="monthly" onclick="switchSubsTab('monthly')">月 費 計 劃</button>
           <button class="subs-tab" data-stab="single" onclick="switchSubsTab('single')">單 次 報 告</button>
         </div>
@@ -407,74 +421,92 @@ function injectSubscribeModal() {
             <div class="subs-plan-price">HKD$48<span>&nbsp;/月</span></div>
             <div class="subs-plan-desc">隨時取消 · 立即生效</div>
             <div class="subs-features">
+              <div class="subs-feature subs-feature-highlight"><span class="subs-feature-check">✦</span><strong>每月 1 份 AI 命理報告（任選 1 類）</strong></div>
               <div class="subs-feature"><span class="subs-feature-check">✦</span>無限求簽 · AI 深度解籤</div>
-              <div class="subs-feature"><span class="subs-feature-check">✦</span>流年逐月分析（每月重點提示）</div>
+              <div class="subs-feature"><span class="subs-feature-check">✦</span>風水問答 10 條 / 月</div>
               <div class="subs-feature"><span class="subs-feature-check">✦</span>每日運程推播通知</div>
               <div class="subs-feature"><span class="subs-feature-check">✦</span>犯太歲化解方法</div>
               <div class="subs-feature"><span class="subs-feature-check">✦</span>旺身方向 · 首飾 · 身體建議</div>
-              <div class="subs-feature"><span class="subs-feature-check">✦</span>風水問答 10條/月</div>
-              <div class="subs-feature"><span class="subs-feature-check">✦</span>用戶檔案最多 10個</div>
+              <div class="subs-feature"><span class="subs-feature-check">✦</span>用戶檔案最多 10 個</div>
             </div>
             <button class="subs-subscribe-btn" onclick="doMockSubscribe('monthly-48')">訂 閱 · $48/月</button>
           </div>
 
-          <!-- Tier 2: $68 recommended -->
+          <!-- Tier 2: $98 recommended -->
           <div class="subs-plan-box" style="margin-top:0.9rem;border-color:rgba(201,168,76,0.55);background:rgba(201,168,76,0.04)">
             <div class="subs-plan-tier-label" style="color:#e8d080;border-color:rgba(232,208,128,0.5)">✦ 推 薦</div>
             <div class="subs-plan-name">人 生 決 策 層</div>
             <div class="subs-plan-price">HKD$98<span>&nbsp;/月</span></div>
             <div class="subs-plan-desc">包含所有 $48 功能 · 更多深度分析</div>
             <div class="subs-features">
-              <div class="subs-feature"><span class="subs-feature-check">✦</span>流年逐月深度分析（事業/感情/財運/健康詳細）</div>
-              <div class="subs-feature"><span class="subs-feature-check">✦</span>AI 命盤深度分析</div>
-              <div class="subs-feature"><span class="subs-feature-check">✦</span>每月 AI 個人化運程報告</div>
-              <div class="subs-feature"><span class="subs-feature-check">✦</span>個人化八字擇日（每月1次）</div>
-              <div class="subs-feature"><span class="subs-feature-check">✦</span>深度合婚月報（每月1份）</div>
+              <div class="subs-feature subs-feature-highlight" style="color:#e8d080;"><span class="subs-feature-check" style="color:#e8d080;">✦</span><strong>每月 3 份 AI 命理報告（任選 3 類）</strong></div>
+              <div class="subs-feature"><span class="subs-feature-check">✦</span>無限求簽 · AI 深度解籤</div>
               <div class="subs-feature"><span class="subs-feature-check">✦</span>無限風水問答</div>
-              <div class="subs-feature"><span class="subs-feature-check">✦</span>單次報告7折（每月限2次，奇門遁甲豁免）</div>
+              <div class="subs-feature"><span class="subs-feature-check">✦</span>AI 命盤深度分析</div>
+              <div class="subs-feature"><span class="subs-feature-check">✦</span>單次報告 7 折（每月限 2 次，奇門遁甲豁免）</div>
+              <div class="subs-feature"><span class="subs-feature-check">✦</span>每日運程推播通知</div>
               <div class="subs-feature"><span class="subs-feature-check">✦</span>無限用戶檔案</div>
             </div>
             <button class="subs-subscribe-btn" onclick="doMockSubscribe('monthly-68')" style="background:linear-gradient(135deg,#6b1010,#9b2020 50%,#6b1010);border-color:#e8d080;color:#e8d080">訂 閱 · $98/月</button>
           </div>
 
+          <!-- Free tier comparison -->
+          <div style="margin-top:0.75rem;padding:0.6rem 0.75rem;background:rgba(255,255,255,0.018);border:1px solid rgba(255,255,255,0.06);border-radius:7px;">
+            <div style="font-size:0.62rem;color:var(--text-dim);letter-spacing:0.1em;line-height:1.9;">
+              免費版：0 份 AI 報告 · 3 條風水問答 · 每日 1 次求簽<br>
+              $48/月：每月 1 份 AI 報告 · 10 條問答 · 無限求簽<br>
+              $98/月：每月 3 份 AI 報告 · 無限問答 · 無限求簽
+            </div>
+          </div>
+
           <div class="subs-safe-note" style="margin-top:0.8rem">🔒 安全付款 · Mock 示範模式 · 不會扣款</div>
         </div>
         <div class="subs-panel" id="subsTabSingle">
+          <div style="font-size:0.65rem;color:var(--text-dim);letter-spacing:0.08em;line-height:1.7;margin-bottom:0.65rem;padding:0.45rem 0.5rem;border:1px solid rgba(201,168,76,0.15);border-radius:6px;background:rgba(201,168,76,0.02);">
+            💡 非訂閱用戶可單次購買 · $98 會員享 7 折（每月限 2 次）
+          </div>
           <div class="subs-report-list">
-            <div class="subs-report-item" onclick="selectReport(this,'個人化八字擇日','HKD$68')">
+            <div class="subs-report-item" onclick="selectReport(this,'感情運勢AI報告','HKD$68')">
               <div class="subs-report-left">
-                <div class="subs-report-icon">📆</div>
-                <div><div class="subs-report-name">個人化八字擇日</div><div class="subs-report-desc">配合命格揀選最佳吉日</div></div>
+                <div class="subs-report-icon">💕</div>
+                <div><div class="subs-report-name">感情運勢 AI 報告</div><div class="subs-report-desc">感情走勢 · 桃花時機 · 配對建議</div></div>
               </div>
               <div class="subs-report-price">HKD$68</div>
             </div>
-            <div class="subs-report-item" onclick="selectReport(this,'深度合婚報告','HKD$68')">
+            <div class="subs-report-item" onclick="selectReport(this,'事業財運AI報告','HKD$68')">
               <div class="subs-report-left">
-                <div class="subs-report-icon">💍</div>
-                <div><div class="subs-report-name">深度合婚報告</div><div class="subs-report-desc">雙方命格深度匹配分析</div></div>
+                <div class="subs-report-icon">💼</div>
+                <div><div class="subs-report-name">事業財運 AI 報告</div><div class="subs-report-desc">事業方向 · 財運分析 · 投資建議</div></div>
               </div>
               <div class="subs-report-price">HKD$68</div>
             </div>
-            <div class="subs-report-item" onclick="selectReport(this,'深度改名報告','HKD$128')">
+            <div class="subs-report-item" onclick="selectReport(this,'健康運勢AI報告','HKD$68')">
               <div class="subs-report-left">
-                <div class="subs-report-icon">✍️</div>
-                <div><div class="subs-report-name">深度改名報告</div><div class="subs-report-desc">五行補缺 · 康熙筆劃分析</div></div>
+                <div class="subs-report-icon">🌿</div>
+                <div><div class="subs-report-name">健康運勢 AI 報告</div><div class="subs-report-desc">健康注意事項 · 五行調養建議</div></div>
               </div>
-              <div class="subs-report-price">HKD$128</div>
+              <div class="subs-report-price">HKD$68</div>
             </div>
             <div class="subs-report-item" onclick="selectReport(this,'全年深度命理報告（PDF）','HKD$98')">
               <div class="subs-report-left">
                 <div class="subs-report-icon">📄</div>
-                <div><div class="subs-report-name">全年深度命理報告（PDF可下載）</div><div class="subs-report-desc">以PDF發送至電郵 · 可永久保存</div></div>
+                <div><div class="subs-report-name">全年深度命理報告（PDF）</div><div class="subs-report-desc">流年逐月 · 以PDF發送電郵 · 永久保存</div></div>
               </div>
               <div class="subs-report-price">HKD$98</div>
             </div>
-            <div class="subs-report-item" onclick="selectReport(this,'家居/辦公室風水深度報告（PDF）','HKD$98')">
+            <div class="subs-report-item" onclick="selectReport(this,'深度合婚報告','HKD$68')">
               <div class="subs-report-left">
-                <div class="subs-report-icon">🏠</div>
-                <div><div class="subs-report-name">家居/辦公室風水深度報告（PDF）</div><div class="subs-report-desc">以PDF發送至電郵 · 可永久保存</div></div>
+                <div class="subs-report-icon">💍</div>
+                <div><div class="subs-report-name">合婚配對 AI 報告</div><div class="subs-report-desc">雙方命格深度匹配分析</div></div>
               </div>
-              <div class="subs-report-price">HKD$98</div>
+              <div class="subs-report-price">HKD$68</div>
+            </div>
+            <div class="subs-report-item" onclick="selectReport(this,'個人化八字擇日','HKD$68')">
+              <div class="subs-report-left">
+                <div class="subs-report-icon">📆</div>
+                <div><div class="subs-report-name">擇日建議 AI 報告</div><div class="subs-report-desc">配合命格揀選最佳吉日</div></div>
+              </div>
+              <div class="subs-report-price">HKD$68</div>
             </div>
             <div class="subs-report-item" onclick="selectReport(this,'另一半性格外貌分析','HKD$68')">
               <div class="subs-report-left">
@@ -482,6 +514,20 @@ function injectSubscribeModal() {
                 <div><div class="subs-report-name">另一半性格外貌分析</div><div class="subs-report-desc">推算另一半命格特質</div></div>
               </div>
               <div class="subs-report-price">HKD$68</div>
+            </div>
+            <div class="subs-report-item" onclick="selectReport(this,'家居/辦公室風水深度報告（PDF）','HKD$98')">
+              <div class="subs-report-left">
+                <div class="subs-report-icon">🏠</div>
+                <div><div class="subs-report-name">家居/辦公室風水報告（PDF）</div><div class="subs-report-desc">以PDF發送電郵 · 可永久保存</div></div>
+              </div>
+              <div class="subs-report-price">HKD$98</div>
+            </div>
+            <div class="subs-report-item" onclick="selectReport(this,'深度改名報告','HKD$128')">
+              <div class="subs-report-left">
+                <div class="subs-report-icon">✍️</div>
+                <div><div class="subs-report-name">深度改名報告</div><div class="subs-report-desc">五行補缺 · 康熙筆劃分析</div></div>
+              </div>
+              <div class="subs-report-price">HKD$128</div>
             </div>
             <div class="subs-report-item" onclick="selectReport(this,'子女緣分析','HKD$68')">
               <div class="subs-report-left">
@@ -493,7 +539,7 @@ function injectSubscribeModal() {
             <div class="subs-report-item" onclick="selectReport(this,'奇門遁甲完整盤','HKD$198')">
               <div class="subs-report-left">
                 <div class="subs-report-icon">☰</div>
-                <div><div class="subs-report-name">奇門遁甲完整盤</div><div class="subs-report-desc">八門九星完整時盤分析</div></div>
+                <div><div class="subs-report-name">奇門遁甲完整盤 ★豁免折扣</div><div class="subs-report-desc">八門九星完整時盤分析</div></div>
               </div>
               <div class="subs-report-price">HKD$198</div>
             </div>

@@ -1248,6 +1248,36 @@
       opacity: 0.5;
     }
 
+    /* v5.0 report upsell block */
+    .da-report-upsell {
+      background: rgba(201,168,76,0.04);
+      border: 1px solid rgba(201,168,76,0.18);
+      border-radius: 8px;
+      padding: 0.65rem 0.85rem;
+      margin: 0.7rem 0 0.5rem;
+    }
+    .da-upsell-text {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.45rem;
+    }
+    .da-upsell-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+    .da-upsell-chip {
+      font-size: 0.62rem;
+      font-family: 'Noto Serif TC', serif;
+      letter-spacing: 0.06em;
+      color: var(--text-dim);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 20px;
+      padding: 0.18rem 0.48rem;
+      background: rgba(201,168,76,0.03);
+    }
     .da-upgrade-btn {
       display: block;
       width: 100%;
@@ -2343,6 +2373,17 @@
           <span class="da-paid-badge">🔒 HKD$48起/月</span>
         </div>
         <div class="da-paid-grid" id="daPaidGrid"></div>
+        <div class="da-report-upsell">
+          <div class="da-upsell-text">升級 $48 會員，每月獲得 1 份專屬 AI 命理報告</div>
+          <div class="da-upsell-chips">
+            <span class="da-upsell-chip">💕 感情運勢</span>
+            <span class="da-upsell-chip">💼 事業財運</span>
+            <span class="da-upsell-chip">🌿 健康運勢</span>
+            <span class="da-upsell-chip">📅 流年逐月</span>
+            <span class="da-upsell-chip">💍 合婚配對</span>
+            <span class="da-upsell-chip">📆 擇日建議</span>
+          </div>
+        </div>
         <button class="da-upgrade-btn">🔓 升 級 會 員 · 解 鎖 全 部 分 析</button>
 
         <!-- Single-purchase reports -->
@@ -2598,9 +2639,12 @@
 
         <!-- Paid locked section -->
         <div class="match-paid-section">
-          <div class="match-paid-title">✦ 深 度 合 婚 分 析 報 告</div>
-          <div class="match-paid-preview" id="matchPaidPreview">深度報告包含：大運流年合婚分析、兩人婚後宮位影響、財帛互動、子嗣緣分、性格深度互補分析、2026-2030年合婚走勢預測…</div>
-          <button class="match-unlock-btn">🔓 HKD$68 · 解 鎖 深 度 合 婚 報 告</button>
+          <div class="match-paid-title">✦ 合 婚 配 對 AI 報 告</div>
+          <div class="match-paid-preview" id="matchPaidPreview">報告包含：大運流年合婚分析、婚後宮位影響、財帛互動、子嗣緣分、性格深度互補、2026-2030年走勢…</div>
+          <div style="font-size:0.65rem;color:var(--text-dim);letter-spacing:0.07em;margin:0.4rem 0 0.6rem;line-height:1.7;">
+            💡 $48 月費：每月可選此報告（1份配額）<br>$98 月費：每月 3 份配額，可同時分析多對<br>單次購買：HKD$68
+          </div>
+          <button class="match-unlock-btn">🔓 升級會員 獲取 AI 合婚報告</button>
         </div>
 
         <p class="match-disclaimer">以上分析僅供參考，完整合婚請諮詢專業命理師<br>結果包含隨機因子，每次推算結果可能略有不同</p>
@@ -2795,8 +2839,11 @@
 
         <!-- Paid section -->
         <div class="rn-paid-section">
-          <div class="rn-paid-title" id="rnPaidTitle">✦ 完 整 改 名 報 告</div>
-          <div class="rn-paid-preview" id="rnPaidPreview">完整報告包含10個推薦名字，每個名字附筆劃五行分析、音義解說、與命格配合度評分，以及最佳選用時機建議…</div>
+          <div class="rn-paid-title" id="rnPaidTitle">✦ 完 整 改 名 AI 報 告</div>
+          <div class="rn-paid-preview" id="rnPaidPreview">完整報告包含10個推薦名字，每個名字附筆劃五行分析、音義解說、與命格配合度評分…</div>
+          <div style="font-size:0.62rem;color:var(--text-dim);letter-spacing:0.07em;margin:0.35rem 0 0.5rem;line-height:1.7;">
+            💡 單次購買：HKD$128 ·&nbsp; $98 月費會員享 7 折 HKD$90
+          </div>
           <button class="rn-unlock-btn" id="rnUnlockBtn">🔓 HKD$128 · 解 鎖 完 整 報 告</button>
         </div>
 

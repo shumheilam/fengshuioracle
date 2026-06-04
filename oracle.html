@@ -1713,14 +1713,18 @@ function showDailyLimitToast() {
   toast.innerHTML = `
     <div class="daily-toast-icon">📿</div>
     <div class="daily-toast-title">今 日 已 求 過 籤</div>
-    <div class="daily-toast-msg">免費用戶每日只能求籤一次<br>明日再來，或升級月費會員<br>享無限次求籤</div>
-    <button class="daily-toast-close">知　道　了</button>
+    <div class="daily-toast-msg">免費版每日只能求籤 1 次<br>明日再來，或升級月費會員享無限求簽</div>
+    <div style="font-size:0.65rem;color:rgba(201,168,76,0.7);letter-spacing:0.08em;line-height:1.8;margin:0.5rem 0;">
+      $48/月 · $98/月：無限求簽 · 無限次數
+    </div>
+    <button class="daily-toast-close" onclick="if(typeof openSubscribeModal==='function')openSubscribeModal('monthly')" style="margin-bottom:0.4rem;">✦ 升 級 會 員</button>
+    <button class="daily-toast-close" style="background:transparent;border-color:rgba(255,255,255,0.1);color:var(--text-dim);font-size:0.68rem;">明 日 再 來</button>
   `;
   document.body.appendChild(overlay);
   document.body.appendChild(toast);
   function dismiss() { overlay.remove(); toast.remove(); }
   overlay.addEventListener('click', dismiss);
-  toast.querySelector('.daily-toast-close').addEventListener('click', dismiss);
+  toast.querySelectorAll('.daily-toast-close').forEach(function(b){ b.addEventListener('click', dismiss); });
 }
 
 // ── Mobile tilt shake ─────────────────────────────────────

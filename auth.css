@@ -1006,3 +1006,22 @@
   letter-spacing: 0.2em;
   line-height: 1.8;
 }
+
+/* ── v5.0 Report chips & feature highlight ──────── */
+.subs-report-chip {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-family: 'Noto Serif TC', serif;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  border: 1px solid rgba(201,168,76,0.28);
+  border-radius: 20px;
+  padding: 0.2rem 0.55rem;
+  background: rgba(201,168,76,0.05);
+}
+.subs-feature-highlight {
+  padding: 0.3rem 0.5rem;
+  background: rgba(201,168,76,0.06);
+  border-radius: 5px;
+  margin-bottom: 0.15rem;
+}
