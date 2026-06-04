@@ -1310,6 +1310,13 @@
       color: var(--gold);
       letter-spacing: 0.06em;
     }
+    .da-report-note {
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+      line-height: 1.4;
+      opacity: 0.75;
+    }
     .da-report-unlock {
       margin-top: 0.3rem;
       padding: 0.42rem 0.6rem;
@@ -1781,6 +1788,71 @@
       box-shadow: 0 0 20px rgba(201,168,76,0.18);
       color: var(--gold);
     }
+    /* Tier comparison row */
+    .ln-tier-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.65rem;
+      margin: 1rem 0 0.75rem;
+    }
+    @media (max-width: 560px) {
+      .ln-tier-row { grid-template-columns: 1fr; }
+    }
+    .ln-tier-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 8px;
+      padding: 0.8rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      align-items: flex-start;
+    }
+    .ln-tier-highlight {
+      border-color: rgba(201,168,76,0.38);
+      background: rgba(201,168,76,0.03);
+    }
+    .ln-tier-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      border: 1px solid rgba(201,168,76,0.28);
+      border-radius: 3px;
+      padding: 0.15rem 0.4rem;
+    }
+    .ln-tier-desc {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.06em;
+      line-height: 1.5;
+    }
+    .ln-tier-detail {
+      display: block;
+      font-size: 0.62rem;
+      font-weight: 400;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+      margin-top: 0.1rem;
+    }
+    .ln-unlock-48, .ln-unlock-98, .ln-unlock-single {
+      margin-top: auto;
+      padding: 0.45rem 0.7rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      width: 100%;
+    }
+    .ln-unlock-98 {
+      background: linear-gradient(135deg, #6b1010, #9b2020 50%, #6b1010);
+      border-color: rgba(232,208,128,0.55);
+      color: #e8d080;
+    }
+    .ln-unlock-single {
+      border-color: rgba(175,143,255,0.4);
+      color: #c8a8ff;
+    }
+
     .ln-disclaimer {
       font-size: 0.6rem;
       color: var(--text-dim);
@@ -2347,10 +2419,11 @@
             <button class="da-report-unlock" onclick="handleSingleReport(this,'兄弟姊妹緣分析')">立 即 解 鎖</button>
           </div>
           <div class="da-report-card">
-            <div class="da-report-icon">📅</div>
-            <div class="da-report-name">流年逐月運程</div>
+            <div class="da-report-icon">📄</div>
+            <div class="da-report-name">全年深度命理報告（PDF可下載）</div>
             <div class="da-report-price">HKD$98</div>
-            <button class="da-report-unlock" onclick="handleSingleReport(this,'流年逐月運程')">立 即 解 鎖</button>
+            <div class="da-report-note">以PDF格式發送至您的電郵，可永久保存</div>
+            <button class="da-report-unlock" onclick="handleSingleReport(this,'全年深度命理報告')">立 即 解 鎖</button>
           </div>
           <div class="da-report-card">
             <div class="da-report-icon">🩸</div>
@@ -3723,7 +3796,7 @@ function renderLiuNian() {
       <div class="ln-paid-head">
         <div class="ln-paid-lock">🔐</div>
         <div>
-          <div class="ln-paid-title">逐 月 詳 細 分 析</div>
+          <div class="ln-paid-title">逐 月 深 度 分 析</div>
           <div class="ln-paid-sub">事業 · 感情 · 財運 · 健康 · 化解建議</div>
         </div>
       </div>
@@ -3743,11 +3816,33 @@ function renderLiuNian() {
         `).join('')}
       </div>
 
-      <button class="ln-unlock-btn" onclick="alert('付費功能開發中，敬請期待！')">
-        🔓 &nbsp; HKD$48 / 月 &nbsp; 解 鎖 完 整 流 年
-      </button>
+      <!-- Tier comparison -->
+      <div class="ln-tier-row">
+        <div class="ln-tier-card">
+          <div class="ln-tier-badge">$48 月費</div>
+          <div class="ln-tier-desc">逐月簡短分析<br><span class="ln-tier-detail">每月重點提示</span></div>
+          <button class="ln-unlock-btn ln-unlock-48" onclick="if(typeof openSubscribeModal==='function')openSubscribeModal('monthly')">
+            🔓 $48/月 解鎖
+          </button>
+        </div>
+        <div class="ln-tier-card ln-tier-highlight">
+          <div class="ln-tier-badge" style="color:#e8d080;border-color:rgba(232,208,128,0.4)">$98 月費 ✦</div>
+          <div class="ln-tier-desc">逐月深度分析<br><span class="ln-tier-detail">事業/感情/財運/健康詳細</span></div>
+          <button class="ln-unlock-btn ln-unlock-98" onclick="if(typeof openSubscribeModal==='function')openSubscribeModal('monthly')">
+            🔓 $98/月 深度解鎖
+          </button>
+        </div>
+        <div class="ln-tier-card">
+          <div class="ln-tier-badge" style="color:#af8fff;border-color:rgba(175,143,255,0.3)">單次 PDF</div>
+          <div class="ln-tier-desc">全年深度命理報告<br><span class="ln-tier-detail">PDF發送至電郵 · 永久保存</span></div>
+          <button class="ln-unlock-btn ln-unlock-single" onclick="if(typeof handleSingleReport==='function')handleSingleReport(this,'全年深度命理報告')">
+            📄 HKD$98 購買PDF
+          </button>
+        </div>
+      </div>
+
       <div class="ln-disclaimer">
-        解鎖後即可查看全年12個月詳細運程分析，包括事業、感情、財運、健康及每月化解建議<br>
+        月費方案在 App 內即時查看；PDF單次報告以電郵發送，可永久保存及列印<br>
         所有分析基於您的八字命格，僅供娛樂及參考，不構成專業命理建議
       </div>
     </div>

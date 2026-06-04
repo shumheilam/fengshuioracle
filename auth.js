@@ -408,7 +408,7 @@ function injectSubscribeModal() {
             <div class="subs-plan-desc">隨時取消 · 立即生效</div>
             <div class="subs-features">
               <div class="subs-feature"><span class="subs-feature-check">✦</span>無限求簽 · AI 深度解籤</div>
-              <div class="subs-feature"><span class="subs-feature-check">✦</span>流年逐月分析</div>
+              <div class="subs-feature"><span class="subs-feature-check">✦</span>流年逐月分析（每月重點提示）</div>
               <div class="subs-feature"><span class="subs-feature-check">✦</span>每日運程推播通知</div>
               <div class="subs-feature"><span class="subs-feature-check">✦</span>犯太歲化解方法</div>
               <div class="subs-feature"><span class="subs-feature-check">✦</span>旺身方向 · 首飾 · 身體建議</div>
@@ -425,6 +425,7 @@ function injectSubscribeModal() {
             <div class="subs-plan-price">HKD$98<span>&nbsp;/月</span></div>
             <div class="subs-plan-desc">包含所有 $48 功能 · 更多深度分析</div>
             <div class="subs-features">
+              <div class="subs-feature"><span class="subs-feature-check">✦</span>流年逐月深度分析（事業/感情/財運/健康詳細）</div>
               <div class="subs-feature"><span class="subs-feature-check">✦</span>AI 命盤深度分析</div>
               <div class="subs-feature"><span class="subs-feature-check">✦</span>每月 AI 個人化運程報告</div>
               <div class="subs-feature"><span class="subs-feature-check">✦</span>個人化八字擇日（每月1次）</div>
@@ -461,10 +462,17 @@ function injectSubscribeModal() {
               </div>
               <div class="subs-report-price">HKD$128</div>
             </div>
-            <div class="subs-report-item" onclick="selectReport(this,'流年逐月詳細','HKD$98')">
+            <div class="subs-report-item" onclick="selectReport(this,'全年深度命理報告（PDF）','HKD$98')">
               <div class="subs-report-left">
-                <div class="subs-report-icon">📅</div>
-                <div><div class="subs-report-name">流年逐月詳細</div><div class="subs-report-desc">逐月細化運勢走向</div></div>
+                <div class="subs-report-icon">📄</div>
+                <div><div class="subs-report-name">全年深度命理報告（PDF可下載）</div><div class="subs-report-desc">以PDF發送至電郵 · 可永久保存</div></div>
+              </div>
+              <div class="subs-report-price">HKD$98</div>
+            </div>
+            <div class="subs-report-item" onclick="selectReport(this,'家居/辦公室風水深度報告（PDF）','HKD$98')">
+              <div class="subs-report-left">
+                <div class="subs-report-icon">🏠</div>
+                <div><div class="subs-report-name">家居/辦公室風水深度報告（PDF）</div><div class="subs-report-desc">以PDF發送至電郵 · 可永久保存</div></div>
               </div>
               <div class="subs-report-price">HKD$98</div>
             </div>
