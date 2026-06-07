@@ -1,0 +1,104 @@
+/* ═══════════════════════════════════════════════════════════
+   theme.css — 深色 / 淺色模式
+   風生水起 FengShui Oracle · Siriis Labs
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── 平滑過渡動畫 ── */
+*, *::before, *::after {
+  transition:
+    background-color 0.35s ease,
+    color            0.35s ease,
+    border-color     0.35s ease,
+    box-shadow       0.35s ease,
+    fill             0.35s ease !important;
+}
+
+/* ── 切換按鈕 ── */
+.theme-toggle {
+  background : none;
+  border     : 1px solid rgba(201,168,76,0.38);
+  border-radius : 50%;
+  width  : 36px;
+  height : 36px;
+  cursor : pointer;
+  font-size : 1.05rem;
+  line-height : 1;
+  display : flex;
+  align-items : center;
+  justify-content : center;
+  color : var(--gold);
+  flex-shrink : 0;
+  margin-left : 0.65rem;
+  padding : 0;
+  transition :
+    border-color 0.2s ease,
+    background   0.2s ease,
+    transform    0.25s ease !important;
+}
+.theme-toggle:hover {
+  background   : rgba(201,168,76,0.12);
+  border-color : rgba(201,168,76,0.65);
+  transform    : scale(1.1) rotate(18deg);
+}
+.theme-toggle:active {
+  transform : scale(0.95);
+}
+
+/* ── 淺色模式 CSS 變數覆蓋 ──
+   金色保留不變；背景改為暖米白；深色文字
+   ── */
+html.light-mode {
+  --bg         : #f5efe2;
+  --bg-card    : #fffdf6;
+  --bg-sidebar : #ece6d8;
+  --bg-input   : rgba(0, 0, 0, 0.05);
+  --text       : #2a1a08;
+  --text-dim   : #7a6040;
+  --red-dark   : #8b1515;
+  --red-mid    : #b52525;
+  /* 金色系保留 */
+  --gold      : #c9a84c;
+  --gold-light: #e8d080;
+  --gold-dim  : rgba(201,168,76,0.30);
+}
+
+/* body 背景放射漸層（淺色版） */
+html.light-mode body {
+  background-image: radial-gradient(ellipse 80% 50% at 50% 0%, #f0e8d2 0%, transparent 65%) !important;
+}
+
+/* 淺色模式下某些固定深色元素需要調整 */
+html.light-mode .nav-tab.active {
+  color         : #8b6914;
+  border-color  : rgba(139,105,20,0.45);
+  background    : rgba(201,168,76,0.12);
+}
+html.light-mode .nav-tab:not(.active) {
+  color : #7a6040;
+}
+html.light-mode .nav-tab:not(.active):hover {
+  color : #2a1a08;
+}
+
+/* 淺色模式：nav 底部線 */
+html.light-mode nav {
+  border-bottom-color: rgba(201,168,76,0.28);
+}
+
+/* 手機底部 tab bar */
+html.light-mode .mob-tab-bar {
+  background    : rgba(240,232,216,0.97) !important;
+  border-color  : rgba(201,168,76,0.28) !important;
+}
+html.light-mode .mob-tab-item {
+  color : #7a6040;
+}
+html.light-mode .mob-tab-item.active {
+  color : #8b6914;
+}
+
+/* 淺色模式：卡片/面板背景 */
+html.light-mode [style*="background: rgba(255,255,255,0.04)"],
+html.light-mode [style*="background:rgba(255,255,255,0.04)"] {
+  background : rgba(0,0,0,0.04) !important;
+}
