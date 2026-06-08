@@ -208,7 +208,58 @@ html.light-mode .ai-card {
   border-color : rgba(139,105,20,0.2) !important;
 }
 
-/* ── oracle.html 古卷軸底部黑色漸層橋接條 light mode ── */
+/* ── oracle.html 古卷軸底部棕色橫條 + 橋接條 light mode ── */
 html.light-mode .scroll-to-ai-bridge {
   background : transparent !important;
+}
+/* 底部 roller（scroll-outer 最後一個 .scroll-roller）在 light mode 隱藏 */
+html.light-mode .scroll-outer .scroll-roller:last-child {
+  display : none !important;
+}
+/* 橋接區域以下確保同頁面背景一致 */
+html.light-mode .scroll-dark-footer {
+  background : transparent;
+}
+
+/* ── oracle.html AI深度解籤 light mode 文字顏色修正 ── */
+
+/* 整體容器：暖米色背景，移除紫色 */
+html.light-mode .ai-section-wrap {
+  background   : #fdf3e3 !important;
+  border-color : rgba(139,105,20,0.35) !important;
+}
+
+/* 標題「AI 深度解籤」：改成深金色系 */
+html.light-mode .ai-section-title {
+  color : #8a6420 !important;
+}
+
+/* 「感情」「事業」「健康」「財運」卡片標題 */
+html.light-mode .ai-card-name {
+  color : #5a3e1b !important;
+}
+
+/* 付費內容預覽（blur保留，底色改暖色） */
+html.light-mode .ai-card-preview {
+  color            : #6b4c1e !important;
+  background-color : #e8d5a3;
+  border-radius    : 4px;
+  padding          : 0.15rem 0.25rem;
+}
+
+/* 「🔒 解鎖查看」文字 */
+html.light-mode .ai-card-lock {
+  color       : #8a6420 !important;
+  font-weight : 600;
+}
+
+/* 「$48/月起 解鎖深度解籤」大按鈕：金色漸變 */
+html.light-mode .ai-unlock-btn {
+  background   : linear-gradient(135deg, #c9a84c, #8a6420) !important;
+  border-color : rgba(138,100,32,0.55) !important;
+  color        : #ffffff !important;
+}
+html.light-mode .ai-unlock-btn:hover {
+  box-shadow   : 0 0 22px rgba(201,168,76,0.35) !important;
+  border-color : rgba(201,168,76,0.75) !important;
 }
