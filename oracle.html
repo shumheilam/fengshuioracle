@@ -55,16 +55,23 @@
     .nav-brand {
       text-decoration: none;
       display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.5rem;
     }
-    .nav-brand .brand-name {
-      font-size: 0.95rem;
+    .logo-text {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      width: 2.4rem;
+      height: 2.4rem;
+      font-size: 0.7rem;
       font-weight: 900;
       color: var(--gold);
-      letter-spacing: 0.35em;
       line-height: 1.2;
+      text-align: center;
+      letter-spacing: 0;
+      flex-shrink: 0;
     }
     .nav-brand .brand-sub {
       font-size: 0.55rem;
@@ -1135,7 +1142,7 @@
 <body>
 
 <nav>
-  <a class="nav-brand" href="index.html"><span class="brand-name">風 生 水 起</span><span class="brand-sub">FengShui Oracle</span></a>
+  <a class="nav-brand" href="index.html"><span class="logo-text"><span>風</span><span>水</span><span>生</span><span>起</span></span><span class="brand-sub">FengShui Oracle</span></a>
   <div class="nav-tabs">
     <a class="nav-tab" href="index.html">八 字 命 盤</a>
     <a class="nav-tab" href="index.html" onclick="sessionStorage.setItem('tab','liuNian')">流 年 運 程</a>

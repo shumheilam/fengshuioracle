@@ -68,7 +68,7 @@ html.light-mode body {
 }
 
 /* ── Logo 防換行 ── */
-.nav-brand .brand-name {
+.logo-text {
   white-space : nowrap;
 }
 
@@ -144,8 +144,21 @@ html.light-mode #compassCard {
   border-color : rgba(201,168,76,0.25) !important;
 }
 html.light-mode #fsCard {
-  background  : #2a1808 !important;
-  border-color : rgba(201,168,76,0.25) !important;
+  background  : #fdf8f0 !important;
+  border-color : rgba(201,168,76,0.35) !important;
+}
+html.light-mode .fs-cell {
+  background   : #ffffff !important;
+  border-color : #e8d5a3 !important;
+}
+html.light-mode .fs-dir {
+  color : #8a6420 !important;
+}
+html.light-mode .fs-name {
+  color : #5a4020 !important;
+}
+html.light-mode .fs-badge {
+  color : #3a2010 !important;
 }
 html.light-mode #compassCard .card-title,
 html.light-mode #fsCard .card-title {
@@ -153,4 +166,28 @@ html.light-mode #fsCard .card-title {
 }
 html.light-mode #compassCard .compass-facing {
   color : rgba(144,112,80,0.85) !important;
+}
+
+/* ── Issue: index.html 另一半桃花高亮 light mode ── */
+html.light-mode .da-partner-free-el {
+  color      : #8a6420 !important;
+  text-shadow: none !important;
+}
+
+/* ── Issue: oracle.html AI深度解籤 dark background light mode ── */
+html.light-mode .ai-section-wrap {
+  background   : rgba(240,232,216,0.6) !important;
+  border-color : rgba(139,105,20,0.3) !important;
+}
+html.light-mode .ai-section-title {
+  color : #6a3a90 !important;
+}
+html.light-mode .ai-section-badge {
+  background   : rgba(139,105,20,0.1) !important;
+  border-color : rgba(139,105,20,0.25) !important;
+  color        : #7a6040 !important;
+}
+html.light-mode .ai-card {
+  background   : rgba(255,255,255,0.7) !important;
+  border-color : rgba(139,105,20,0.2) !important;
 }
