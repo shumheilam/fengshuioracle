@@ -175,7 +175,7 @@
       /* dial rotates with device heading */
       transform-box: fill-box;
       transform-origin: center;
-      transition: transform 0.15s ease-out;
+      transition: transform 0.3s ease-out;
     }
     #needleGroup {
       /* needle is FIXED — always points to top of screen (South/北 indicator) */
@@ -1523,6 +1523,8 @@ function getDirectionFromDeg(deg) {
 // ── Compass logic ─────────────────────────────────────────
 let compassActive = false;
 let currentDeg = 0;
+let smoothedHeading = 0;
+const SMOOTHING = 0.15;
 
 function requestCompassPerm() {
   if (typeof DeviceOrientationEvent !== 'undefined' &&
@@ -1541,21 +1543,43 @@ function requestCompassPerm() {
 function startCompass() {
   document.getElementById('permBtn').style.display = 'none';
   compassActive = true;
-  window.addEventListener('deviceorientationabsolute', handleOrientation, true);
-  window.addEventListener('deviceorientation', handleOrientation, true);
+  // Android Chrome 支援 deviceorientationabsolute（絕對方向），優先使用
+  // 只綁定一個事件避免雙重觸發
+  if (window.DeviceOrientationAbsoluteEvent) {
+    window.addEventListener('deviceorientationabsolute', handleOrientation, true);
+  } else {
+    window.addEventListener('deviceorientation', handleOrientation, true);
+  }
   document.getElementById('facingDisplay').textContent = '正在感應方向…';
 }
 
 function handleOrientation(e) {
-  let alpha = e.alpha || 0;
-  if (e.webkitCompassHeading !== undefined) {
-    alpha = e.webkitCompassHeading;
-  } else if (e.absolute && e.alpha !== null) {
-    alpha = 360 - e.alpha;
+  let heading = 0;
+
+  // Android: absolute event 提供真實北方角度
+  if (e.absolute && e.alpha !== null) {
+    heading = 360 - e.alpha;
   }
-  alpha = ((alpha % 360) + 360) % 360;
-  currentDeg = alpha;
-  updateCompassUI(alpha);
+  // iOS: webkitCompassHeading 已是相對磁北的角度
+  else if (e.webkitCompassHeading !== undefined) {
+    heading = e.webkitCompassHeading;
+  }
+  // Fallback
+  else if (e.alpha !== null) {
+    heading = 360 - e.alpha;
+  }
+
+  heading = ((heading % 360) + 360) % 360;
+
+  // 低通濾波：處理角度跨越 0/360 邊界，防止抽筋
+  let diff = heading - smoothedHeading;
+  if (diff > 180) diff -= 360;
+  if (diff < -180) diff += 360;
+  smoothedHeading += SMOOTHING * diff;
+  smoothedHeading = ((smoothedHeading % 360) + 360) % 360;
+
+  currentDeg = Math.round(smoothedHeading);
+  updateCompassUI(currentDeg);
 }
 
 function updateCompassUI(deg) {
