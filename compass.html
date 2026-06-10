@@ -1524,7 +1524,9 @@ function getDirectionFromDeg(deg) {
 let compassActive = false;
 let currentDeg = 0;
 let smoothedHeading = 0;
-const SMOOTHING = 0.15;
+const SMOOTHING = 0.05;
+const DEAD_ZONE = 2;
+let lastUpdate = 0;
 
 function requestCompassPerm() {
   if (typeof DeviceOrientationEvent !== 'undefined' &&
@@ -1554,6 +1556,10 @@ function startCompass() {
 }
 
 function handleOrientation(e) {
+  const now = Date.now();
+  if (now - lastUpdate < 100) return;
+  lastUpdate = now;
+
   let heading = 0;
 
   // iOS: webkitCompassHeading 直接係正確方位角（0=北，順時針增加）
@@ -1578,8 +1584,11 @@ function handleOrientation(e) {
   smoothedHeading += SMOOTHING * diff;
   smoothedHeading = ((smoothedHeading % 360) + 360) % 360;
 
-  currentDeg = Math.round(smoothedHeading);
-  updateCompassUI(currentDeg);
+  const newHeading = Math.round(smoothedHeading);
+  if (Math.abs(newHeading - currentDeg) >= DEAD_ZONE) {
+    currentDeg = newHeading;
+    updateCompassUI(currentDeg);
+  }
 }
 
 function updateCompassUI(deg) {
