@@ -1556,17 +1556,17 @@ function startCompass() {
 function handleOrientation(e) {
   let heading = 0;
 
-  // Android: absolute event 提供真實北方角度
-  if (e.absolute && e.alpha !== null) {
-    heading = 360 - e.alpha;
-  }
-  // iOS: webkitCompassHeading 已是相對磁北的角度
-  else if (e.webkitCompassHeading !== undefined) {
+  // iOS: webkitCompassHeading 直接係正確方位角（0=北，順時針增加）
+  if (e.webkitCompassHeading !== undefined) {
     heading = e.webkitCompassHeading;
+  }
+  // Android absolute: alpha 係裝置相對地理北極旋轉角，直接用作 heading
+  else if (e.absolute === true && e.alpha !== null) {
+    heading = e.alpha;
   }
   // Fallback
   else if (e.alpha !== null) {
-    heading = 360 - e.alpha;
+    heading = e.alpha;
   }
 
   heading = ((heading % 360) + 360) % 360;
