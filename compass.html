@@ -191,10 +191,23 @@
     }
     .compass-facing {
       text-align: center;
-      font-size: 0.75rem;
+      font-size: 0.73rem;
       color: var(--text-dim);
-      letter-spacing: 0.35em;
+      letter-spacing: 0.2em;
       margin-top: 0.2rem;
+      line-height: 1.9;
+    }
+    .compass-sitting {
+      text-align: center;
+      font-size: 0.68rem;
+      color: rgba(144,112,80,0.7);
+      letter-spacing: 0.15em;
+      margin-top: 0.1rem;
+      display: none;
+    }
+    .mtn-highlight {
+      color: var(--gold);
+      font-weight: 700;
     }
     .perm-btn {
       display: inline-flex;
@@ -971,31 +984,21 @@
             <circle cx="140" cy="140" r="90"  fill="none" stroke="rgba(201,168,76,0.15)" stroke-width="0.6"/>
             <circle cx="140" cy="140" r="55"  fill="none" stroke="rgba(201,168,76,0.12)" stroke-width="0.6"/>
 
-            <!-- Direction labels -->
-            <!-- N -->
+            <!-- Direction labels (outer ring, r≈114) -->
+            <!-- N=南 at top of dial -->
             <text x="140" y="26" text-anchor="middle" fill="#d04040" font-family="Noto Serif TC,serif" font-size="13" font-weight="900" letter-spacing="1">南</text>
-            <text x="140" y="38" text-anchor="middle" fill="rgba(208,64,64,0.55)" font-family="serif" font-size="8">☲</text>
-            <!-- S -->
+            <!-- S=北 at bottom -->
             <text x="140" y="262" text-anchor="middle" fill="#c9a84c" font-family="Noto Serif TC,serif" font-size="13" font-weight="700">北</text>
-            <text x="140" y="250" text-anchor="middle" fill="rgba(201,168,76,0.55)" font-family="serif" font-size="8">☵</text>
-            <!-- E -->
+            <!-- E=西 at right -->
             <text x="258" y="144" text-anchor="middle" fill="#c9a84c" font-family="Noto Serif TC,serif" font-size="13" font-weight="700">西</text>
-            <text x="246" y="144" text-anchor="middle" fill="rgba(201,168,76,0.55)" font-family="serif" font-size="8">☱</text>
-            <!-- W -->
+            <!-- W=東 at left -->
             <text x="22" y="144" text-anchor="middle" fill="#c9a84c" font-family="Noto Serif TC,serif" font-size="13" font-weight="700">東</text>
-            <text x="34" y="144" text-anchor="middle" fill="rgba(201,168,76,0.55)" font-family="serif" font-size="8">☳</text>
 
             <!-- Diagonal directions -->
-            <text x="217" y="56" text-anchor="middle" fill="rgba(201,168,76,0.8)" font-family="Noto Serif TC,serif" font-size="10">西南</text>
-            <text x="63"  y="56" text-anchor="middle" fill="rgba(201,168,76,0.8)" font-family="Noto Serif TC,serif" font-size="10">東南</text>
-            <text x="217" y="232" text-anchor="middle" fill="rgba(201,168,76,0.8)" font-family="Noto Serif TC,serif" font-size="10">西北</text>
-            <text x="63"  y="232" text-anchor="middle" fill="rgba(201,168,76,0.8)" font-family="Noto Serif TC,serif" font-size="10">東北</text>
-
-            <!-- Diagonal gua symbols -->
-            <text x="217" y="68" text-anchor="middle" fill="rgba(201,168,76,0.4)" font-family="serif" font-size="8">☷</text>
-            <text x="63"  y="68" text-anchor="middle" fill="rgba(201,168,76,0.4)" font-family="serif" font-size="8">☴</text>
-            <text x="217" y="220" text-anchor="middle" fill="rgba(201,168,76,0.4)" font-family="serif" font-size="8">☰</text>
-            <text x="63"  y="220" text-anchor="middle" fill="rgba(201,168,76,0.4)" font-family="serif" font-size="8">☶</text>
+            <text x="215" y="54" text-anchor="middle" fill="rgba(201,168,76,0.75)" font-family="Noto Serif TC,serif" font-size="9.5">西南</text>
+            <text x="65"  y="54" text-anchor="middle" fill="rgba(201,168,76,0.75)" font-family="Noto Serif TC,serif" font-size="9.5">東南</text>
+            <text x="215" y="234" text-anchor="middle" fill="rgba(201,168,76,0.75)" font-family="Noto Serif TC,serif" font-size="9.5">西北</text>
+            <text x="65"  y="234" text-anchor="middle" fill="rgba(201,168,76,0.75)" font-family="Noto Serif TC,serif" font-size="9.5">東北</text>
 
             <!-- Outer degree marks -->
             <g stroke="rgba(201,168,76,0.4)" stroke-width="1.2">
@@ -1034,6 +1037,7 @@
       <div>
         <div class="compass-degree" id="degreeDisplay">000°</div>
         <div class="compass-facing" id="facingDisplay">正在等待方向感應…</div>
+        <div class="compass-sitting" id="sittingDisplay"></div>
       </div>
 
       <button class="perm-btn" id="permBtn" onclick="requestCompassPerm()">
@@ -1526,6 +1530,55 @@
 <script src="auth.js"></script>
 <script src="notifications.js"></script>
 <script>
+// ── 24 Mountains ─────────────────────────────────────────
+// ── 24山環字體常數（改字體大小只需改呢三行）─────────────
+const MTN_FONT_BASE = 9.5;   // 普通山字體
+const MTN_FONT_FAC  = 11;    // 面向山（highlight）
+const MTN_FONT_SIT  = 10;    // 坐山（dimmed highlight）
+
+const MOUNTAINS = [
+  {name:'子', deg:0},   {name:'癸', deg:15},  {name:'丑', deg:30},
+  {name:'艮', deg:45},  {name:'寅', deg:60},  {name:'甲', deg:75},
+  {name:'卯', deg:90},  {name:'乙', deg:105}, {name:'辰', deg:120},
+  {name:'巽', deg:135}, {name:'巳', deg:150}, {name:'丙', deg:165},
+  {name:'午', deg:180}, {name:'丁', deg:195}, {name:'未', deg:210},
+  {name:'坤', deg:225}, {name:'申', deg:240}, {name:'庚', deg:255},
+  {name:'酉', deg:270}, {name:'辛', deg:285}, {name:'戌', deg:300},
+  {name:'乾', deg:315}, {name:'亥', deg:330}, {name:'壬', deg:345}
+];
+
+function getMountainFromDeg(deg) {
+  const d = ((deg % 360) + 360) % 360;
+  return MOUNTAINS[Math.round(d / 15) % 24];
+}
+
+function build24MtnRing() {
+  // Outer band: between r=90 middle ring and direction labels at r≈114
+  // Gua symbols removed to free this space
+  const R_IN = 92, R_OUT = 108, R_TXT = 100, C = 140;
+  let html = `
+    <circle cx="${C}" cy="${C}" r="${R_IN}" fill="none" stroke="rgba(201,168,76,0.28)" stroke-width="0.6"/>
+    <circle cx="${C}" cy="${C}" r="${R_OUT}" fill="none" stroke="rgba(201,168,76,0.28)" stroke-width="0.6"/>
+  `;
+  MOUNTAINS.forEach(mtn => {
+    const rad = mtn.deg * Math.PI / 180;
+    const tx = (C - R_TXT * Math.sin(rad)).toFixed(1);
+    const ty = (C + R_TXT * Math.cos(rad)).toFixed(1);
+    html += `<text x="${tx}" y="${ty}" text-anchor="middle" dominant-baseline="central"
+      fill="rgba(201,168,76,0.85)" font-family="Noto Serif TC,serif" font-size="${MTN_FONT_BASE}"
+      id="mtn-${mtn.name}">${mtn.name}</text>`;
+    // separator line at +7.5° boundary
+    const sRad = (mtn.deg + 7.5) * Math.PI / 180;
+    const x1 = (C - R_IN  * Math.sin(sRad)).toFixed(1), y1 = (C + R_IN  * Math.cos(sRad)).toFixed(1);
+    const x2 = (C - R_OUT * Math.sin(sRad)).toFixed(1), y2 = (C + R_OUT * Math.cos(sRad)).toFixed(1);
+    html += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="rgba(201,168,76,0.22)" stroke-width="0.5"/>`;
+  });
+  const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  g.id = 'mtn24Ring';
+  g.innerHTML = html;
+  document.getElementById('compassRing').appendChild(g);
+}
+
 // ── Direction data ────────────────────────────────────────
 const DIRECTIONS = {
   '南': {
@@ -1680,7 +1733,29 @@ function updateCompassUI(deg) {
   const dir = getDirectionFromDeg(deg);
   const data = DIRECTIONS[dir] || DIRECTIONS['北'];
 
-  document.getElementById('facingDisplay').textContent = '您正面向：' + dir + '方（' + (data.trigram) + '卦・' + data.element + '）';
+  const facingMtn = getMountainFromDeg(deg);
+  const sitDeg = (deg + 180) % 360;
+  const sitDir = getDirectionFromDeg(sitDeg);
+  const sitData = DIRECTIONS[sitDir] || DIRECTIONS['北'];
+  const sitMtn = getMountainFromDeg(sitDeg);
+
+  document.getElementById('facingDisplay').textContent =
+    '您正面向：' + dir + '方・' + facingMtn.name + '山（' + data.trigram + '卦・' + data.element + '）';
+  const sitEl = document.getElementById('sittingDisplay');
+  sitEl.textContent = '坐山：' + sitDir + '方・' + sitMtn.name + '山（' + sitData.trigram + '卦・' + sitData.element + '）';
+  sitEl.style.display = 'block';
+
+  // Highlight active mountains on ring
+  document.querySelectorAll('#mtn24Ring text').forEach(el => {
+    el.setAttribute('fill', 'rgba(201,168,76,0.82)');
+    el.setAttribute('font-weight', 'normal');
+    el.setAttribute('font-size', MTN_FONT_BASE);
+  });
+  const facEl = document.getElementById('mtn-' + facingMtn.name);
+  if (facEl) { facEl.setAttribute('fill', '#e8d080'); facEl.setAttribute('font-weight', '900'); facEl.setAttribute('font-size', MTN_FONT_FAC); }
+  const sitRingEl = document.getElementById('mtn-' + sitMtn.name);
+  if (sitRingEl) { sitRingEl.setAttribute('fill', 'rgba(201,168,76,0.6)'); sitRingEl.setAttribute('font-weight', '700'); sitRingEl.setAttribute('font-size', MTN_FONT_SIT); }
+
   document.getElementById('dirGua').textContent = data.gua;
   document.getElementById('dirName').textContent = dir + '方 · ' + data.trigram + '卦';
   document.getElementById('dirDesc').textContent = data.desc;
@@ -1901,6 +1976,7 @@ function closeMobMore() {
 // ── Init ──────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   buildFsGrid();
+  build24MtnRing();
   const count = parseInt(localStorage.getItem('compassRegCount') || '66');
   document.getElementById('regCount').textContent = count;
 
