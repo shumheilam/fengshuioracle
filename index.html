@@ -3413,14 +3413,14 @@ function calculate() {
 
 function renderResult(pillars, year, month, day, shichen, name) {
   const shichenName = BRANCHES[shichen] + '時';
-  const dateStr = `西曆 ${year} 年 ${MONTH_NAMES[month]} 月 ${day} 日　${shichenName}`;
+  const dateStr = `西曆 ${year} 年 ${month} 月 ${day} 日　${shichenName}`;
 
   document.getElementById('resNameRow').innerHTML = name
     ? `<div class="result-name">${name}</div>` : '';
   document.getElementById('resMeta').textContent = dateStr;
 
   // Pillars
-  document.getElementById('pillarsWrap').innerHTML = pillars.map(p => {
+  document.getElementById('pillarsWrap').innerHTML = [...pillars].reverse().map(p => {
     const se = STEM_EL[p.stem], be = BRAN_EL[p.branch];
     return `
       <div class="pillar">
@@ -3438,7 +3438,7 @@ function renderResult(pillars, year, month, day, shichen, name) {
   }).join('');
 
   // Info cards
-  const bazi      = pillars.map(p => STEMS[p.stem]+BRANCHES[p.branch]).join(' ');
+  const bazi      = [...pillars].reverse().map(p => STEMS[p.stem]+BRANCHES[p.branch]).join(' ');
   const yearGZ    = STEMS[pillars[0].stem] + BRANCHES[pillars[0].branch];
   const bzyear    = pillars[0].bzyear;
   const dayMaster = STEMS[pillars[2].stem];
@@ -4122,7 +4122,7 @@ function renderProfileList() {
       <div class="p-card ${isActive ? 'active' : ''}" onclick="loadProfile('${p.id}')">
         <div class="p-card-name">${p.name}</div>
         <div class="p-card-info">
-          ${p.year}年 ${MONTH_NAMES[p.month]}月 ${p.day}日<br>
+          ${p.year}年 ${p.month}月 ${p.day}日<br>
           ${scName}　${animal}年
         </div>
         <div class="p-card-actions">
