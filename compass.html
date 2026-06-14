@@ -849,6 +849,182 @@
       text-align: center;
     }
 
+  /* ── 八宅命理分析 Card ──────────────────────────── */
+  .bazhai-input-row {
+    display: flex;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
+    margin-bottom: 1.2rem;
+  }
+  .bazhai-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .bazhai-label {
+    font-size: 0.63rem;
+    color: var(--text-dim);
+    letter-spacing: 0.3em;
+  }
+  .bazhai-input {
+    background: var(--bg-input);
+    border: 1px solid var(--gold-dim);
+    border-radius: 5px;
+    color: var(--text);
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.82rem;
+    padding: 0.55rem 0.75rem;
+    outline: none;
+    width: 100px;
+    transition: border-color 0.2s;
+  }
+  .bazhai-input:focus { border-color: rgba(201,168,76,0.6); }
+  .bazhai-select {
+    background: var(--bg-input);
+    border: 1px solid var(--gold-dim);
+    border-radius: 5px;
+    color: var(--text);
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.82rem;
+    padding: 0.55rem 0.75rem;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .bazhai-select:focus { border-color: rgba(201,168,76,0.6); }
+  .btn-bazhai-calc {
+    padding: 0.55rem 1.2rem;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.45);
+    color: var(--gold);
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.25em;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn-bazhai-calc:hover { background: rgba(201,168,76,0.2); }
+
+  .bazhai-result-box {
+    display: none;
+  }
+  .bazhai-kua-row {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+    margin-bottom: 1.1rem;
+    flex-wrap: wrap;
+  }
+  .bazhai-kua-badge {
+    text-align: center;
+    padding: 0.8rem 1.4rem;
+    background: rgba(201,168,76,0.06);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 8px;
+    min-width: 110px;
+  }
+  .bazhai-kua-num { font-size: 2rem; color: var(--gold); line-height: 1; margin-bottom: 0.25rem; }
+  .bazhai-kua-name { font-size: 0.95rem; font-weight: 700; color: var(--gold); letter-spacing: 0.3em; margin-bottom: 0.2rem; }
+  .bazhai-kua-group { font-size: 0.65rem; color: var(--text-dim); letter-spacing: 0.2em; }
+
+  .bazhai-compat-strip {
+    text-align: center;
+    padding: 0.75rem 1rem;
+    border-radius: 7px;
+    margin-bottom: 1.2rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+  }
+  .bazhai-compat-strip.match {
+    background: rgba(40,140,70,0.12);
+    border: 1px solid rgba(40,140,70,0.4);
+    color: #70d070;
+  }
+  .bazhai-compat-strip.nomatch {
+    background: rgba(200,100,30,0.12);
+    border: 1px solid rgba(200,100,30,0.4);
+    color: #e0a050;
+  }
+  .bazhai-compat-detail {
+    font-size: 0.68rem;
+    font-weight: 400;
+    display: block;
+    margin-top: 0.3rem;
+    letter-spacing: 0.1em;
+    opacity: 0.85;
+  }
+
+  /* 8-direction grid */
+  .bazhai-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    max-width: 440px;
+    margin: 0 auto 1rem;
+  }
+  .bazhai-cell {
+    background: #0a0606;
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 6px;
+    padding: 0.7rem 0.35rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.18s;
+    position: relative;
+  }
+  .bazhai-cell:hover { border-color: var(--gold); box-shadow: 0 0 12px rgba(201,168,76,0.2); }
+  .bazhai-cell.ji  { border-color: rgba(80,180,80,0.45); }
+  .bazhai-cell.xiong { border-color: rgba(180,50,50,0.45); }
+  .bazhai-cell.center { cursor: default; background: transparent; border: none; }
+
+  .bazhai-cell-dir  { font-size: 0.6rem; color: var(--text-dim); letter-spacing: 0.18em; margin-bottom: 0.2rem; }
+  .bazhai-cell-trigram { font-size: 1.2rem; line-height: 1; margin-bottom: 0.15rem; }
+  .bazhai-cell-label { font-size: 0.68rem; letter-spacing: 0.12em; }
+  .bazhai-cell-label.ji { color: #70d070; }
+  .bazhai-cell-label.xiong { color: #e05050; }
+  .bazhai-cell-star { font-size: 0.55rem; color: var(--text-dim); letter-spacing: 0.08em; margin-top: 0.1rem; }
+
+  .bazhai-paywall {
+    background: rgba(201,168,76,0.04);
+    border: 1px dashed rgba(201,168,76,0.3);
+    border-radius: 8px;
+    padding: 1.2rem;
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+  .bazhai-paywall-title {
+    font-size: 0.82rem; font-weight: 700;
+    color: var(--gold); letter-spacing: 0.35em;
+    margin-bottom: 0.5rem;
+  }
+
+  /* 八宅 detail panel */
+  .bazhai-detail-panel {
+    background: #120a0a;
+    border: 1px solid rgba(201,168,76,0.4);
+    border-radius: 12px 12px 0 0;
+    padding: 1.8rem 1.6rem 2.5rem;
+    width: min(520px, 100%);
+    max-height: 70vh;
+    overflow-y: auto;
+    animation: slideUp 0.28s ease-out;
+  }
+  .bazhai-star-icon { font-size: 2rem; text-align: center; display: block; margin-bottom: 0.3rem; }
+  .bazhai-detail-name {
+    font-size: 1rem; font-weight: 700;
+    color: var(--gold); text-align: center;
+    letter-spacing: 0.3em; margin-bottom: 0.2rem;
+  }
+  .bazhai-detail-sub {
+    text-align: center; font-size: 0.65rem;
+    color: var(--text-dim); letter-spacing: 0.22em; margin-bottom: 1.2rem;
+  }
+
   /* ── Add to Home Screen Banner ── */
   #a2hsBanner {
     position: fixed;
@@ -1053,6 +1229,71 @@
         <div class="dir-tip" id="dirTip"></div>
         <div class="personal-dir" id="personalDir" style="display:none"></div>
       </div>
+    </div>
+  </div>
+
+  <!-- ── 八宅命理分析 Card ──────────────────────────── -->
+  <div class="card" id="bazhaiCard">
+    <div class="cc tl"></div><div class="cc tr"></div>
+    <div class="cc bl"></div><div class="cc br"></div>
+    <div class="card-title">八 宅 命 理 分 析</div>
+
+    <div class="bazhai-input-row">
+      <div class="bazhai-field">
+        <span class="bazhai-label">出 生 年 份</span>
+        <input class="bazhai-input" type="number" id="bazhaiYear" placeholder="例：1990"
+          min="1900" max="2099" inputmode="numeric">
+      </div>
+      <div class="bazhai-field">
+        <span class="bazhai-label">性 別</span>
+        <select class="bazhai-select" id="bazhaiGender">
+          <option value="male">男</option>
+          <option value="female">女</option>
+        </select>
+      </div>
+      <button class="btn-bazhai-calc" onclick="calcBazhai()">計 算 命 卦</button>
+    </div>
+
+    <!-- Result area (hidden until calculated) -->
+    <div class="bazhai-result-box" id="bazhaiResult">
+
+      <!-- 命卦顯示 -->
+      <div class="bazhai-kua-row">
+        <div class="bazhai-kua-badge">
+          <div class="bazhai-kua-num" id="bKuaGua"></div>
+          <div class="bazhai-kua-name" id="bKuaName"></div>
+          <div class="bazhai-kua-group" id="bKuaGroup"></div>
+        </div>
+        <div class="bazhai-kua-badge" id="bDoorBadge">
+          <div class="bazhai-kua-num" id="bDoorGua"></div>
+          <div class="bazhai-kua-name" id="bDoorName"></div>
+          <div class="bazhai-kua-group">大門朝向</div>
+        </div>
+      </div>
+
+      <!-- 宅命相配 -->
+      <div class="bazhai-compat-strip" id="bCompatStrip">
+        <span id="bCompatText"></span>
+        <span class="bazhai-compat-detail" id="bCompatDetail"></span>
+      </div>
+
+      <!-- 八方位吉凶格 (3×3, center = 命卦圖示) -->
+      <div class="bazhai-grid" id="bazhaiGrid"></div>
+
+      <!-- 付費牆 -->
+      <div class="bazhai-paywall" id="bazhaiPaywall">
+        <div class="paywall-lock">🔒</div>
+        <div class="bazhai-paywall-title">完 整 八 方 位 建 議　解 鎖</div>
+        <ul class="paywall-list" style="margin-bottom:0.9rem;">
+          <li>客廳、主人房最佳方位擺設</li>
+          <li>廚房爐灶、書房書桌最旺方向</li>
+          <li>各方位詳細催旺化煞建議</li>
+          <li>配合流年飛星個人化分析</li>
+        </ul>
+        <div style="font-size:0.65rem;color:rgba(201,168,76,0.7);letter-spacing:0.08em;margin-bottom:0.7rem;">單次八宅報告 HKD$98 · $98/月會員無限次</div>
+        <button class="btn-unlock" onclick="if(typeof openSubscribeModal==='function')openSubscribeModal('monthly')">解 鎖 完 整 分 析</button>
+      </div>
+
     </div>
   </div>
 
@@ -1436,6 +1677,33 @@
   </div>
 
 </main>
+
+<!-- ── 八宅 Detail Panel ──────────────────────────── -->
+<div class="detail-overlay" id="bazhaiDetailOverlay" onclick="closeBazhaiDetail(event)">
+  <div class="bazhai-detail-panel">
+    <button class="detail-close" onclick="document.getElementById('bazhaiDetailOverlay').classList.remove('open')">✕</button>
+    <span class="bazhai-star-icon" id="bdIcon"></span>
+    <div class="bazhai-detail-name" id="bdName"></div>
+    <div class="bazhai-detail-sub" id="bdSub"></div>
+    <div class="detail-section-title">吉 凶 影 響</div>
+    <div class="detail-text" id="bdEffect"></div>
+    <div class="detail-section-title" style="margin-top:1rem;">免 費 建 議</div>
+    <div class="detail-tip" id="bdFreeTip"></div>
+    <div id="bdPaidSection" style="margin-top:1rem;display:none;">
+      <div class="detail-section-title">客 廳 ／ 主 人 房</div>
+      <div class="detail-tip" id="bdLiving"></div>
+      <div class="detail-section-title" style="margin-top:0.8rem;">廚 房 ／ 書 房</div>
+      <div class="detail-tip" id="bdKitchen"></div>
+    </div>
+    <div id="bdPayLock" style="margin-top:1rem;text-align:center;padding:0.8rem;border:1px dashed rgba(201,168,76,0.3);border-radius:6px;">
+      <div style="font-size:0.85rem;color:var(--text-dim);margin-bottom:0.5rem;">🔒 付費解鎖完整擺設建議</div>
+      <button class="btn-unlock" style="font-size:0.72rem;padding:0.5rem 1.2rem;"
+        onclick="document.getElementById('bazhaiDetailOverlay').classList.remove('open');if(typeof openSubscribeModal==='function')openSubscribeModal('monthly')">
+        HKD$98 解 鎖 報 告
+      </button>
+    </div>
+  </div>
+</div>
 
 <!-- ── Flying Star Detail Panel ──────────────────── -->
 <div class="detail-overlay" id="detailOverlay" onclick="closeDetail(event)">
@@ -1986,10 +2254,258 @@ function closeMobMore() {
   document.getElementById('mobMoreOverlay').classList.remove('open');
 }
 
+// ── 八宅命理分析 ──────────────────────────────────────────
+
+// BAZHAI_MAP — 依八宅明鏡大游年歌訣直接重建
+// 口訣：乾六天五祸绝延生 / 坎五天生延绝祸六 / 艮六绝祸生延天五 / 震延生祸绝五天六
+//       巽天五六祸生绝延 / 离六五绝延祸生天 / 坤天延绝生祸五六 / 兑生祸延绝六五天
+// 順時針方位：坎→艮→震→巽→離→坤→兌→乾→坎
+// 對每個卦X：本身=伏位，口訣7字依次對應X後7個順時針方位
+// 東四命：坎(N)、震(E)、巽(SE)、離(S)
+// 西四命：乾(NW)、坤(SW)、兌(W)、艮(NE)
+const BAZHAI_MAP = {
+  '坎': { 生氣:'巽', 天醫:'震', 延年:'離', 伏位:'坎', 禍害:'兌', 六煞:'乾', 絕命:'坤', 五鬼:'艮' },
+  '離': { 生氣:'震', 天醫:'巽', 延年:'坎', 伏位:'離', 禍害:'艮', 六煞:'坤', 絕命:'乾', 五鬼:'兌' },
+  '震': { 生氣:'離', 天醫:'坎', 延年:'巽', 伏位:'震', 禍害:'坤', 六煞:'艮', 絕命:'兌', 五鬼:'乾' },
+  '巽': { 生氣:'坎', 天醫:'離', 延年:'震', 伏位:'巽', 禍害:'乾', 六煞:'兌', 絕命:'艮', 五鬼:'坤' },
+  '乾': { 生氣:'兌', 天醫:'艮', 延年:'坤', 伏位:'乾', 禍害:'巽', 六煞:'坎', 絕命:'離', 五鬼:'震' },
+  '坤': { 生氣:'艮', 天醫:'兌', 延年:'乾', 伏位:'坤', 禍害:'震', 六煞:'離', 絕命:'坎', 五鬼:'巽' },
+  '兌': { 生氣:'乾', 天醫:'坤', 延年:'艮', 伏位:'兌', 禍害:'坎', 六煞:'巽', 絕命:'震', 五鬼:'離' },
+  '艮': { 生氣:'坤', 天醫:'乾', 延年:'兌', 伏位:'艮', 禍害:'離', 六煞:'震', 絕命:'巽', 五鬼:'坎' }
+};
+
+const KUA_MAP = { 1:'坎', 2:'坤', 3:'震', 4:'巽', 6:'乾', 7:'兌', 8:'艮', 9:'離' };
+const EAST4 = new Set(['坎','震','巽','離']);
+const DIR_TO_TRIGRAM = { '北':'坎','南':'離','東':'震','西':'兌','東南':'巽','西南':'坤','西北':'乾','東北':'艮' };
+const TRIGRAM_TO_GUA  = { '坎':'☵','離':'☲','震':'☳','兌':'☱','巽':'☴','坤':'☷','乾':'☰','艮':'☶' };
+const AUSPICIOUS_LABELS = new Set(['生氣','天醫','延年','伏位']);
+
+// Lo Shu-style 3×3 grid order: NW N NE / W C E / SW S SE
+// We reorder as: 西北 北 東北 / 西 [中] 東 / 西南 南 東南
+const BAZHAI_GRID_ORDER = ['西北','北','東北','西',null,'東','西南','南','東南'];
+
+// 每個吉凶位的說明和建議
+const STAR_INFO = {
+  '生氣': {
+    icon: '🌟', label: '生氣（貪狼）', type: 'ji', rank: '四吉之首',
+    effect: '生氣為最旺吉氣，主財運豐盛、事業騰飛、子孫繁榮。此方氣場最為旺盛，利一切積極向上之事。',
+    free: '大門宜朝此方向，氣路順暢財運旺。臥室頭部宜朝此方，睡眠質素提升，精力充沛。',
+    living: '客廳沙發背靠此方牆壁，坐位面向此方，有助一家之主事業財運。主人房床頭可朝此方，催旺貴人運。',
+    kitchen: '書房書桌宜朝此方，思維清晰、事業進展順利。廚房爐灶宜在此方，財氣豐盛。'
+  },
+  '天醫': {
+    icon: '💚', label: '天醫（巨門）', type: 'ji', rank: '四吉之二',
+    effect: '天醫主健康長壽、貴人助力、化解是非。此方有益健康，病者宜朝此方休息，有助康復。',
+    free: '睡房宜選在此方位，對健康特別有利。家中長者、體弱者的床位宜朝此方向。',
+    living: '客廳可在此方放置植物或魚缸，旺健康運。主人房、老人房宜設於此方，庇佑全家健康。',
+    kitchen: '廚房設於此方，家人飲食健康有保障。書房在此方利於思維清晰，讀書效率高。'
+  },
+  '延年': {
+    icon: '💛', label: '延年（武曲）', type: 'ji', rank: '四吉之三',
+    effect: '延年主婚姻和諧、感情順遂、人際關係良好。夫妻宮位，利感情穩定，凡事從長計議、持久穩定。',
+    free: '婚房、夫妻臥室宜在此方，感情穩固。客廳設於此方，一家人感情融洽、家庭和諧。',
+    living: '客廳、飯廳設於此方，家人感情融洽。夫妻睡房宜朝此方，有助感情長久穩定。',
+    kitchen: '廚房在此方，主飲食和諧，家人相處融洽。書房在此方，辦事穩重持久，適合長期計劃。'
+  },
+  '伏位': {
+    icon: '🔵', label: '伏位（輔弼）', type: 'ji', rank: '四吉之末',
+    effect: '伏位穩定守護，主家宅安穩、守成保業。此方不主進取，但守護平安，適合靜養休息。',
+    free: '此方宜靜不宜動，適合儲物、靜坐、冥想。家中老人、小孩房間可設於此方，安穩平靜。',
+    living: '客廳可在此方放書架、儲物，保持整潔。睡房選在此方，睡眠安穩，適合需要靜養之人。',
+    kitchen: '書房在此方，思緒穩定，適合需要深度集中的學習。廚房在此方，飲食規律，健康有節。'
+  },
+  '禍害': {
+    icon: '⚠️', label: '禍害（祿存）', type: 'xiong', rank: '四凶之末',
+    effect: '禍害主口舌是非、小事不順、財運小損。四凶中程度最輕，宜化解，忌在此方重要擺設或開門。',
+    free: '此方忌開大門、主房門。可放化煞物品如六帝錢、葫蘆等化解不利氣場。',
+    living: '客廳忌將此方設為主座位。廁所、儲物室設於此方，以穢氣制凶，反而化解。',
+    kitchen: '廚房忌設在此方，易生口舌。書房忌設在此方，思緒易受干擾，決策多失誤。'
+  },
+  '五鬼': {
+    icon: '🔴', label: '五鬼（廉貞）', type: 'xiong', rank: '四凶之三',
+    effect: '五鬼主火災、盜賊、小人是非、意外血光。需特別防範，此方切勿設主要臥室或辦公位置。',
+    free: '此方嚴禁開門或設主要房間。可在此方放粗鹽、五帝錢化煞，保持整潔，減少停留時間。',
+    living: '此方最宜設廁所、儲物室，以重物鎮壓凶氣。切勿設主人房、客廳。',
+    kitchen: '廚房可在此方（火制五鬼之凶）。書房絕對避免設在此方，影響判斷力及易招小人。'
+  },
+  '六煞': {
+    icon: '🟠', label: '六煞（文曲）', type: 'xiong', rank: '四凶之二',
+    effect: '六煞主感情桃花困擾、酒色損財、失眠多夢。此方對感情、睡眠最不利，需要化解。',
+    free: '此方忌設臥室，尤忌床頭朝此方向，容易失眠多夢、感情不順。可放黑色水晶或葫蘆化解。',
+    living: '此方忌設主人房、夫妻臥室，感情易生波折。客廳可設於此方，以流動人氣化解靜煞。',
+    kitchen: '廚房忌在此方，主飲食不節、財運散漫。書房可設於此方（學業使六煞之能量正面轉化）。'
+  },
+  '絕命': {
+    icon: '🔴', label: '絕命（破軍）', type: 'xiong', rank: '四凶之首',
+    effect: '絕命為最凶之煞，主重病、損丁、破財、大凶意外。此方是最需要化解的方位，切勿在此安床、開門。',
+    free: '此方嚴禁開大門或設主要臥室。宜在此方放六帝錢、山海鎮化煞，或設廁所以穢氣制凶。',
+    living: '此方最宜設廁所或儲物室（以穢制凶）。切勿設主人房、兒童房，凶氣影響最嚴重。',
+    kitchen: '廚房可設在此方（以火洩凶氣）。書房、辦公位絕對不可在此方，影響決策、多招失敗。'
+  }
+};
+
+let currentKua = null;
+let currentKuaTrigram = null;
+
+function calcKuaNumber(year, gender) {
+  const yy = year % 100;
+  const digitSum = Math.floor(yy / 10) + (yy % 10);
+  // Handle multi-digit sums (e.g. yy=99 → 18 → 1+8=9... but formula uses raw sum)
+  let kua;
+  if (gender === 'male') {
+    kua = (100 - digitSum) % 9;
+    if (kua === 0) kua = 9;
+  } else {
+    kua = (digitSum + 5) % 9;
+    if (kua === 0) kua = 9;
+  }
+  // 命卦5：男→坤(2)，女→艮(8)
+  if (kua === 5) kua = (gender === 'male') ? 2 : 8;
+  return kua;
+}
+
+function calcBazhai() {
+  const yearVal = parseInt(document.getElementById('bazhaiYear').value);
+  const gender  = document.getElementById('bazhaiGender').value;
+  if (!yearVal || yearVal < 1900 || yearVal > 2099) {
+    document.getElementById('bazhaiYear').focus();
+    return;
+  }
+
+  const kua = calcKuaNumber(yearVal, gender);
+  const trigram = KUA_MAP[kua];
+  currentKua = kua;
+  currentKuaTrigram = trigram;
+
+  const isE4 = EAST4.has(trigram);
+  const gua = TRIGRAM_TO_GUA[trigram] || '☯';
+
+  // 命卦顯示
+  document.getElementById('bKuaGua').textContent   = gua;
+  document.getElementById('bKuaName').textContent  = trigram + '命（' + kua + '）';
+  document.getElementById('bKuaGroup').textContent = isE4 ? '東 四 命' : '西 四 命';
+
+  // 大門朝向（根據目前指南針讀數）
+  const facingDir = getDirectionFromDeg(currentDeg);
+  const doorTrigram = DIR_TO_TRIGRAM[facingDir] || null;
+  const doorGua = doorTrigram ? TRIGRAM_TO_GUA[doorTrigram] : '☯';
+  document.getElementById('bDoorGua').textContent  = doorTrigram ? doorGua : '—';
+  document.getElementById('bDoorName').textContent = doorTrigram ? (doorTrigram + '宅') : '未啟動指南針';
+
+  // 宅命相配
+  const strip = document.getElementById('bCompatStrip');
+  const compatText = document.getElementById('bCompatText');
+  const compatDetail = document.getElementById('bCompatDetail');
+
+  if (doorTrigram) {
+    const doorIsE4 = EAST4.has(doorTrigram);
+    const matched = isE4 === doorIsE4;
+    strip.className = 'bazhai-compat-strip ' + (matched ? 'match' : 'nomatch');
+    compatText.textContent = matched ? '✓ 宅 命 相 配　大 吉' : '⚠ 宅 命 不 配';
+    const matchLabel = (isE4 ? '東四命' : '西四命') + ' + ' +
+      (doorIsE4 ? '東四宅（' : '西四宅（') + facingDir + '門）';
+    compatDetail.textContent = matched
+      ? matchLabel + '　同氣相求，宅氣與命卦相合，居住大旺'
+      : matchLabel + '　宅命相剋，建議從化解方位入手調整佈局';
+  } else {
+    strip.className = 'bazhai-compat-strip';
+    strip.style.background = 'rgba(201,168,76,0.06)';
+    strip.style.border = '1px solid rgba(201,168,76,0.25)';
+    strip.style.color = 'var(--text-dim)';
+    compatText.textContent = '請啟動指南針以判斷大門朝向';
+    compatDetail.textContent = '';
+  }
+
+  // 八方位格
+  buildBazhaiGrid(trigram, facingDir);
+
+  document.getElementById('bazhaiResult').style.display = 'block';
+}
+
+function buildBazhaiGrid(trigram, currentFacingDir) {
+  const map = BAZHAI_MAP[trigram];
+  const grid = document.getElementById('bazhaiGrid');
+  grid.innerHTML = '';
+
+  // Reverse lookup: direction → 吉凶標籤
+  const dirLabel = {};
+  Object.entries(map).forEach(([label, t]) => {
+    // find direction for this trigram
+    const dir = Object.entries(DIR_TO_TRIGRAM).find(([d, tri]) => tri === t);
+    if (dir) dirLabel[dir[0]] = label;
+  });
+  // 伏位 = self
+  const selfDir = Object.entries(DIR_TO_TRIGRAM).find(([d, tri]) => tri === trigram);
+  if (selfDir) dirLabel[selfDir[0]] = '伏位';
+
+  BAZHAI_GRID_ORDER.forEach((dir, i) => {
+    const cell = document.createElement('div');
+    if (!dir) {
+      // Center cell: show 命卦
+      cell.className = 'bazhai-cell center';
+      cell.innerHTML = `<div style="font-size:0.58rem;color:var(--text-dim);letter-spacing:0.15em;margin-bottom:0.2rem;">命 卦</div>
+        <div style="font-size:1.6rem;color:var(--gold);line-height:1;">${TRIGRAM_TO_GUA[trigram]||'☯'}</div>
+        <div style="font-size:0.6rem;color:var(--gold);letter-spacing:0.1em;margin-top:0.15rem;">${trigram}</div>`;
+      grid.appendChild(cell);
+      return;
+    }
+
+    const label = dirLabel[dir] || '';
+    const isJi = AUSPICIOUS_LABELS.has(label);
+    const isFacing = (dir === currentFacingDir);
+    const dirTrigram = DIR_TO_TRIGRAM[dir] || '';
+    const guaSym = TRIGRAM_TO_GUA[dirTrigram] || '';
+    const info = STAR_INFO[label] || {};
+
+    cell.className = 'bazhai-cell ' + (isJi ? 'ji' : 'xiong') + (isFacing ? ' glow' : '');
+    if (isFacing) cell.style.boxShadow = '0 0 14px rgba(201,168,76,0.35)';
+    cell.innerHTML = `
+      <div class="bazhai-cell-dir">${dir}${isFacing ? ' ●' : ''}</div>
+      <div class="bazhai-cell-trigram">${guaSym}</div>
+      <div class="bazhai-cell-label ${isJi ? 'ji' : 'xiong'}">${label}</div>
+      <div class="bazhai-cell-star">${info.rank || ''}</div>`;
+    cell.addEventListener('click', () => openBazhaiDetail(dir, label, dirTrigram));
+    grid.appendChild(cell);
+  });
+}
+
+function openBazhaiDetail(dir, label, trigram) {
+  const info = STAR_INFO[label];
+  if (!info) return;
+  const isJi = AUSPICIOUS_LABELS.has(label);
+  document.getElementById('bdIcon').textContent = info.icon;
+  document.getElementById('bdName').textContent = info.label;
+  document.getElementById('bdSub').textContent = dir + '方 · ' + (TRIGRAM_TO_GUA[trigram]||'') + ' ' + trigram + '卦 · ' + info.rank;
+  document.getElementById('bdEffect').textContent = info.effect;
+  document.getElementById('bdFreeTip').textContent = info.free;
+  // Paid section hidden (Phase 4)
+  document.getElementById('bdPaidSection').style.display = 'none';
+  document.getElementById('bdPayLock').style.display = 'block';
+  document.getElementById('bazhaiDetailOverlay').classList.add('open');
+}
+
+function closeBazhaiDetail(e) {
+  if (e.target === document.getElementById('bazhaiDetailOverlay')) {
+    document.getElementById('bazhaiDetailOverlay').classList.remove('open');
+  }
+}
+
+function bazhaiAutoFill() {
+  // 嘗試從 localStorage profiles 自動帶入出生年份+性別
+  try {
+    const profiles = JSON.parse(localStorage.getItem('profiles') || '[]');
+    const active = profiles.find(p => p.active) || profiles[0];
+    if (active && active.year) {
+      document.getElementById('bazhaiYear').value = active.year;
+    }
+  } catch(e) {}
+}
+
 // ── Init ──────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   buildFsGrid();
   build24MtnRing();
+  bazhaiAutoFill();
   const count = parseInt(localStorage.getItem('compassRegCount') || '66');
   document.getElementById('regCount').textContent = count;
 
