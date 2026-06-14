@@ -2,3 +2,4 @@
 node_modules/
 .Rhistory
 .claude/
+scripts/cache/
