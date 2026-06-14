@@ -877,6 +877,55 @@
       letter-spacing: 0.07em; line-height: 1.9; opacity: 0.55;
     }
 
+    /* ── 五格剖象法 ── */
+    .kx-section-title {
+      font-size: 0.65rem; color: var(--text-dim); letter-spacing: 0.45em;
+      text-align: center; margin: 1.2rem 0 0.8rem;
+    }
+    .kx-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .kx-card {
+      border-radius: 7px;
+      padding: 0.7rem 0.4rem;
+      text-align: center;
+      border: 2px solid;
+      transition: transform 0.2s;
+    }
+    .kx-card.ji  { border-color: var(--wood); background: rgba(80,180,100,0.07); }
+    .kx-card.xiong { border-color: var(--fire); background: rgba(220,80,60,0.07); }
+    .kx-card-name { font-size: 0.58rem; letter-spacing: 0.3em; color: var(--text-dim); margin-bottom: 0.3rem; }
+    .kx-card-num  { font-size: 1.1rem; font-weight: 700; color: var(--gold); line-height: 1; }
+    .kx-card-level { font-size: 0.75rem; font-weight: 700; margin: 0.2rem 0; }
+    .kx-card.ji  .kx-card-level { color: var(--wood); }
+    .kx-card.xiong .kx-card-level { color: var(--fire); }
+    .kx-card-el   { font-size: 0.6rem; color: var(--text-dim); }
+    .kx-card-desc { font-size: 0.58rem; color: var(--text-dim); margin-top: 0.25rem; line-height: 1.6; }
+    .kx-overall {
+      text-align: center; padding: 0.6rem; border-radius: 6px;
+      margin-bottom: 1rem; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.3em;
+    }
+    .kx-overall.daji  { background: rgba(80,180,100,0.12); color: var(--wood); border: 1px solid rgba(80,180,100,0.3); }
+    .kx-overall.zhongji { background: rgba(201,168,76,0.12); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+    .kx-overall.ping  { background: rgba(255,255,255,0.05); color: var(--text-dim); border: 1px solid rgba(255,255,255,0.1); }
+    .kx-overall.zhuyi { background: rgba(220,80,60,0.10); color: var(--fire); border: 1px solid rgba(220,80,60,0.25); }
+    .kx-est-note { font-size: 0.6rem; color: rgba(201,168,76,0.55); text-align: center; margin-top: -0.5rem; margin-bottom: 0.8rem; }
+    .kx-strokes-row { display: flex; justify-content: center; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.7rem; }
+    .kx-stroke-chip {
+      font-size: 0.65rem; padding: 0.15rem 0.55rem;
+      border: 1px solid rgba(201,168,76,0.3); border-radius: 20px;
+      color: var(--text-dim); background: rgba(201,168,76,0.05);
+      letter-spacing: 0.05em;
+    }
+    @media (max-width: 480px) {
+      .kx-grid { grid-template-columns: repeat(5,1fr); gap: 0.3rem; }
+      .kx-card { padding: 0.5rem 0.2rem; }
+      .kx-card-desc { display: none; }
+    }
+
     @media (max-width: 600px) {
       .scene-grid { grid-template-columns: repeat(3,1fr); gap: 0.5rem; }
       .scene-name { font-size: 0.7rem; }
@@ -3194,9 +3243,16 @@
       <!-- ── 成人改名 Form ── -->
       <div class="scene-form" id="form-adult">
         <div class="rename-form-grid">
-          <div class="rename-fg-full">
+          <div>
             <label class="rename-form-label">現有全名（包括姓氏）</label>
             <input class="rename-input" id="rnAdultName" placeholder="例：陳志明" autocomplete="off">
+          </div>
+          <div>
+            <label class="rename-form-label">姓氏字數</label>
+            <select class="rename-select" id="rnAdultSurnameLen">
+              <option value="1">單姓（1字）</option>
+              <option value="2">複姓（2字）</option>
+            </select>
           </div>
           <div>
             <label class="rename-form-label">出生年份</label>
@@ -3292,16 +3348,19 @@
         <!-- Free result grid -->
         <div class="rn-free-grid" id="rnFreeGrid"></div>
 
-        <!-- Score bars (adult only) -->
-        <div id="rnScoreBars" style="display:none;margin-bottom:1.2rem">
-          <p style="font-size:0.65rem;color:var(--text-dim);letter-spacing:0.35em;margin-bottom:0.7rem">名 字 五 行 評 分</p>
-          <div id="rnScoreBarsInner"></div>
+        <!-- 五格剖象法（成人改名 / 新生兒命名 顯示） -->
+        <div id="rnFiveGridSection" style="display:none;">
+          <p class="kx-section-title">康 熙 字 典 五 格 剖 象 法</p>
+          <div class="kx-strokes-row" id="kxStrokesRow"></div>
+          <div class="kx-grid" id="kxGrid"></div>
+          <div class="kx-overall" id="kxOverall"></div>
+          <div class="kx-est-note" id="kxEstNote" style="display:none;">※ 部分用字筆劃為估算值，僅供參考</div>
         </div>
 
         <!-- Paid section -->
         <div class="rn-paid-section">
           <div class="rn-paid-title" id="rnPaidTitle">✦ 完 整 改 名 AI 報 告</div>
-          <div class="da-report-free-line" id="rnFreeLine" style="margin-bottom:0.5rem;">輸入姓名後顯示五行評分提示</div>
+          <div class="da-report-free-line" id="rnFreeLine" style="margin-bottom:0.5rem;">輸入姓名後顯示五格分析</div>
           <div class="rn-paid-preview" id="rnPaidPreview">完整報告包含10個推薦名字，每個名字附筆劃五行分析、音義解說、與命格配合度評分…</div>
           <div style="font-size:0.62rem;color:var(--text-dim);letter-spacing:0.07em;margin:0.35rem 0 0.5rem;line-height:1.7;">
             💡 深度改名報告：HKD$128 · 10個推薦名字+康熙筆劃+五行評分
@@ -3309,8 +3368,7 @@
           <button class="rn-unlock-btn" id="rnUnlockBtn">🔓 HKD$128 · 解 鎖 完 整 報 告</button>
         </div>
 
-        <p class="rn-disclaimer">以上分析僅供參考，完整改名建議請諮詢專業命理師<br>筆劃五行以康熙字典筆劃為準，本系統採簡化演算</p>
-        <p style="font-size:0.62rem;color:rgba(201,168,76,0.6);text-align:center;margin-top:0.6rem;letter-spacing:0.05em;line-height:1.6;">＊五行屬性以偏旁部首作簡化分析，如需精準筆劃五行分析，請選擇深度改名報告</p>
+        <p class="rn-disclaimer">以上分析僅供參考，完整改名建議請諮詢專業命理師<br>筆劃以康熙字典為準，未收錄字以估算值代替</p>
       </div>
     </div>
 
@@ -4888,6 +4946,63 @@ const BIZ_INDUSTRY_NAME = {
 
 const EL_COLOR_HEX = {'木':'var(--wood)','火':'var(--fire)','土':'var(--earth)','金':'var(--metal)','水':'var(--water)'};
 
+// ── 渲染康熙五格剖象法 ────────────────────────────────────
+function renderFiveGrid(fullName, surnameLen) {
+  const parsed = parseNameStrokes(fullName, surnameLen);
+  const section = document.getElementById('rnFiveGridSection');
+  if (!parsed || parsed.givenNameStrokes.length === 0) {
+    section.style.display = 'none';
+    return;
+  }
+
+  const grids = calculateFiveGrids(parsed.surnameStrokes, parsed.givenNameStrokes);
+  const gridNames = ['天格','人格','地格','外格','總格'];
+  const gridKeys  = ['天格','人格','地格','外格','總格'];
+
+  // 筆劃明細 row
+  const allChars = [...parsed.surnameChars, ...parsed.givenChars];
+  const strokesRow = document.getElementById('kxStrokesRow');
+  strokesRow.innerHTML = allChars.map(c => {
+    const r = getKangxiStrokes(c);
+    return `<span class="kx-stroke-chip">${c} ${r.strokes}${r.estimated ? '≈' : ''}</span>`;
+  }).join('');
+
+  // 五格卡片
+  let jiCount = 0;
+  const kxGrid = document.getElementById('kxGrid');
+  kxGrid.innerHTML = gridKeys.map((key, i) => {
+    const num   = grids[key];
+    const info  = lookupShu(num);
+    const el    = getWuxingByNumber(num);
+    const isJi  = info.level === '吉';
+    if (isJi) jiCount++;
+    return `<div class="kx-card ${isJi ? 'ji' : 'xiong'}">
+      <div class="kx-card-name">${gridNames[i]}</div>
+      <div class="kx-card-num">${num}</div>
+      <div class="kx-card-level">${info.level}</div>
+      <div class="kx-card-el">屬${el}</div>
+      <div class="kx-card-desc">${info.desc}</div>
+    </div>`;
+  }).join('');
+
+  // 整體評分
+  const overall = document.getElementById('kxOverall');
+  let overallText, overallClass;
+  if (jiCount === 5)      { overallText = '✦ 大 吉 ✦  五格全吉，名字格局極佳'; overallClass = 'daji'; }
+  else if (jiCount >= 3)  { overallText = `✦ 中 吉 ✦  五格中${jiCount}吉，名字格局良好`; overallClass = 'zhongji'; }
+  else if (jiCount >= 1)  { overallText = `▲ 平  ▲  五格中${jiCount}吉，名字尚可`; overallClass = 'ping'; }
+  else                    { overallText = '▼ 需注意 ▼  五格皆凶，建議重新考慮'; overallClass = 'zhuyi'; }
+  overall.textContent = overallText;
+  overall.className = `kx-overall ${overallClass}`;
+
+  // 估算提示
+  const estNote = document.getElementById('kxEstNote');
+  estNote.style.display = parsed.hasEstimated ? 'block' : 'none';
+
+  section.style.display = 'block';
+  return { jiCount, grids };
+}
+
 function analyzeRename(scene) {
   let pillars, name = '', surname = '', gender = '', industry = '';
   let year, month, day, shichen;
@@ -4926,6 +5041,9 @@ function analyzeRename(scene) {
 
   let freeCards = [], paidTitle = '', paidPreview = '', unlockLabel = '';
 
+  // 隱藏五格區（各場景按需顯示）
+  document.getElementById('rnFiveGridSection').style.display = 'none';
+
   if (scene === 'baby') {
     document.getElementById('rnResultTitle').textContent = '新 生 兒 命 名 分 析';
     const gLabel = gender === 'm' ? '男寶寶' : gender === 'f' ? '女寶寶' : '寶寶';
@@ -4939,52 +5057,38 @@ function analyzeRename(scene) {
         val: gender==='f' ? '宜選音韻柔和，如「妍、雅、琳、欣」' : '宜選音韻響亮，如「朗、峻、霖、博」',
         sub: `${gLabel}取名音韻建議` },
     ];
-    paidTitle   = '✦ 10個完整推薦名字 + 筆劃五行評分';
-    paidPreview = `為${surname||''}${gLabel}精心推薦10個吉名：${surname||'○'}○○、${surname||'○'}○○…每個名字附康熙字典筆劃分析、五行配合分數、音義解說及適合改名時機…`;
+    // 如已填姓氏，顯示五格（姓+示例名佔位，用戶命名後完整分析）
+    if (surname) {
+      // 示例用途：僅顯示姓氏五格參考
+      const sLen = parseInt(surname.length) || 1;
+      // 新生兒暫無名字，只做姓氏說明
+      const exNote = document.getElementById('kxEstNote');
+    }
+    paidTitle   = '✦ 10個完整推薦名字 + 康熙五格評分';
+    paidPreview = `為${surname||''}${gLabel}精心推薦10個吉名，每個名字均以康熙字典筆劃計算五格剖象法，確保天格、人格、地格、外格、總格皆吉，附音義解說及命格配合度評分…`;
     unlockLabel = `🔓 HKD$128 · 解 鎖 10 個 推 薦 名 字`;
 
   } else if (scene === 'adult') {
     document.getElementById('rnResultTitle').textContent = '成 人 改 名 分 析';
-    const nameCnt   = nameToElements(name);
-    const nameEls   = EL_LIST.filter(e => nameCnt[e] > 0);
-    const totalName = Object.values(nameCnt).reduce((a,b)=>a+b,0);
 
-    // Compatibility: how well does name complement bazi
-    let compat = 60;
-    EL_LIST.forEach(e => {
-      if (bazCnt[e] === 0 && nameCnt[e] > 0) compat += 10; // name fills bazi gap
-      if (bazCnt[e] >= 3 && nameCnt[e] > 0) compat -= 6;   // name adds to already strong el
-    });
-    const seed2 = (year * 3 + day * 7 + name.charCodeAt(0)) % 15 - 7;
-    compat = Math.max(28, Math.min(96, compat + seed2));
+    const surnameLen = parseInt(document.getElementById('rnAdultSurnameLen').value) || 1;
+    const fiveResult = renderFiveGrid(name, surnameLen);
 
-    const compatColor = compat >= 75 ? 'var(--wood)' : compat >= 55 ? 'var(--earth)' : 'var(--fire)';
-    const compatLabel = compat >= 75 ? '配合良好' : compat >= 55 ? '尚可接受' : '建議改善';
+    let jiCount = fiveResult ? fiveResult.jiCount : 0;
+    const compatScore = Math.round(20 + jiCount * 16);
+    const compatColor = jiCount >= 4 ? 'var(--wood)' : jiCount >= 2 ? 'var(--earth)' : 'var(--fire)';
+    const compatLabel = jiCount >= 4 ? '五格配合良好' : jiCount >= 2 ? '五格尚可' : '建議重新命名';
 
     freeCards = [
-      { icon:'📛', label:'現有名字', val: name, sub:`共${name.length}字，五行屬性分析如下` },
-      { icon:'⚗️', label:'名字主要五行', val: nameEls.length ? nameEls.join('、') : '—',
-        sub:`名字五行組成：${EL_LIST.map(e=>nameCnt[e]?`${e}×${nameCnt[e]}`:'').filter(Boolean).join(' ')}` },
-      { icon:'🎯', label:'與命格配合度', val:`${compat}%`, sub: compatLabel, score: compat, scoreColor: compatColor },
-      { icon:'💡', label:'改名方向建議',
+      { icon:'📛', label:'現有名字', val: name, sub:`共${name.length}字，五格剖象分析如下` },
+      { icon:'🔮', label:'命格日主', val:`${STEMS[pillars[2].stem]}${dayEl}`, sub:`日主五行屬${dayEl}，命格核心能量` },
+      { icon:'🎯', label:'五格吉凶配合', val:`${jiCount}/5格吉`, sub: compatLabel, score: compatScore, scoreColor: compatColor },
+      { icon:'💡', label:'改名五行方向',
         val:`宜補${lackEl}氣用字`, sub: RN_RADICALS[lackEl].reason, extra: RN_RADICALS[lackEl].label },
     ];
 
-    // Score bars
-    document.getElementById('rnScoreBars').style.display = 'block';
-    document.getElementById('rnScoreBarsInner').innerHTML = EL_LIST.map(e => {
-      const pct = totalName ? Math.round(nameCnt[e]/totalName*100) : 0;
-      return `<div class="rn-score-wrap">
-        <span style="font-size:0.72rem;font-weight:700;width:1.1em;${EL_COLOR_HEX[e]?`color:${EL_COLOR_HEX[e]}`:''}">${e}</span>
-        <div class="rn-score-bar-track">
-          <div class="rn-score-bar" style="width:${pct}%;background:${EL_COLOR_HEX[e]}"></div>
-        </div>
-        <span class="rn-score-num">${pct}%</span>
-      </div>`;
-    }).join('');
-
-    paidTitle   = '✦ 改 名 建 議 方 向 + 推 薦 用 字';
-    paidPreview = `根據${name}的五行分析，深度改名報告包含：適合筆劃數範圍、30個推薦用字列表（含五行屬性）、每字音義分析、最佳改名時機（流年吉凶）、改名後運勢預測…`;
+    paidTitle   = '✦ 改 名 建 議 + 康 熙 五 格 推 薦 用 字';
+    paidPreview = `根據${name}的五格剖象分析，深度改名報告包含：人格吉數範圍、30個符合五格全吉的推薦用字列表、每字音義分析、最佳改名時機（流年吉凶）、改名後運勢預測…`;
     unlockLabel = `🔓 HKD$128 · 解 鎖 完 整 改 名 方 案`;
 
   } else {
@@ -4994,7 +5098,6 @@ function analyzeRename(scene) {
     const synergy = EL_GENERATES[dayEl] === indEl ? '相生，極為有利'
                   : EL_RESTRICTS[dayEl] === indEl ? '相剋，需注意'
                   : dayEl === indEl ? '同氣，志同道合' : '平和，可行';
-    document.getElementById('rnScoreBars').style.display = 'none';
     freeCards = [
       { icon:'👤', label:'創辦人日主', val:`${STEMS[pillars[2].stem]}${dayEl}`, sub:`命格核心五行屬${dayEl}` },
       { icon:'🏭', label:'行業五行屬性', val:`${indName}　屬${indEl}`, sub:`${indEl}行業與命格${dayEl}${synergy}` },
@@ -5003,8 +5106,8 @@ function analyzeRename(scene) {
         val: EL_GENERATES[dayEl] === indEl ? '天時地利，大力發展' : '穩紮穩打，循序漸進',
         sub:`日主${dayEl}與${indEl}行業五行關係：${synergy}` },
     ];
-    paidTitle   = '✦ 5 個 公 司 名 建 議 + 五 行 評 分';
-    paidPreview = `根據創辦人命格及${indName}行業屬性，精選5個公司名：○○科技、○○創新…每個名字附五行評分、筆劃吉凶分析、適合開業日期推算、公司命格走勢預測…`;
+    paidTitle   = '✦ 5 個 公 司 名 建 議 + 康 熙 五 格 評 分';
+    paidPreview = `根據創辦人命格及${indName}行業屬性，精選5個公司名，每個名字以康熙字典五格剖象法評分，確保總格吉數、人格旺氣，附開業日期推算、公司命格走勢預測…`;
     unlockLabel = `🔓 HKD$128 · 解 鎖 5 個 公 司 命 名 方 案`;
   }
 
@@ -5025,14 +5128,16 @@ function analyzeRename(scene) {
   document.getElementById('rnPaidPreview').textContent = paidPreview;
   document.getElementById('rnUnlockBtn').textContent   = unlockLabel;
 
-  // ── 深度改名：免費預覽一句話 ──
+  // 免費預覽提示
   const rnFreeEl = document.getElementById('rnFreeLine');
   if (rnFreeEl) {
     if (scene === 'adult' && name) {
-      const compatLabel2 = compat >= 75 ? '高' : compat >= 55 ? '中' : '低';
-      rnFreeEl.textContent = `您現有名字五行評分【${compat}分】，與命格配合度【${compatLabel2}】`;
+      const fiveResult2 = document.getElementById('rnFiveGridSection').style.display !== 'none';
+      rnFreeEl.textContent = fiveResult2
+        ? `已完成康熙五格剖象法分析，完整改名方案請解鎖深度報告`
+        : `輸入姓名後顯示康熙字典五格分析`;
     } else if (scene === 'baby') {
-      rnFreeEl.textContent = `您的寶寶命格屬【${dayEl}】，深度命名將以補${lackEl}氣為方向`;
+      rnFreeEl.textContent = `寶寶命格屬【${dayEl}】，深度命名以補${lackEl}氣、五格吉數為目標`;
     } else {
       rnFreeEl.textContent = `公司命格日主屬【${dayEl}】，與行業五行關係影響生意興衰`;
     }
@@ -5163,6 +5268,7 @@ function showNotifEnabled(btn, status) {
   </div>
 </div>
 
+<script src="kangxi-data.js"></script>
 <script src="auth.js"></script>
 <script src="notifications.js"></script>
 
