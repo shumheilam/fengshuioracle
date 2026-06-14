@@ -1716,8 +1716,21 @@ function handleOrientation(e) {
   let diff = heading - smoothedHeading;
   if (diff > 180) diff -= 360;
   if (diff < -180) diff += 360;
-  smoothedHeading += SMOOTHING * diff;
-  smoothedHeading = ((smoothedHeading % 360) + 360) % 360;
+
+  // 自適應平滑：變化大→快速追蹤，變化小→重平滑穩定
+  const absDiff = Math.abs(diff);
+  let adaptiveSmoothing;
+  if (absDiff > 15) {
+    adaptiveSmoothing = 0.35;  // 大幅度變化，快速追蹤
+  } else if (absDiff > 5) {
+    adaptiveSmoothing = 0.15;  // 中等變化，中等追蹤
+  } else {
+    adaptiveSmoothing = 0.05;  // 細微變化，保持穩定
+  }
+
+  smoothedHeading = smoothedHeading + adaptiveSmoothing * diff;
+  if (smoothedHeading < 0) smoothedHeading += 360;
+  if (smoothedHeading >= 360) smoothedHeading -= 360;
 
   const newHeading = Math.round(smoothedHeading);
   if (Math.abs(newHeading - currentDeg) >= DEAD_ZONE) {
