@@ -2885,7 +2885,7 @@
         <p class="card-title">日 主 強 弱 · 用 神 忌 神</p>
         <p class="da-section-sub">扶抑法 · 月令權重×2 · 量化命理標準</p>
         <div id="yongShenContent"></div>
-        <p class="ys-disclaimer">※ 本系統採用扶抑法計算日主強弱，月令權重參考量化命理常見比例（×2）。不同命理流派（如旺相休囚死定令法、月令權重50%以上等）對強弱判斷可能有不同結論，尤其對接近中和嘅命格更為明顯，僅供參考。</p>
+        <p class="ys-disclaimer">※ 本系統採用扶抑法計算日主強弱，以印+比劫對比財+官殺（食傷不計入強弱判斷），月令權重×2。不同命理流派對強弱判斷可能有不同結論，僅供參考。</p>
       </div>
     </div>
 
@@ -3657,7 +3657,7 @@ function calcYongShen(pillars) {
   const CAI_SS  = new Set(['偏財','正財']);
   const GS_SS   = new Set(['七殺','正官']);
 
-  let bangScore = 0, xieScore = 0;
+  let bangScore = 0, caiGsScore = 0;
   let bangYin = 0, bangBJ = 0;         // 印 vs 比劫
   let xieCS = 0, xieCai = 0, xieGS = 0; // 食傷 vs 財 vs 官殺
 
@@ -3667,10 +3667,9 @@ function calcYongShen(pillars) {
       bangScore += w;
       if (YIN_SS.has(ss)) bangYin += w; else bangBJ += w;
     } else {
-      xieScore += w;
-      if (CS_SS.has(ss)) xieCS += w;
-      else if (CAI_SS.has(ss)) xieCai += w;
-      else if (GS_SS.has(ss)) xieGS += w;
+      if (CS_SS.has(ss))       xieCS += w;
+      else if (CAI_SS.has(ss)) { xieCai += w; caiGsScore += w; }
+      else if (GS_SS.has(ss))  { xieGS  += w; caiGsScore += w; }
     }
   }
 
@@ -3688,10 +3687,10 @@ function calcYongShen(pillars) {
     Object.entries(pos).forEach(([type, stemChar]) => addScore(ssMap[stemChar], w[type]));
   });
 
-  const diff = xieScore - bangScore;
+  const diff = bangScore - caiGsScore; // 正值=身強，負值=身弱
   let strength;
-  if (diff >= 1)       strength = '身弱';
-  else if (diff <= -1) strength = '身強';
+  if (diff >= 1)       strength = '身強';
+  else if (diff <= -1) strength = '身弱';
   else                 strength = '身中和';
 
   const dayEl = STEM_EL[pillars[2].stem];
@@ -3701,40 +3700,52 @@ function calcYongShen(pillars) {
   const EL_KE    = {'木':'土','火':'金','土':'水','金':'木','水':'火'};
 
   // 忌神：造成失衡嘅主導五行
-  // 身強/身中和：幫身中印 vs 比劫，哪個高 → 對應五行
-  // 身弱：洩耗剋中食傷/財/官殺，哪個高 → 對應五行
+  // 身強：印/比劫中較高者；身弱：財/官殺中較高者
   function dominantBang() {
     return bangYin >= bangBJ ? EL_YIN[dayEl] : dayEl;
   }
-  function dominantXie() {
-    if (xieCS >= xieCai && xieCS >= xieGS) return EL_SHANG[dayEl];
-    if (xieCai >= xieCS && xieCai >= xieGS) return EL_KE[dayEl];
-    return EL_KE_ME[dayEl];
+  function dominantCaiGs() {
+    return xieCai >= xieGS ? EL_KE[dayEl] : EL_KE_ME[dayEl];
   }
 
-  let yongEl, yongName, jiEl, jiName;
+  // 用神五行列表（可並列）
+  let yongEls, yongName, jiEl, jiName;
   if (strength === '身弱') {
-    yongEl  = EL_YIN[dayEl];
-    yongName = `印星（${yongEl}，生扶日主）`;
-    jiEl    = dominantXie();
-    const jiCat = jiEl === EL_SHANG[dayEl] ? '食傷' : jiEl === EL_KE[dayEl] ? '財星' : '官殺';
-    jiName  = `${jiCat}（${jiEl}，主導洩耗）`;
+    // 用神：印/比劫中分數較高者
+    const yongEl = bangYin >= bangBJ ? EL_YIN[dayEl] : dayEl;
+    const yongCat = bangYin >= bangBJ ? '印星' : '比劫';
+    yongEls  = [yongEl];
+    yongName = `${yongCat}（${yongEl}，生扶日主）`;
+    jiEl    = dominantCaiGs();
+    const jiCat = jiEl === EL_KE[dayEl] ? '財星' : '官殺';
+    jiName  = `${jiCat}（${jiEl}，主導剋耗）`;
   } else if (strength === '身強') {
-    yongEl  = EL_KE_ME[dayEl];
-    yongName = `官殺（${yongEl}，制衡日主）`;
+    // 用神：財/官殺中分數較低者（最需補充那方），打平則並列
+    const TIED_THRESHOLD = 0.3;
+    if (Math.abs(xieCai - xieGS) <= TIED_THRESHOLD) {
+      yongEls  = [EL_KE[dayEl], EL_KE_ME[dayEl]]; // 財、官殺並列
+      yongName = `財星・官殺（${EL_KE[dayEl]}・${EL_KE_ME[dayEl]}，制衡日主）`;
+    } else if (xieCai < xieGS) {
+      yongEls  = [EL_KE[dayEl]];
+      yongName = `財星（${EL_KE[dayEl]}，制衡日主）`;
+    } else {
+      yongEls  = [EL_KE_ME[dayEl]];
+      yongName = `官殺（${EL_KE_ME[dayEl]}，制衡日主）`;
+    }
     jiEl    = dominantBang();
     const jiCat = jiEl === EL_YIN[dayEl] ? '印星' : '比劫';
     jiName  = `${jiCat}（${jiEl}，主導幫身）`;
   } else {
     // 身中和：食傷洩秀；忌神=幫身中主導五行
-    yongEl  = EL_SHANG[dayEl];
-    yongName = `食傷（${yongEl}，洩秀調和）`;
+    yongEls  = [EL_SHANG[dayEl]];
+    yongName = `食傷（${EL_SHANG[dayEl]}，洩秀調和）`;
     jiEl    = dominantBang();
     const jiCat = jiEl === EL_YIN[dayEl] ? '印星' : '比劫';
     jiName  = `${jiCat}（${jiEl}，主導幫身）`;
   }
 
-  return { bangScore, xieScore, diff, strength, yongEl, yongName, jiEl, jiName, dayEl,
+  const yongEl = yongEls[0]; // 主用神（顯示顏色用）
+  return { bangScore, caiGsScore, diff, strength, yongEl, yongEls, yongName, jiEl, jiName, dayEl,
            bangYin, bangBJ, xieCS, xieCai, xieGS };
 }
 
@@ -3755,11 +3766,11 @@ function renderYongShen(pillars) {
       <div class="ys-card">
         <div class="ys-card-label">日 主 強 弱</div>
         <div class="ys-card-val" style="color:${strengthColor}">${data.strength}</div>
-        <div class="ys-card-sub">幫身 ${data.bangScore.toFixed(1)}　洩耗 ${data.xieScore.toFixed(1)}<br>差距 ${Math.abs(data.diff).toFixed(1)}</div>
+        <div class="ys-card-sub">幫身 ${data.bangScore.toFixed(1)}　財官殺 ${data.caiGsScore.toFixed(1)}<br>差距 ${Math.abs(data.diff).toFixed(1)}</div>
       </div>
       <div class="ys-card">
         <div class="ys-card-label">用 神</div>
-        <div class="ys-card-val" style="color:${yongColor}">${data.yongEl}</div>
+        <div class="ys-card-val">${data.yongEls.map(el=>`<span style="color:${EL_COL[el]||'var(--text)'}">${el}</span>`).join('<span style="color:var(--text-muted)">・</span>')}</div>
         <div class="ys-card-sub">${data.yongName}</div>
       </div>
       <div class="ys-card">
@@ -3768,7 +3779,7 @@ function renderYongShen(pillars) {
         <div class="ys-card-sub">${data.jiName}</div>
       </div>
     </div>
-    <div class="ys-score-row">扶抑法計分 · 月令×2 · 幫身：比劫印 · 洩耗剋：食傷財官殺</div>`;
+    <div class="ys-score-row">扶抑法計分 · 月令×2 · 幫身：印+比劫 vs 財官殺（食傷不計入強弱）</div>`;
 
   sec.style.display = '';
 }
