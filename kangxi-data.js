@@ -120,6 +120,12 @@ function calculateFiveGrids(surnameStrokes, givenNameStrokes) {
     ren  = sArr[0] + gArr[0];
     di   = gArr[0] + gArr[1];
     wai  = gArr[1] + 1;
+  } else if (sArr.length === 1 && gArr.length >= 3) {
+    // 單姓+3字(含)以上名：如「明燧科技」視為姓「明」+名「燧科技」
+    tian = sArr[0] + 1;
+    ren  = sArr[0] + gArr[0];
+    di   = gArr.reduce((a, b) => a + b, 0); // 名字全部筆劃之和
+    wai  = gArr[gArr.length - 1] + 1;       // 末字 + 1
   } else if (sArr.length === 2 && gArr.length === 1) {
     tian = sArr[0] + sArr[1];
     ren  = sArr[1] + gArr[0];

@@ -3259,6 +3259,10 @@
             </select>
           </div>
         </div>
+        <div class="rename-fg-full" style="margin-top:0.75rem">
+          <label class="rename-form-label">候選名字（選填，可輸入多個用逗號分隔，例如：睎琳, 雅賢）</label>
+          <input class="rename-input" id="rnBabyCandidates" placeholder="例：睎琳, 雅賢" autocomplete="off">
+        </div>
         <button class="btn-primary" id="btnAnalyzeBaby" onclick="analyzeRename('baby')">開 始 命 名 分 析</button>
       </div>
 
@@ -3356,6 +3360,10 @@
             </select>
           </div>
         </div>
+        <div class="rename-fg-full" style="margin-top:0.75rem">
+          <label class="rename-form-label">候選公司名（選填，可輸入多個用逗號分隔，例如：明燧科技, 啟源科技）</label>
+          <input class="rename-input" id="rnBizCandidates" placeholder="例如：明燧科技, 啟源科技" autocomplete="off">
+        </div>
         <button class="btn-primary" id="btnAnalyzeBiz" onclick="analyzeRename('biz')">開 始 公 司 命 名 分 析</button>
       </div>
     </div>
@@ -3380,6 +3388,9 @@
           <div class="kx-est-note" id="kxEstNote" style="display:none;">※ 部分用字筆劃為估算值，僅供參考</div>
           <p style="font-size:0.68rem;color:var(--text-muted,rgba(255,255,255,0.38));margin:0.6rem 1rem 0;line-height:1.6;letter-spacing:0.02em;">※ 本系統採用《康熙字典》部首傳統筆劃計法（如氵、辶、阝等部首採康熙原始筆劃）。不同命名流派或字典版本可能有1-2畫差異，如結果接近吉凶臨界，建議多方參考。</p>
         </div>
+
+        <!-- 候選名字五格卡（新生兒/公司命名）-->
+        <div id="rnCandidateGrids"></div>
 
         <!-- Paid section -->
         <div class="rn-paid-section">
@@ -5201,6 +5212,58 @@ function renderFiveGrid(fullName, surnameLen) {
   return { jiCount, grids };
 }
 
+// ── 共用：根據全名+姓氏字數建立五格卡 HTML（新生兒/公司/成人共用）────
+function buildFiveGridCardHTML(fullName, surnameLen, showBizNote) {
+  const parsed = parseNameStrokes(fullName, surnameLen || 1);
+  if (!parsed || parsed.givenNameStrokes.length === 0) return '';
+
+  const grids     = calculateFiveGrids(parsed.surnameStrokes, parsed.givenNameStrokes);
+  const gridKeys  = ['天格','人格','地格','外格','總格'];
+  const allChars  = [...parsed.surnameChars, ...parsed.givenChars];
+
+  const strokesHTML = allChars.map(c => {
+    const r = getKangxiStrokes(c);
+    return `<span class="kx-stroke-chip">${c} ${r.strokes}${r.estimated ? '≈' : ''}</span>`;
+  }).join('');
+
+  let jiCount = 0;
+  const cardsHTML = gridKeys.map(key => {
+    const num  = grids[key];
+    const info = lookupShu(num);
+    const el   = getWuxingByNumber(num);
+    const isJi = info.level === '吉';
+    if (isJi) jiCount++;
+    return `<div class="kx-card ${isJi ? 'ji' : 'xiong'}">
+      <div class="kx-card-name">${key}</div>
+      <div class="kx-card-num">${num}</div>
+      <div class="kx-card-level">${info.level}</div>
+      <div class="kx-card-el">屬${el}</div>
+      <div class="kx-card-desc">${info.desc}</div>
+    </div>`;
+  }).join('');
+
+  let overallText, overallClass;
+  if (jiCount === 5)     { overallText = '✦ 大 吉 ✦  五格全吉，名字格局極佳'; overallClass = 'daji'; }
+  else if (jiCount >= 3) { overallText = `✦ 中 吉 ✦  五格中${jiCount}吉，名字格局良好`; overallClass = 'zhongji'; }
+  else if (jiCount >= 1) { overallText = `▲ 平  ▲  五格中${jiCount}吉，名字尚可`; overallClass = 'ping'; }
+  else                   { overallText = '▼ 需注意 ▼  五格皆凶，建議重新考慮'; overallClass = 'zhuyi'; }
+
+  const estNote = parsed.hasEstimated
+    ? `<div class="kx-est-note" style="display:block;">※ 部分用字筆劃為估算值，僅供參考</div>` : '';
+
+  const bizNote = showBizNote
+    ? `<p style="font-size:0.68rem;color:var(--text-muted,rgba(255,255,255,0.38));margin:0.6rem 1rem 0;line-height:1.6;letter-spacing:0.02em;">※ 五格剖象法原為人名設計，套用於多字公司名屬延伸應用，計算方式無統一業界標準，僅供參考。</p>` : '';
+
+  return `<div class="rnc-candidate-block">
+    <p class="kx-section-title" style="margin-top:1.2rem">康 熙 五 格 剖 象 ── ${fullName}</p>
+    <div class="kx-strokes-row">${strokesHTML}</div>
+    <div class="kx-grid">${cardsHTML}</div>
+    <div class="kx-overall ${overallClass}">${overallText}</div>
+    ${estNote}
+    ${bizNote}
+  </div>`;
+}
+
 function analyzeRename(scene) {
   let pillars, name = '', surname = '', gender = '', industry = '';
   let year, month, day, shichen;
@@ -5239,8 +5302,9 @@ function analyzeRename(scene) {
 
   let freeCards = [], paidTitle = '', paidPreview = '', unlockLabel = '';
 
-  // 隱藏五格區（各場景按需顯示）
+  // 隱藏五格區 + 清空候選名字格（各場景按需顯示）
   document.getElementById('rnFiveGridSection').style.display = 'none';
+  document.getElementById('rnCandidateGrids').innerHTML = '';
 
   if (scene === 'baby') {
     document.getElementById('rnResultTitle').textContent = '新 生 兒 命 名 分 析';
@@ -5255,13 +5319,13 @@ function analyzeRename(scene) {
         val: gender==='f' ? '宜選音韻柔和，如「妍、雅、琳、欣」' : '宜選音韻響亮，如「朗、峻、霖、博」',
         sub: `${gLabel}取名音韻建議` },
     ];
-    // 如已填姓氏，顯示五格（姓+示例名佔位，用戶命名後完整分析）
-    if (surname) {
-      // 示例用途：僅顯示姓氏五格參考
-      const sLen = parseInt(surname.length) || 1;
-      // 新生兒暫無名字，只做姓氏說明
-      const exNote = document.getElementById('kxEstNote');
-    }
+    // 候選名字五格分析
+    const candidatesRaw = document.getElementById('rnBabyCandidates').value.trim();
+    const candidates = candidatesRaw ? candidatesRaw.split(/[,，]/).map(s => s.trim()).filter(Boolean) : [];
+    const surnameLen = [...(surname||'')].length || 1;
+    document.getElementById('rnCandidateGrids').innerHTML =
+      candidates.map(cand => buildFiveGridCardHTML(surname + cand, surnameLen)).join('');
+
     paidTitle   = '✦ 10個完整推薦名字 + 康熙五格評分';
     paidPreview = `為${surname||''}${gLabel}精心推薦10個吉名，每個名字均以康熙字典筆劃計算五格剖象法，確保天格、人格、地格、外格、總格皆吉，附音義解說及命格配合度評分…`;
     unlockLabel = `🔓 HKD$128 · 解 鎖 10 個 推 薦 名 字`;
@@ -5304,6 +5368,12 @@ function analyzeRename(scene) {
         val: EL_GENERATES[dayEl] === indEl ? '天時地利，大力發展' : '穩紮穩打，循序漸進',
         sub:`日主${dayEl}與${indEl}行業五行關係：${synergy}` },
     ];
+    // 候選公司名五格分析（以第一字為「姓」，其餘為「名」）
+    const bizCandidatesRaw = document.getElementById('rnBizCandidates').value.trim();
+    const bizCandidates = bizCandidatesRaw ? bizCandidatesRaw.split(/[,，]/).map(s => s.trim()).filter(Boolean) : [];
+    document.getElementById('rnCandidateGrids').innerHTML =
+      bizCandidates.map(cand => buildFiveGridCardHTML(cand, 1, true)).join('');
+
     paidTitle   = '✦ 5 個 公 司 名 建 議 + 康 熙 五 格 評 分';
     paidPreview = `根據創辦人命格及${indName}行業屬性，精選5個公司名，每個名字以康熙字典五格剖象法評分，確保總格吉數、人格旺氣，附開業日期推算、公司命格走勢預測…`;
     unlockLabel = `🔓 HKD$128 · 解 鎖 5 個 公 司 命 名 方 案`;
