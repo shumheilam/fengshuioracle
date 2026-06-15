@@ -1352,10 +1352,10 @@ function scoreDay(date, eventType) {
 
   const primaryTag = EVENT_PRIMARY_TAG[eventType];
 
-  // 若事項有必要標籤：忌中有則排除，宜中無則不適合
+  // 若事項有必要標籤：忌中有則排除；在yi則繼續計分；兩者都唔在則中性（base score由其他因素決定）
   if (primaryTag) {
     if (dayData.ji.includes(primaryTag)) return -999; // 明確忌此事 → 排除
-    if (!dayData.yi.includes(primaryTag)) return -1;  // 宜中無此事 → 不合適
+    // 宜中有 → 繼續計分；兩者都唔在 → 同樣繼續（中性，唔加唔減）
   }
 
   // 通過篩選，開始計分
