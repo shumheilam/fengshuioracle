@@ -1670,8 +1670,11 @@
       <div style="font-size:0.62rem;color:var(--text-dim);letter-spacing:0.06em;line-height:1.75;margin-bottom:0.75rem;">輸入任何風水問題，由 AI 即時解答一條。</div>
       <textarea disabled placeholder="例：廁所門對著大門點化解？（即將推出）"
         style="width:100%;box-sizing:border-box;background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.25);border-radius:6px;color:var(--text-dim);font-family:'Noto Serif TC',serif;font-size:0.7rem;letter-spacing:0.05em;padding:0.6rem;resize:none;height:4rem;cursor:not-allowed;margin-bottom:0.5rem;"></textarea>
-      <button disabled style="width:100%;background:linear-gradient(135deg,rgba(201,168,76,0.3),rgba(160,120,40,0.3));border:1px solid rgba(201,168,76,0.4);border-radius:6px;color:rgba(201,168,76,0.5);font-family:'Noto Serif TC',serif;font-size:0.75rem;font-weight:700;letter-spacing:0.2em;padding:0.6rem;cursor:not-allowed;">
+      <button disabled style="width:100%;background:linear-gradient(135deg,rgba(201,168,76,0.3),rgba(160,120,40,0.3));border:1px solid rgba(201,168,76,0.4);border-radius:6px;color:rgba(201,168,76,0.5);font-family:'Noto Serif TC',serif;font-size:0.75rem;font-weight:700;letter-spacing:0.2em;padding:0.6rem;cursor:not-allowed;margin-bottom:0.4rem;">
         HKD$18　即時解答（即將推出）
+      </button>
+      <button disabled style="width:100%;background:transparent;border:1px solid rgba(201,168,76,0.2);border-radius:6px;color:rgba(201,168,76,0.4);font-family:'Noto Serif TC',serif;font-size:0.68rem;letter-spacing:0.15em;padding:0.45rem;cursor:not-allowed;">
+        📤 分享／截圖保存（即將推出）
       </button>
     </div>
 
@@ -1682,7 +1685,7 @@
         <div style="font-size:0.8rem;font-weight:700;color:var(--gold);letter-spacing:0.12em;">單 一 空 間 風 水 快 測</div>
         <span style="font-size:0.6rem;color:rgba(201,168,76,0.6);letter-spacing:0.08em;margin-left:auto;">即 將 推 出</span>
       </div>
-      <div style="font-size:0.62rem;color:var(--text-dim);letter-spacing:0.06em;line-height:1.75;margin-bottom:0.75rem;">選擇空間，AI 即時生成針對性風水建議報告。</div>
+      <div style="font-size:0.62rem;color:var(--text-dim);letter-spacing:0.06em;line-height:1.75;margin-bottom:0.75rem;">選擇空間，AI 即時生成針對性風水建議，結果可截圖分享。</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;margin-bottom:0.75rem;">
         <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.68rem;color:var(--text-dim);letter-spacing:0.06em;background:rgba(255,255,255,0.03);border:1px solid rgba(201,168,76,0.2);border-radius:5px;padding:0.45rem 0.6rem;cursor:not-allowed;opacity:0.6;">
           <input type="radio" name="fsq-room" disabled style="accent-color:var(--gold);"> 🛏️ 睡房
@@ -1694,11 +1697,32 @@
           <input type="radio" name="fsq-room" disabled style="accent-color:var(--gold);"> 🚪 大門
         </label>
         <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.68rem;color:var(--text-dim);letter-spacing:0.06em;background:rgba(255,255,255,0.03);border:1px solid rgba(201,168,76,0.2);border-radius:5px;padding:0.45rem 0.6rem;cursor:not-allowed;opacity:0.6;">
+          <input type="radio" name="fsq-room" disabled style="accent-color:var(--gold);"> 🛋️ 客廳
+        </label>
+        <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.68rem;color:var(--text-dim);letter-spacing:0.06em;background:rgba(255,255,255,0.03);border:1px solid rgba(201,168,76,0.2);border-radius:5px;padding:0.45rem 0.6rem;cursor:not-allowed;opacity:0.6;">
+          <input type="radio" name="fsq-room" disabled style="accent-color:var(--gold);"> 🍳 廚房
+        </label>
+        <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.68rem;color:var(--text-dim);letter-spacing:0.06em;background:rgba(255,255,255,0.03);border:1px solid rgba(201,168,76,0.2);border-radius:5px;padding:0.45rem 0.6rem;cursor:not-allowed;opacity:0.6;">
+          <input type="radio" name="fsq-room" disabled style="accent-color:var(--gold);"> 🚿 廁所
+        </label>
+        <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.68rem;color:var(--text-dim);letter-spacing:0.06em;background:rgba(255,255,255,0.03);border:1px solid rgba(201,168,76,0.2);border-radius:5px;padding:0.45rem 0.6rem;cursor:not-allowed;opacity:0.6;">
+          <input type="radio" name="fsq-room" disabled style="accent-color:var(--gold);"> 🧒 小孩房
+        </label>
+        <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.68rem;color:var(--text-dim);letter-spacing:0.06em;background:rgba(255,255,255,0.03);border:1px solid rgba(201,168,76,0.2);border-radius:5px;padding:0.45rem 0.6rem;cursor:not-allowed;opacity:0.6;">
+          <input type="radio" name="fsq-room" disabled style="accent-color:var(--gold);"> 🪔 神位
+        </label>
+        <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.68rem;color:var(--text-dim);letter-spacing:0.06em;background:rgba(255,255,255,0.03);border:1px solid rgba(201,168,76,0.2);border-radius:5px;padding:0.45rem 0.6rem;cursor:not-allowed;opacity:0.6;">
           <input type="radio" name="fsq-room" disabled style="accent-color:var(--gold);"> 💼 辦公桌
         </label>
+        <label style="display:flex;align-items:center;gap:0.4rem;font-size:0.68rem;color:var(--text-dim);letter-spacing:0.06em;background:rgba(255,255,255,0.03);border:1px solid rgba(201,168,76,0.2);border-radius:5px;padding:0.45rem 0.6rem;cursor:not-allowed;opacity:0.6;">
+          <input type="radio" name="fsq-room" disabled style="accent-color:var(--gold);"> 🏪 舖位
+        </label>
       </div>
-      <button disabled style="width:100%;background:linear-gradient(135deg,rgba(201,168,76,0.3),rgba(160,120,40,0.3));border:1px solid rgba(201,168,76,0.4);border-radius:6px;color:rgba(201,168,76,0.5);font-family:'Noto Serif TC',serif;font-size:0.75rem;font-weight:700;letter-spacing:0.2em;padding:0.6rem;cursor:not-allowed;">
+      <button disabled style="width:100%;background:linear-gradient(135deg,rgba(201,168,76,0.3),rgba(160,120,40,0.3));border:1px solid rgba(201,168,76,0.4);border-radius:6px;color:rgba(201,168,76,0.5);font-family:'Noto Serif TC',serif;font-size:0.75rem;font-weight:700;letter-spacing:0.2em;padding:0.6rem;cursor:not-allowed;margin-bottom:0.4rem;">
         HKD$28　開始測算（即將推出）
+      </button>
+      <button disabled style="width:100%;background:transparent;border:1px solid rgba(201,168,76,0.2);border-radius:6px;color:rgba(201,168,76,0.4);font-family:'Noto Serif TC',serif;font-size:0.68rem;letter-spacing:0.15em;padding:0.45rem;cursor:not-allowed;">
+        📤 分享／截圖保存（即將推出）
       </button>
     </div>
 
