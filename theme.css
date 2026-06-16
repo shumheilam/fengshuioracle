@@ -430,9 +430,19 @@ html.light-mode .subs-subscribe-btn:hover {
   border-color : rgba(245,230,200,0.7) !important;
 }
 
-/* ── Issue 3: 推薦標籤 light mode 加深 ── */
+/* ── 推薦標籤：base dark mode 用 CSS var gold；light mode 加深 ── */
+.promo-tag {
+  color        : var(--gold);
+  font-weight  : 700;
+  white-space  : nowrap;
+}
 html.light-mode .promo-tag {
-  color : #7a4e10 !important;
+  color : #8a6420 !important;
+}
+
+/* ── Issue 3: compass.html 九宮格提示句 light mode 加深 ── */
+html.light-mode .grid-hint {
+  color : #5a3a10 !important;
 }
 
 /* ── Issue 2: 登入/註冊 modal 改淺色背景 ── */
