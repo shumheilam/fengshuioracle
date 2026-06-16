@@ -154,34 +154,162 @@ html.light-mode .aday-lock-footer {
   background : linear-gradient(to top, rgba(240,232,216,0.98) 70%, rgba(240,232,216,0.8)) !important;
 }
 
-/* ── Issue 5 & 6: compass.html 羅盤 + 飛星九宮格固定深色 ── */
+/* ── Issue 5 & 6: compass.html 羅盤 + 飛星九宮格 light mode ── */
+
+/* 羅盤卡片：改白底 */
 html.light-mode #compassCard {
-  background  : #1a1008 !important;
-  border-color : rgba(201,168,76,0.25) !important;
+  background   : #ffffff !important;
+  border-color : rgba(138,100,32,0.3) !important;
 }
+/* 羅盤度數 / 方位文字 */
+html.light-mode .compass-degree {
+  color       : #8a6420 !important;
+  text-shadow : none !important;
+}
+html.light-mode .compass-facing,
+html.light-mode .compass-sitting {
+  color : #5a4020 !important;
+}
+html.light-mode .perm-btn {
+  background   : rgba(138,100,32,0.08) !important;
+  border-color : rgba(138,100,32,0.35) !important;
+  color        : #8a6420 !important;
+}
+
+/* 方位分析框 */
+html.light-mode .dir-analysis {
+  background   : rgba(138,100,32,0.05) !important;
+  border-color : rgba(138,100,32,0.25) !important;
+}
+html.light-mode .dir-desc  { color : #2a1205 !important; }
+html.light-mode .dir-tip   {
+  background : rgba(138,100,32,0.06) !important;
+  color      : #5a4020 !important;
+}
+html.light-mode .personal-dir {
+  background : rgba(155,32,32,0.08) !important;
+  color      : #8b1515 !important;
+}
+
+/* 飛星九宮格卡片 */
 html.light-mode #fsCard {
-  background  : #fdf8f0 !important;
-  border-color : rgba(201,168,76,0.35) !important;
+  background   : #fdf8f0 !important;
+  border-color : rgba(138,100,32,0.3) !important;
 }
 html.light-mode .fs-cell {
   background   : #ffffff !important;
-  border-color : #e8d5a3 !important;
+  border-color : rgba(138,100,32,0.25) !important;
 }
-html.light-mode .fs-dir {
+html.light-mode .fs-cell:hover,
+html.light-mode .fs-cell.glow {
+  border-color : #8a6420 !important;
+  box-shadow   : 0 0 12px rgba(138,100,32,0.18) !important;
+}
+html.light-mode .fs-dir  { color : #8a6420 !important; }
+html.light-mode .fs-name { color : #2a1205 !important; }
+html.light-mode .fs-badge { color : #2a1205 !important; }
+
+/* 卡片標題金色加深 */
+html.light-mode .card-title {
   color : #8a6420 !important;
 }
-html.light-mode .fs-name {
-  color : #5a4020 !important;
+
+/* 八宅命理分析格仔 */
+html.light-mode .bazhai-cell {
+  background   : #ffffff !important;
+  border-color : rgba(138,100,32,0.22) !important;
 }
-html.light-mode .fs-badge {
-  color : #3a2010 !important;
+html.light-mode .bazhai-cell:hover {
+  border-color : #8a6420 !important;
+  box-shadow   : 0 0 10px rgba(138,100,32,0.18) !important;
 }
+html.light-mode .bazhai-cell.ji    { border-color : rgba(40,140,70,0.5) !important; }
+html.light-mode .bazhai-cell.xiong { border-color : rgba(180,50,50,0.45) !important; }
+html.light-mode .bazhai-cell-dir   { color : #8a6420 !important; }
+html.light-mode .bazhai-cell-star  { color : #5a4020 !important; }
+html.light-mode .bazhai-kua-badge {
+  background   : rgba(138,100,32,0.07) !important;
+  border-color : rgba(138,100,32,0.28) !important;
+}
+
+/* 彈出詳情面板 (flying stars detail panel) */
+html.light-mode .detail-panel {
+  background   : #ffffff !important;
+  border-color : rgba(138,100,32,0.35) !important;
+}
+html.light-mode .detail-text { color : #2a1205 !important; }
+html.light-mode .detail-tip  {
+  background : rgba(138,100,32,0.06) !important;
+  color      : #5a4020 !important;
+}
+html.light-mode .detail-dir-tag  { color : #7a6040 !important; }
+html.light-mode .detail-close    { color : #7a6040 !important; }
+
+/* 八宅彈出詳情面板 */
+html.light-mode .bazhai-detail-panel {
+  background   : #ffffff !important;
+  border-color : rgba(138,100,32,0.35) !important;
+}
+
+/* 登記優先體驗 Modal */
+html.light-mode .modal-box {
+  background   : #ffffff !important;
+  border-color : rgba(138,100,32,0.35) !important;
+}
+html.light-mode .modal-close { color : #7a6040 !important; }
+html.light-mode .modal-sub   { color : #7a6040 !important; }
+
+/* 預設問答 accordion */
+html.light-mode .preset-q {
+  border-color : rgba(138,100,32,0.22) !important;
+}
+html.light-mode .preset-q.open {
+  border-color : rgba(138,100,32,0.45) !important;
+}
+html.light-mode .preset-q-header {
+  background : rgba(138,100,32,0.04) !important;
+}
+html.light-mode .preset-q-header:hover {
+  background : rgba(138,100,32,0.08) !important;
+}
+html.light-mode .preset-q-text { color : #2a1205 !important; }
+html.light-mode .preset-q-inner {
+  border-top-color : rgba(138,100,32,0.12) !important;
+}
+html.light-mode .ans-text { color : #2a1205 !important; }
+html.light-mode .ans-box  {
+  background   : rgba(138,100,32,0.05) !important;
+  border-color : rgba(138,100,32,0.25) !important;
+}
+
+/* 所有 section 背景卡片通用 */
+html.light-mode .card {
+  background   : #ffffff !important;
+  border-color : rgba(138,100,32,0.25) !important;
+}
+
+/* Paywall / Coming Soon 區 */
+html.light-mode .paywall-section,
+html.light-mode .bazhai-paywall,
+html.light-mode .paid-consult-v2 {
+  background   : rgba(138,100,32,0.04) !important;
+  border-color : rgba(138,100,32,0.28) !important;
+}
+html.light-mode .paywall-lock   { color : #7a6040 !important; }
+html.light-mode .paywall-list   { color : #5a4020 !important; }
+html.light-mode .cs-feature-chip {
+  border-color : rgba(138,100,32,0.28) !important;
+  color        : #5a4020 !important;
+}
+html.light-mode .paid-tier-chip {
+  border-color : rgba(138,100,32,0.28) !important;
+  color        : #5a4020 !important;
+}
+
+/* 覆蓋 compassCard/fsCard card-title（避免被通用 card-title 覆蓋兩次） */
 html.light-mode #compassCard .card-title,
 html.light-mode #fsCard .card-title {
-  color : var(--gold) !important;
-}
-html.light-mode #compassCard .compass-facing {
-  color : rgba(144,112,80,0.85) !important;
+  color : #8a6420 !important;
 }
 
 /* ── Issue: index.html 另一半桃花高亮 light mode ── */
@@ -273,4 +401,24 @@ html.light-mode .ai-unlock-btn {
 html.light-mode .ai-unlock-btn:hover {
   box-shadow   : 0 0 22px rgba(201,168,76,0.35) !important;
   border-color : rgba(201,168,76,0.75) !important;
+}
+
+/* ── qimen.html 表單 light mode ── */
+html.light-mode .form-group input,
+html.light-mode .form-group select {
+  background   : #ffffff !important;
+  color        : #2a1205 !important;
+  border-color : rgba(138,100,32,0.35) !important;
+}
+html.light-mode .form-group select option {
+  background : #ffffff;
+  color      : #2a1205;
+}
+
+/* ── 奇門遁甲九宮格 light mode ── */
+html.light-mode #palaceSvg rect:first-child {
+  fill : #ffffff !important;
+}
+html.light-mode #palaceSvg text {
+  fill : #2a1205 !important;
 }
