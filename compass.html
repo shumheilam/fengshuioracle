@@ -2185,6 +2185,10 @@ function buildFsGrid(year) {
       <div class="fs-name">${info.name.replace(/^[一二三四五六七八九]\S/, '')}</div>
       <div class="fs-badge">${info.badge}</div>`;
     cell.addEventListener('click', () => openDetail(star));
+    cell.setAttribute('tabindex', '0');
+    cell.setAttribute('role', 'button');
+    cell.setAttribute('aria-label', `${dir}方位飛星${num}，${info.name}`);
+    cell.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); cell.click(); } });
     grid.appendChild(cell);
   });
 }
@@ -2588,6 +2592,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('permBtn').textContent = '此裝置不支援方向感應器';
     document.getElementById('facingDisplay').textContent = '請使用手機瀏覽以啟用真實指南針';
   }
+
+  // A11y: make preset-q-header keyboard-operable
+  document.querySelectorAll('.preset-q-header').forEach(el => {
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('role', 'button');
+    const qText = el.querySelector('.preset-q-text');
+    if (qText) el.setAttribute('aria-label', qText.textContent.trim());
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); } });
+  });
 });
 </script>
 

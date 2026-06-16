@@ -2714,7 +2714,7 @@
     </button>
 
     <!-- Desktop header -->
-    <div class="sidebar-head" onclick="toggleSidebar()">
+    <div class="sidebar-head" onclick="toggleSidebar()" tabindex="0" role="button" aria-label="收合或展開我的檔案列表" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
       <span class="sidebar-head-title">我 的 檔 案</span>
       <span class="sb-icon" id="sbIcon">▾</span>
     </div>
@@ -3203,17 +3203,17 @@
 
       <!-- Scene selector -->
       <div class="scene-grid">
-        <div class="scene-card active" id="sc-baby" onclick="selectScene('baby')">
+        <div class="scene-card active" id="sc-baby" onclick="selectScene('baby')" tabindex="0" role="button" aria-label="選擇新生兒命名場景" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
           <div class="scene-icon">👶</div>
           <div class="scene-name">新生兒命名</div>
           <div class="scene-desc">依命格五行<br>推薦吉祥用字</div>
         </div>
-        <div class="scene-card" id="sc-adult" onclick="selectScene('adult')">
+        <div class="scene-card" id="sc-adult" onclick="selectScene('adult')" tabindex="0" role="button" aria-label="選擇成人改名改運場景" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
           <div class="scene-icon">🧑</div>
           <div class="scene-name">成人改名改運</div>
           <div class="scene-desc">分析現有名字<br>五行配合程度</div>
         </div>
-        <div class="scene-card" id="sc-biz" onclick="selectScene('biz')">
+        <div class="scene-card" id="sc-biz" onclick="selectScene('biz')" tabindex="0" role="button" aria-label="選擇公司命名場景" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
           <div class="scene-icon">🏢</div>
           <div class="scene-name">公司命名</div>
           <div class="scene-desc">創辦人命格<br>配合行業五行</div>
@@ -4391,7 +4391,7 @@ function renderProfileList() {
     const scName  = BRANCHES[p.shichen] + '時';
     const isActive = p.id === activeId;
     return `
-      <div class="p-card ${isActive ? 'active' : ''}" onclick="loadProfile('${p.id}')">
+      <div class="p-card ${isActive ? 'active' : ''}" onclick="loadProfile('${p.id}')" tabindex="0" role="button" aria-label="載入${p.name}的命盤檔案" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
         <div class="p-card-name">${p.name}</div>
         <div class="p-card-info">
           ${p.year}年 ${p.month}月 ${p.day}日<br>

@@ -1299,7 +1299,7 @@
       <div class="shake-area">
         <p class="deity-banner">恭請 <span id="chosenDeityName">—</span> 指引</p>
 
-        <div class="cylinder-wrap" onclick="shakeCylinder()">
+        <div class="cylinder-wrap" onclick="shakeCylinder()" tabindex="0" role="button" aria-label="搖動籤筒求籤" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
           <div class="cylinder" id="cylinder">
             <div class="cylinder-rim-top"></div>
             <div class="sticks">
@@ -1635,7 +1635,7 @@ const FREE_LIMIT = 1;
 // ── Render deity grid ─────────────────────────────────────
 function renderDeities() {
   document.getElementById('deityGrid').innerHTML = DEITIES.map(d => `
-    <div class="deity-card" id="dc-${d.id}" onclick="selectDeity('${d.id}')">
+    <div class="deity-card" id="dc-${d.id}" onclick="selectDeity('${d.id}')" tabindex="0" role="button" aria-label="選擇${d.name}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
       <div class="deity-icon">${d.icon}</div>
       <div class="deity-name">${d.name}</div>
       <div class="deity-title">${d.title}</div>
