@@ -171,9 +171,99 @@ function runDingjuTests() {
   console.groupEnd();
 }
 
+// ─── 第二步：地盤排列（三奇六儀入九宮）────────────────────────
+const LIUYI  = ['戊','己','庚','辛','壬','癸'];   // 六儀，固定順序
+const SANQI  = ['乙','丙','丁'];                   // 三奇，固定順序
+
+/**
+ * 排地盤（三奇六儀入九宮）
+ * @param {boolean} yang - true=陽遁, false=陰遁
+ * @param {number}  ju   - 局數 1–9
+ * @returns {Object} { 1:'戊', 2:'己', … } 九宮各宮天干
+ */
+function buildDiPan(yang, ju) {
+  const pan = {};
+
+  // ── 六儀部分：從 ju 宮起，按陽順/陰逆走 6 個宮位 ──
+  let palace = ju;
+  for (let i = 0; i < 6; i++) {
+    pan[palace] = LIUYI[i];
+    palace = yang
+      ? (palace % 9) + 1        // 順：9→1
+      : ((palace - 2 + 9) % 9) + 1;  // 逆：1→9
+  }
+
+  // ── 三奇部分：填入剩餘 3 個宮位 ──
+  // 陽遁：丁丙乙逆序填入（即 SANQI 反向）
+  // 陰遁：乙丙丁順序填入（即 SANQI 正向）
+  const sanqiOrder = yang ? [...SANQI].reverse() : SANQI;
+  for (let i = 0; i < 3; i++) {
+    pan[palace] = sanqiOrder[i];
+    palace = yang
+      ? (palace % 9) + 1
+      : ((palace - 2 + 9) % 9) + 1;
+  }
+
+  return pan;
+}
+
+// ─── 地盤驗算 ─────────────────────────────────────────────────
+function runDiPanTests() {
+  const cases = [
+    {
+      label: '陽遁1局',
+      yang: true, ju: 1,
+      expect: {1:'戊',2:'己',3:'庚',4:'辛',5:'壬',6:'癸',7:'丁',8:'丙',9:'乙'}
+    },
+    {
+      label: '陽遁2局',
+      yang: true, ju: 2,
+      expect: {1:'乙',2:'戊',3:'己',4:'庚',5:'辛',6:'壬',7:'癸',8:'丁',9:'丙'}
+    },
+    {
+      label: '陰遁9局',
+      yang: false, ju: 9,
+      expect: {1:'丁',2:'丙',3:'乙',4:'癸',5:'壬',6:'辛',7:'庚',8:'己',9:'戊'}
+    }
+  ];
+
+  const PALACE_NAME = {
+    1:'坎(北)',2:'坤(西南)',3:'震(東)',4:'巽(東南)',
+    5:'中',6:'乾(西北)',7:'兌(西)',8:'艮(東北)',9:'離(南)'
+  };
+
+  console.group('奇門遁甲地盤驗算');
+  for (const c of cases) {
+    const result = buildDiPan(c.yang, c.ju);
+    const pass = [1,2,3,4,5,6,7,8,9].every(p => result[p] === c.expect[p]);
+    const detail = [1,2,3,4,5,6,7,8,9]
+      .map(p => {
+        const ok = result[p] === c.expect[p];
+        return `${ok ? '✓' : '✗'}${p}${PALACE_NAME[p].slice(0,1)}=${result[p]}`;
+      }).join(' ');
+    console.log(`${pass ? '✅' : '❌'} ${c.label}: ${detail}`);
+    if (!pass) {
+      console.table(
+        [1,2,3,4,5,6,7,8,9].map(p => ({
+          宮位: `${p} ${PALACE_NAME[p]}`,
+          結果: result[p],
+          預期: c.expect[p],
+          符合: result[p] === c.expect[p] ? '✓' : '✗'
+        }))
+      );
+    }
+  }
+  console.groupEnd();
+  return cases.map(c => ({
+    label: c.label,
+    result: buildDiPan(c.yang, c.ju),
+    pass: [1,2,3,4,5,6,7,8,9].every(p => buildDiPan(c.yang, c.ju)[p] === c.expect[p])
+  }));
+}
+
 // ─── 模組匯出（瀏覽器全域 + ES module 兼容）─────────────────
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { calcDingju, getJieqiDates, JIEQI_JU, runDingjuTests };
+  module.exports = { calcDingju, getJieqiDates, JIEQI_JU, runDingjuTests, buildDiPan, runDiPanTests };
 } else if (typeof window !== 'undefined') {
-  window.QimenDingju = { calcDingju, getJieqiDates, JIEQI_JU, runDingjuTests };
+  window.QimenDingju = { calcDingju, getJieqiDates, JIEQI_JU, runDingjuTests, buildDiPan, runDiPanTests };
 }

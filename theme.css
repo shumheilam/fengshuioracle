@@ -414,6 +414,179 @@ html.light-mode #ss-earth-circle { fill: #fef9e0 !important; }
 html.light-mode #ss-water-circle { fill: #e3eef8 !important; }
 html.light-mode #ss-metal-circle { fill: #f5ede0 !important; }
 
+/* ── Issue 1: 紅色按鈕 (btn-primary / auth-submit / subs-subscribe-btn) 文字改白 ── */
+html.light-mode .btn-primary {
+  color : #ffffff !important;
+}
+html.light-mode .btn-primary:hover {
+  color : #f5e6c8 !important;
+}
+html.light-mode .auth-submit {
+  color : #ffffff !important;
+}
+html.light-mode .auth-submit:hover {
+  color : #f5e6c8 !important;
+}
+html.light-mode .subs-subscribe-btn {
+  color : #ffffff !important;
+}
+html.light-mode .subs-subscribe-btn:hover {
+  color : #f5e6c8 !important;
+  border-color : rgba(245,230,200,0.7) !important;
+}
+
+/* ── Issue 2: 登入/註冊 modal 改淺色背景 ── */
+html.light-mode .auth-modal {
+  background : #fffdf6 !important;
+  border-color : rgba(138,100,32,0.4) !important;
+  box-shadow : 0 0 60px rgba(0,0,0,0.25), 0 0 0 1px rgba(138,100,32,0.08) inset !important;
+}
+html.light-mode .settings-modal {
+  background : #fffdf6 !important;
+  border-color : rgba(138,100,32,0.4) !important;
+  box-shadow : 0 0 60px rgba(0,0,0,0.25) !important;
+}
+html.light-mode .subs-modal {
+  background : linear-gradient(160deg, #fffdf6 0%, #fdf5e6 100%) !important;
+  border-color : rgba(138,100,32,0.4) !important;
+}
+html.light-mode .nav-dropdown {
+  background : #fffdf6 !important;
+  border-color : rgba(138,100,32,0.3) !important;
+  box-shadow : 0 8px 32px rgba(0,0,0,0.18) !important;
+}
+html.light-mode .nav-dd-badge.free {
+  background : rgba(0,0,0,0.04) !important;
+  border-color : rgba(0,0,0,0.12) !important;
+}
+html.light-mode .auth-input {
+  background : rgba(0,0,0,0.04) !important;
+  border-color : rgba(138,100,32,0.25) !important;
+}
+html.light-mode .auth-google {
+  background : rgba(0,0,0,0.04) !important;
+  border-color : rgba(0,0,0,0.15) !important;
+}
+html.light-mode .auth-modal::before,
+html.light-mode .auth-modal::after,
+html.light-mode .subs-modal::before,
+html.light-mode .subs-modal::after {
+  border-color : rgba(138,100,32,0.4) !important;
+}
+html.light-mode .auth-tabs,
+html.light-mode .subs-tabs {
+  border-bottom-color : rgba(138,100,32,0.2) !important;
+}
+html.light-mode .auth-or::before,
+html.light-mode .auth-or::after {
+  background : rgba(138,100,32,0.18) !important;
+}
+html.light-mode .nav-dropdown-header {
+  border-bottom-color : rgba(138,100,32,0.15) !important;
+}
+html.light-mode .nav-dd-sep {
+  background : rgba(138,100,32,0.12) !important;
+}
+html.light-mode .subs-plan-box {
+  background : linear-gradient(135deg, rgba(201,168,76,0.1), rgba(201,168,76,0.04)) !important;
+  border-color : rgba(138,100,32,0.4) !important;
+}
+html.light-mode .subs-report-item {
+  background : rgba(0,0,0,0.02) !important;
+  border-color : rgba(138,100,32,0.18) !important;
+}
+html.light-mode .subs-report-item:hover {
+  background : rgba(138,100,32,0.05) !important;
+  border-color : rgba(138,100,32,0.38) !important;
+}
+html.light-mode .subs-report-item.selected {
+  background : rgba(138,100,32,0.08) !important;
+}
+html.light-mode .subs-section {
+  background : rgba(138,100,32,0.05) !important;
+  border-color : rgba(138,100,32,0.2) !important;
+}
+html.light-mode .settings-toggle {
+  background : rgba(0,0,0,0.12) !important;
+}
+
+/* ── Issue 3: 推播通知狀態文字（白底上綠色加深）── */
+html.light-mode .da-notif-status {
+  color : #1a6b25 !important;
+}
+
+/* ── Issue 4: Paywall/升級卡片 light mode — 淺金底+深褐字 ── */
+html.light-mode .rn-paid-section,
+html.light-mode .match-paid-section,
+html.light-mode .ln-paid-section {
+  background : #f5e6c8 !important;
+  border-color : rgba(90,58,16,0.3) !important;
+}
+html.light-mode .rn-paid-title,
+html.light-mode .match-paid-title,
+html.light-mode .ln-paid-title {
+  color : #5a3a10 !important;
+}
+html.light-mode .rn-paid-preview,
+html.light-mode .match-paid-preview {
+  color : rgba(90,58,16,0.4) !important;
+}
+html.light-mode .ln-preview-card {
+  background : rgba(0,0,0,0.04) !important;
+  border-color : rgba(90,58,16,0.2) !important;
+}
+html.light-mode .rn-unlock-btn,
+html.light-mode .match-unlock-btn,
+html.light-mode .da-upgrade-btn {
+  background : linear-gradient(135deg, #8a6420, #5a3a10 50%, #8a6420) !important;
+  border-color : rgba(90,58,16,0.55) !important;
+  color : #ffffff !important;
+}
+html.light-mode .rn-unlock-btn:hover,
+html.light-mode .match-unlock-btn:hover,
+html.light-mode .da-upgrade-btn:hover {
+  border-color : rgba(201,168,76,0.7) !important;
+  box-shadow : 0 0 14px rgba(138,100,32,0.25) !important;
+}
+/* 深度命格解析 overlay */
+html.light-mode .ss-paid-overlay {
+  background : rgba(245,230,200,0.9) !important;
+}
+html.light-mode .ss-paid-overlay-title {
+  color : #5a3a10 !important;
+}
+html.light-mode .ss-paid-overlay-sub {
+  color : #7a5020 !important;
+}
+html.light-mode .ss-paid-btn {
+  color : #ffffff !important;
+}
+/* da-report-upsell (每月AI報告 upsell block) */
+html.light-mode .da-report-upsell {
+  background : #f5e6c8 !important;
+  border-color : rgba(90,58,16,0.25) !important;
+}
+html.light-mode .da-upsell-text {
+  color : #5a3a10 !important;
+}
+html.light-mode .da-upsell-chip {
+  color : #7a5020 !important;
+  border-color : rgba(90,58,16,0.22) !important;
+  background : rgba(90,58,16,0.05) !important;
+}
+/* 流年 ln-paid-section 副標題 */
+html.light-mode .ln-paid-sub {
+  color : #7a5020 !important;
+}
+
+/* ── Issue 5: compass.html 吉/凶標籤文字加深 ── */
+html.light-mode .bazhai-cell-label.ji   { color : #1a6b1a !important; }
+html.light-mode .bazhai-cell-label.xiong { color : #a81212 !important; }
+/* 選擇年份 label */
+html.light-mode .fs-year-label {
+  color : #8a6420 !important;
+}
+
 /* ── qimen.html 表單 light mode ── */
 html.light-mode .form-group input,
 html.light-mode .form-group select {

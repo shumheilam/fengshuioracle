@@ -1280,6 +1280,7 @@
       </div>
 
       <!-- 八方位吉凶格 (3×3, center = 命卦圖示) -->
+      <div style="text-align:center;font-size:0.62rem;color:rgba(201,168,76,0.6);letter-spacing:0.1em;margin-bottom:0.45rem;">💡 點擊任意方位查看詳細建議</div>
       <div class="bazhai-grid" id="bazhaiGrid"></div>
 
       <!-- 付費牆 -->
@@ -1307,12 +1308,13 @@
     <div style="text-align:center;color:rgba(201,168,76,0.75);font-size:0.7rem;letter-spacing:0.15em;margin:-0.3rem 0 0.7rem;" id="fsSubtitle">一白貪狼入中宮</div>
 
     <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-bottom:0.9rem;">
-      <span style="font-size:0.65rem;color:rgba(201,168,76,0.6);letter-spacing:0.1em;">選 擇 年 份</span>
+      <span class="fs-year-label" style="font-size:0.65rem;color:rgba(201,168,76,0.6);letter-spacing:0.1em;">選 擇 年 份</span>
       <select id="fsYearSel" onchange="onFsYearChange(this.value)"
         style="background:#1a0e0e;color:var(--gold);border:1px solid rgba(201,168,76,0.4);border-radius:4px;padding:0.2rem 0.5rem;font-family:inherit;font-size:0.75rem;cursor:pointer;">
       </select>
     </div>
 
+    <div style="text-align:center;font-size:0.62rem;color:rgba(201,168,76,0.6);letter-spacing:0.1em;margin-bottom:0.45rem;">💡 點擊任意方位查看詳細建議</div>
     <div class="fs-grid" id="fsGrid">
       <!-- Rendered by JS in Lo Shu order: SE S SW / E C W / NE N NW -->
     </div>
