@@ -2744,17 +2744,17 @@
       <div class="form-grid">
         <!-- Name – full width -->
         <div class="form-group fg-full">
-          <label>姓　名</label>
+          <label for="profileName">姓　名</label>
           <input type="text" id="profileName" placeholder="請輸入姓名（儲存檔案時必填）" autocomplete="off">
         </div>
         <!-- Year -->
         <div class="form-group">
-          <label>出生年份（西曆）</label>
+          <label for="birthYear">出生年份（西曆）</label>
           <input type="number" id="birthYear" placeholder="例：1990" min="1800" max="2100">
         </div>
         <!-- Month -->
         <div class="form-group">
-          <label>出生月份</label>
+          <label for="birthMonth">出生月份</label>
           <select id="birthMonth">
             <option value="">請選擇</option>
             <option value="1">1月</option><option value="2">2月</option>
@@ -2767,12 +2767,12 @@
         </div>
         <!-- Day -->
         <div class="form-group">
-          <label>出生日期</label>
+          <label for="birthDay">出生日期</label>
           <input type="number" id="birthDay" placeholder="例：15" min="1" max="31">
         </div>
         <!-- Shichen -->
         <div class="form-group">
-          <label>出生時辰</label>
+          <label for="birthShichen">出生時辰</label>
           <select id="birthShichen">
             <option value="">請選擇</option>
             <option value="0">子時　23:00 – 01:00</option>
@@ -3049,15 +3049,15 @@
           <div class="match-person-badge">甲　方</div>
           <div class="match-form-inputs">
             <div class="form-group">
-              <label>姓名（選填）</label>
+              <label for="maName">姓名（選填）</label>
               <input type="text" id="maName" class="match-form-input" placeholder="例：張三" autocomplete="off">
             </div>
             <div class="form-group">
-              <label>出生年份</label>
+              <label for="maYear">出生年份</label>
               <input type="number" id="maYear" class="match-form-input" placeholder="例：1990" min="1800" max="2100">
             </div>
             <div class="form-group">
-              <label>出生月份</label>
+              <label for="maMonth">出生月份</label>
               <select id="maMonth" class="match-form-select">
                 <option value="">請選擇</option>
                 <option value="1">1月</option><option value="2">2月</option><option value="3">3月</option><option value="4">4月</option>
@@ -3066,11 +3066,11 @@
               </select>
             </div>
             <div class="form-group">
-              <label>出生日期</label>
+              <label for="maDay">出生日期</label>
               <input type="number" id="maDay" class="match-form-input" placeholder="例：15" min="1" max="31">
             </div>
             <div class="form-group">
-              <label>出生時辰</label>
+              <label for="maShichen">出生時辰</label>
               <select id="maShichen" class="match-form-select">
                 <option value="">請選擇</option>
                 <option value="0">子時 23:00–01:00</option><option value="1">丑時 01:00–03:00</option>
@@ -3092,15 +3092,15 @@
           <div class="match-person-badge b">乙　方</div>
           <div class="match-form-inputs">
             <div class="form-group">
-              <label>姓名（選填）</label>
+              <label for="mbName">姓名（選填）</label>
               <input type="text" id="mbName" class="match-form-input" placeholder="例：李四" autocomplete="off">
             </div>
             <div class="form-group">
-              <label>出生年份</label>
+              <label for="mbYear">出生年份</label>
               <input type="number" id="mbYear" class="match-form-input" placeholder="例：1992" min="1800" max="2100">
             </div>
             <div class="form-group">
-              <label>出生月份</label>
+              <label for="mbMonth">出生月份</label>
               <select id="mbMonth" class="match-form-select">
                 <option value="">請選擇</option>
                 <option value="1">1月</option><option value="2">2月</option><option value="3">3月</option><option value="4">4月</option>
@@ -3109,11 +3109,11 @@
               </select>
             </div>
             <div class="form-group">
-              <label>出生日期</label>
+              <label for="mbDay">出生日期</label>
               <input type="number" id="mbDay" class="match-form-input" placeholder="例：22" min="1" max="31">
             </div>
             <div class="form-group">
-              <label>出生時辰</label>
+              <label for="mbShichen">出生時辰</label>
               <select id="mbShichen" class="match-form-select">
                 <option value="">請選擇</option>
                 <option value="0">子時 23:00–01:00</option><option value="1">丑時 01:00–03:00</option>
@@ -3224,11 +3224,11 @@
       <div class="scene-form active" id="form-baby">
         <div class="rename-form-grid">
           <div class="rename-fg-full">
-            <label class="rename-form-label">姓氏（將顯示在推薦名字前）</label>
+            <label class="rename-form-label" for="rnBabySurname">姓氏（將顯示在推薦名字前）</label>
             <input class="rename-input" id="rnBabySurname" placeholder="例：陳" autocomplete="off">
           </div>
           <div>
-            <label class="rename-form-label">寶寶性別</label>
+            <label class="rename-form-label" for="rnBabyGender">寶寶性別</label>
             <select class="rename-select" id="rnBabyGender">
               <option value="">請選擇</option>
               <option value="m">男</option>
@@ -3236,11 +3236,11 @@
             </select>
           </div>
           <div>
-            <label class="rename-form-label">出生年份</label>
+            <label class="rename-form-label" for="rnBabyYear">出生年份</label>
             <input class="rename-input" id="rnBabyYear" type="number" placeholder="例：2024" min="1900" max="2100">
           </div>
           <div>
-            <label class="rename-form-label">出生月份</label>
+            <label class="rename-form-label" for="rnBabyMonth">出生月份</label>
             <select class="rename-select" id="rnBabyMonth">
               <option value="">請選擇</option>
               <option value="1">1月</option><option value="2">2月</option><option value="3">3月</option><option value="4">4月</option>
@@ -3249,11 +3249,11 @@
             </select>
           </div>
           <div>
-            <label class="rename-form-label">出生日期</label>
+            <label class="rename-form-label" for="rnBabyDay">出生日期</label>
             <input class="rename-input" id="rnBabyDay" type="number" placeholder="例：15" min="1" max="31">
           </div>
           <div>
-            <label class="rename-form-label">出生時辰</label>
+            <label class="rename-form-label" for="rnBabyShichen">出生時辰</label>
             <select class="rename-select" id="rnBabyShichen">
               <option value="">請選擇</option>
               <option value="0">子時 23:00–01:00</option><option value="1">丑時 01:00–03:00</option>
@@ -3266,7 +3266,7 @@
           </div>
         </div>
         <div class="rename-fg-full" style="margin-top:0.75rem">
-          <label class="rename-form-label">候選名字（選填，可輸入多個用逗號分隔，例如：詩涵, 子軒）</label>
+          <label class="rename-form-label" for="rnBabyCandidates">候選名字（選填，可輸入多個用逗號分隔，例如：詩涵, 子軒）</label>
           <input class="rename-input" id="rnBabyCandidates" placeholder="例：詩涵, 子軒" autocomplete="off">
         </div>
         <button class="btn-primary" id="btnAnalyzeBaby" onclick="analyzeRename('baby')" style="margin-top:1.1rem">開 始 命 名 分 析</button>
@@ -3276,22 +3276,22 @@
       <div class="scene-form" id="form-adult">
         <div class="rename-form-grid">
           <div>
-            <label class="rename-form-label">現有全名（包括姓氏）</label>
+            <label class="rename-form-label" for="rnAdultName">現有全名（包括姓氏）</label>
             <input class="rename-input" id="rnAdultName" placeholder="例：陳志明" autocomplete="off">
           </div>
           <div>
-            <label class="rename-form-label">姓氏字數</label>
+            <label class="rename-form-label" for="rnAdultSurnameLen">姓氏字數</label>
             <select class="rename-select" id="rnAdultSurnameLen">
               <option value="1">單姓（1字）</option>
               <option value="2">複姓（2字）</option>
             </select>
           </div>
           <div>
-            <label class="rename-form-label">出生年份</label>
+            <label class="rename-form-label" for="rnAdultYear">出生年份</label>
             <input class="rename-input" id="rnAdultYear" type="number" placeholder="例：1985" min="1900" max="2100">
           </div>
           <div>
-            <label class="rename-form-label">出生月份</label>
+            <label class="rename-form-label" for="rnAdultMonth">出生月份</label>
             <select class="rename-select" id="rnAdultMonth">
               <option value="">請選擇</option>
               <option value="1">1月</option><option value="2">2月</option><option value="3">3月</option><option value="4">4月</option>
@@ -3300,11 +3300,11 @@
             </select>
           </div>
           <div>
-            <label class="rename-form-label">出生日期</label>
+            <label class="rename-form-label" for="rnAdultDay">出生日期</label>
             <input class="rename-input" id="rnAdultDay" type="number" placeholder="例：20" min="1" max="31">
           </div>
           <div>
-            <label class="rename-form-label">出生時辰</label>
+            <label class="rename-form-label" for="rnAdultShichen">出生時辰</label>
             <select class="rename-select" id="rnAdultShichen">
               <option value="">請選擇</option>
               <option value="0">子時 23:00–01:00</option><option value="1">丑時 01:00–03:00</option>
@@ -3323,11 +3323,11 @@
       <div class="scene-form" id="form-biz">
         <div class="rename-form-grid">
           <div>
-            <label class="rename-form-label">創辦人出生年份</label>
+            <label class="rename-form-label" for="rnBizYear">創辦人出生年份</label>
             <input class="rename-input" id="rnBizYear" type="number" placeholder="例：1978" min="1900" max="2100">
           </div>
           <div>
-            <label class="rename-form-label">出生月份</label>
+            <label class="rename-form-label" for="rnBizMonth">出生月份</label>
             <select class="rename-select" id="rnBizMonth">
               <option value="">請選擇</option>
               <option value="1">1月</option><option value="2">2月</option><option value="3">3月</option><option value="4">4月</option>
@@ -3336,11 +3336,11 @@
             </select>
           </div>
           <div>
-            <label class="rename-form-label">出生日期</label>
+            <label class="rename-form-label" for="rnBizDay">出生日期</label>
             <input class="rename-input" id="rnBizDay" type="number" placeholder="例：8" min="1" max="31">
           </div>
           <div>
-            <label class="rename-form-label">出生時辰</label>
+            <label class="rename-form-label" for="rnBizShichen">出生時辰</label>
             <select class="rename-select" id="rnBizShichen">
               <option value="">請選擇</option>
               <option value="0">子時 23:00–01:00</option><option value="1">丑時 01:00–03:00</option>
@@ -3352,7 +3352,7 @@
             </select>
           </div>
           <div class="rename-fg-full">
-            <label class="rename-form-label">主要行業</label>
+            <label class="rename-form-label" for="rnBizIndustry">主要行業</label>
             <select class="rename-select" id="rnBizIndustry">
               <option value="">請選擇</option>
               <option value="tech">科技 / IT</option>
@@ -3367,7 +3367,7 @@
           </div>
         </div>
         <div class="rename-fg-full" style="margin-top:0.75rem">
-          <label class="rename-form-label">候選公司名（選填，可輸入多個用逗號分隔，例如：興華科技, 啟源創投）</label>
+          <label class="rename-form-label" for="rnBizCandidates">候選公司名（選填，可輸入多個用逗號分隔，例如：興華科技, 啟源創投）</label>
           <input class="rename-input" id="rnBizCandidates" placeholder="例如：興華科技, 啟源創投" autocomplete="off">
         </div>
         <button class="btn-primary" id="btnAnalyzeBiz" onclick="analyzeRename('biz')" style="margin-top:1.1rem">開 始 公 司 命 名 分 析</button>
@@ -5477,7 +5477,7 @@ function showNotifEnabled(btn, status) {
 <!-- ── Auth Modal ──────────────────────────────── -->
 <div class="auth-overlay" id="authOverlay">
   <div class="auth-modal">
-    <button class="auth-close" onclick="closeAuthModal()">✕</button>
+    <button class="auth-close" onclick="closeAuthModal()" aria-label="關閉">✕</button>
     <div class="auth-modal-inner">
       <div class="auth-brand">風 生 水 起</div>
       <div class="auth-brand-sub">FengShui Oracle</div>
@@ -5540,7 +5540,7 @@ function showNotifEnabled(btn, status) {
 <!-- ── Settings / Subscriptions Modal ─────────── -->
 <div class="auth-overlay" id="settingsOverlay">
   <div class="settings-modal">
-    <button class="auth-close" onclick="closeSettings()">✕</button>
+    <button class="auth-close" onclick="closeSettings()" aria-label="關閉">✕</button>
     <div id="settingsBody"></div>
   </div>
 </div>
@@ -5613,7 +5613,7 @@ if ('serviceWorker' in navigator) {
       <div class="a2hs-desc">體驗如真實 App，隨時使用</div>
     </div>
     <button id="a2hsInstall" class="a2hs-btn-install">安裝</button>
-    <button id="a2hsClose" class="a2hs-btn-close">✕</button>
+    <button id="a2hsClose" class="a2hs-btn-close" aria-label="關閉">✕</button>
   </div>
   <div id="a2hsIosHint" style="display:none" class="a2hs-ios-hint">
     點擊下方 <span>□↑</span> 分享按鈕，再選「加入主畫面」

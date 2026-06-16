@@ -631,7 +631,7 @@
 
 <!-- ── Header ──────────────────────────────────────── -->
 <header>
-  <div class="page-title">奇 門 遁 甲</div>
+  <h1 class="page-title">奇 門 遁 甲</h1>
   <div class="page-sub">Ancient Cosmic Compass</div>
   <div class="divider"><span class="divider-sym">☵ ☷ ☳ ☴ ☰ ☱ ☶ ☲</span></div>
 </header>
@@ -644,11 +644,11 @@
     <div class="card-title">輸 入 出 生 資 料</div>
     <div class="form-row">
       <div class="form-group">
-        <label>出 生 年</label>
+        <label for="inYear">出 生 年</label>
         <select id="inYear"></select>
       </div>
       <div class="form-group">
-        <label>出 生 月</label>
+        <label for="inMonth">出 生 月</label>
         <select id="inMonth">
           <option value="1">1月</option><option value="2">2月</option><option value="3">3月</option>
           <option value="4">4月</option><option value="5">5月</option><option value="6">6月</option>
@@ -657,11 +657,11 @@
         </select>
       </div>
       <div class="form-group">
-        <label>出 生 日</label>
+        <label for="inDay">出 生 日</label>
         <select id="inDay"></select>
       </div>
       <div class="form-group">
-        <label>出 生 時</label>
+        <label for="inHour">出 生 時</label>
         <select id="inHour">
           <option value="0">子時 23:00-01:00</option>
           <option value="1">丑時 01:00-03:00</option>
@@ -770,7 +770,7 @@
 <!-- ── Email Modal ──────────────────────────────────── -->
 <div class="modal-overlay" id="registerModal">
   <div class="modal-box">
-    <button class="modal-close" onclick="closeRegisterModal()">✕</button>
+    <button class="modal-close" onclick="closeRegisterModal()" aria-label="關閉">✕</button>
     <div class="modal-title">優 先 體 驗 登 記</div>
     <div class="modal-sub">完整版推出時，您將第一時間獲得通知</div>
     <input class="modal-input" type="email" id="modalEmail" placeholder="your@email.com"
@@ -1140,7 +1140,7 @@ if ('serviceWorker' in navigator) {
       <div class="a2hs-desc">體驗如真實 App，隨時使用</div>
     </div>
     <button id="a2hsInstall" class="a2hs-btn-install">安裝</button>
-    <button id="a2hsClose" class="a2hs-btn-close">✕</button>
+    <button id="a2hsClose" class="a2hs-btn-close" aria-label="關閉">✕</button>
   </div>
   <div id="a2hsIosHint" style="display:none" class="a2hs-ios-hint">
     點擊下方 <span>□↑</span> 分享按鈕，再選「加入主畫面」

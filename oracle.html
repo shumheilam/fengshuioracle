@@ -1292,7 +1292,7 @@
       <div class="cc bl"></div><div class="cc br"></div>
       <p class="card-title">誠 心 搖 簽</p>
 
-      <p class="question-label">所問之事（選填）</p>
+      <label class="question-label" for="questionInput">所問之事（選填）</label>
       <textarea class="question-input" id="questionInput" rows="2"
         placeholder="例如：近期事業發展、感情狀況、家人健康…"></textarea>
 
@@ -1882,7 +1882,7 @@ document.getElementById('dailyCount').textContent = Math.min(getDailyCount(), FR
 <!-- ── Auth Modal ──────────────────────────────── -->
 <div class="auth-overlay" id="authOverlay">
   <div class="auth-modal">
-    <button class="auth-close" onclick="closeAuthModal()">✕</button>
+    <button class="auth-close" onclick="closeAuthModal()" aria-label="關閉">✕</button>
     <div class="auth-modal-inner">
       <div class="auth-brand">風 生 水 起</div>
       <div class="auth-brand-sub">FengShui Oracle</div>
@@ -1940,7 +1940,7 @@ document.getElementById('dailyCount').textContent = Math.min(getDailyCount(), FR
 
 <div class="auth-overlay" id="settingsOverlay">
   <div class="settings-modal">
-    <button class="auth-close" onclick="closeSettings()">✕</button>
+    <button class="auth-close" onclick="closeSettings()" aria-label="關閉">✕</button>
     <div id="settingsBody"></div>
   </div>
 </div>
@@ -2020,7 +2020,7 @@ if ('serviceWorker' in navigator) {
       <div class="a2hs-desc">體驗如真實 App，隨時使用</div>
     </div>
     <button id="a2hsInstall" class="a2hs-btn-install">安裝</button>
-    <button id="a2hsClose" class="a2hs-btn-close">✕</button>
+    <button id="a2hsClose" class="a2hs-btn-close" aria-label="關閉">✕</button>
   </div>
   <div id="a2hsIosHint" style="display:none" class="a2hs-ios-hint">
     點擊下方 <span>□↑</span> 分享按鈕，再選「加入主畫面」

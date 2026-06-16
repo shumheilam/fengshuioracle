@@ -1126,7 +1126,7 @@
 
 <!-- ── Header ──────────────────────────────────────── -->
 <header>
-  <div class="page-title">風 水 羅 盤</div>
+  <h1 class="page-title">風 水 羅 盤</h1>
   <div class="page-sub">FengShui Compass</div>
   <div class="divider"><span class="divider-sym">☵ ☷ ☳ ☴ ☰ ☱ ☶ ☲</span></div>
 </header>
@@ -1242,12 +1242,12 @@
 
     <div class="bazhai-input-row">
       <div class="bazhai-field">
-        <span class="bazhai-label">出 生 年 份</span>
+        <label class="bazhai-label" for="bazhaiYear">出 生 年 份</label>
         <input class="bazhai-input" type="number" id="bazhaiYear" placeholder="例：1990"
           min="1900" max="2099" inputmode="numeric">
       </div>
       <div class="bazhai-field">
-        <span class="bazhai-label">性 別</span>
+        <label class="bazhai-label" for="bazhaiGender">性 別</label>
         <select class="bazhai-select" id="bazhaiGender">
           <option value="male">男</option>
           <option value="female">女</option>
@@ -1691,7 +1691,7 @@
 <!-- ── 八宅 Detail Panel ──────────────────────────── -->
 <div class="detail-overlay" id="bazhaiDetailOverlay" onclick="closeBazhaiDetail(event)">
   <div class="bazhai-detail-panel">
-    <button class="detail-close" onclick="document.getElementById('bazhaiDetailOverlay').classList.remove('open')">✕</button>
+    <button class="detail-close" aria-label="關閉" onclick="document.getElementById('bazhaiDetailOverlay').classList.remove('open')">✕</button>
     <span class="bazhai-star-icon" id="bdIcon"></span>
     <div class="bazhai-detail-name" id="bdName"></div>
     <div class="bazhai-detail-sub" id="bdSub"></div>
@@ -1718,7 +1718,7 @@
 <!-- ── Flying Star Detail Panel ──────────────────── -->
 <div class="detail-overlay" id="detailOverlay" onclick="closeDetail(event)">
   <div class="detail-panel" id="detailPanel">
-    <button class="detail-close" onclick="closeDetailBtn()">✕</button>
+    <button class="detail-close" aria-label="關閉" onclick="closeDetailBtn()">✕</button>
     <div class="detail-star-num" id="dStarNum"></div>
     <div class="detail-star-name" id="dStarName"></div>
     <div class="detail-dir-tag" id="dDirTag"></div>
@@ -1732,7 +1732,7 @@
 <!-- ── Free Q&A Quota Modal ───────────────────────── -->
 <div class="modal-overlay" id="qaQuotaModal">
   <div class="modal-box" style="text-align:center;">
-    <button class="modal-close" onclick="document.getElementById('qaQuotaModal').classList.remove('open')">✕</button>
+    <button class="modal-close" aria-label="關閉" onclick="document.getElementById('qaQuotaModal').classList.remove('open')">✕</button>
     <div style="font-size:1.6rem;margin-bottom:0.6rem;">🔮</div>
     <div class="modal-title" style="letter-spacing:0.15em;font-size:0.95rem;">免費問答額度已用完</div>
     <div style="font-size:0.75rem;color:var(--text-dim);letter-spacing:0.06em;line-height:1.9;margin:0.8rem 0 1.2rem;">
@@ -1752,7 +1752,7 @@
 <!-- ── Register Modal ─────────────────────────────── -->
 <div class="modal-overlay" id="registerModal">
   <div class="modal-box">
-    <button class="modal-close" onclick="closeRegisterModal()">✕</button>
+    <button class="modal-close" aria-label="關閉" onclick="closeRegisterModal()">✕</button>
     <div class="modal-title">優 先 體 驗 登 記</div>
     <div class="modal-sub">完整版推出時，您將第一時間獲得通知</div>
     <input class="modal-input" type="email" id="modalEmail" placeholder="your@email.com"
@@ -2610,7 +2610,7 @@ if ('serviceWorker' in navigator) {
       <div class="a2hs-desc">體驗如真實 App，隨時使用</div>
     </div>
     <button id="a2hsInstall" class="a2hs-btn-install">安裝</button>
-    <button id="a2hsClose" class="a2hs-btn-close">✕</button>
+    <button id="a2hsClose" class="a2hs-btn-close" aria-label="關閉">✕</button>
   </div>
   <div id="a2hsIosHint" style="display:none" class="a2hs-ios-hint">
     點擊下方 <span>□↑</span> 分享按鈕，再選「加入主畫面」

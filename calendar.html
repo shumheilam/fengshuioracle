@@ -546,12 +546,12 @@
 
     <!-- Month navigation -->
     <div class="month-nav">
-      <button class="month-arrow" onclick="changeMonth(-1)">◂</button>
+      <button class="month-arrow" onclick="changeMonth(-1)" aria-label="上一個月">◂</button>
       <div class="month-title">
         <div class="month-lunar" id="monthLunar">—</div>
         <div class="month-solar" id="monthSolar">—</div>
       </div>
-      <button class="month-arrow" onclick="changeMonth(1)">▸</button>
+      <button class="month-arrow" onclick="changeMonth(1)" aria-label="下一個月">▸</button>
     </div>
 
     <!-- Weekday headers -->
@@ -604,7 +604,7 @@
 <!-- Resolve panel -->
 <div class="resolve-panel-backdrop" id="resolvePanel" style="display:none" onclick="closeResolvePanel(event)">
   <div class="resolve-panel">
-    <button class="rp-close" onclick="closeResolvePanel()">✕</button>
+    <button class="rp-close" onclick="closeResolvePanel()" aria-label="關閉">✕</button>
     <div class="rp-title">🧧 犯太歲化解方法</div>
     <div class="rp-sub" id="resolvePanelSub"></div>
     <div class="rp-method">
@@ -633,7 +633,7 @@
 <!-- Day detail panel -->
 <div class="day-panel-backdrop" id="dayPanel" style="display:none" onclick="closeDayPanel(event)">
   <div class="day-panel">
-    <button class="dp-close" onclick="closeDayPanel()">✕</button>
+    <button class="dp-close" onclick="closeDayPanel()" aria-label="關閉">✕</button>
     <div class="dp-date" id="dpDate"></div>
     <div class="dp-title" id="dpTitle"></div>
     <div id="dpContent"></div>
@@ -687,11 +687,11 @@
   <div class="择日-form">
     <div class="择日-form-row">
       <div class="择日-field">
-        <label class="择日-label">開 始 日 期</label>
+        <label class="择日-label" for="zdStartDate">開 始 日 期</label>
         <input class="择日-input" type="date" id="zdStartDate">
       </div>
       <div class="择日-field">
-        <label class="择日-label">結 束 日 期</label>
+        <label class="择日-label" for="zdEndDate">結 束 日 期</label>
         <input class="择日-input" type="date" id="zdEndDate">
       </div>
       <button class="择日-btn" onclick="findAuspiciousDays()">推 薦 吉 日</button>
@@ -1514,7 +1514,7 @@ window.addEventListener('load', () => {
 <!-- ── Auth Modal ──────────────────────────────── -->
 <div class="auth-overlay" id="authOverlay">
   <div class="auth-modal">
-    <button class="auth-close" onclick="closeAuthModal()">✕</button>
+    <button class="auth-close" onclick="closeAuthModal()" aria-label="關閉">✕</button>
     <div class="auth-modal-inner">
       <div class="auth-brand">風 生 水 起</div>
       <div class="auth-brand-sub">FengShui Oracle</div>
@@ -1572,7 +1572,7 @@ window.addEventListener('load', () => {
 
 <div class="auth-overlay" id="settingsOverlay">
   <div class="settings-modal">
-    <button class="auth-close" onclick="closeSettings()">✕</button>
+    <button class="auth-close" onclick="closeSettings()" aria-label="關閉">✕</button>
     <div id="settingsBody"></div>
   </div>
 </div>
@@ -1643,7 +1643,7 @@ if ('serviceWorker' in navigator) {
       <div class="a2hs-desc">體驗如真實 App，隨時使用</div>
     </div>
     <button id="a2hsInstall" class="a2hs-btn-install">安裝</button>
-    <button id="a2hsClose" class="a2hs-btn-close">✕</button>
+    <button id="a2hsClose" class="a2hs-btn-close" aria-label="關閉">✕</button>
   </div>
   <div id="a2hsIosHint" style="display:none" class="a2hs-ios-hint">
     點擊下方 <span>□↑</span> 分享按鈕，再選「加入主畫面」
