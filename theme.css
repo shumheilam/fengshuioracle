@@ -56,8 +56,10 @@ html.light-mode {
   --text-dim   : #7a6040;
   --red-dark   : #8b1515;
   --red-mid    : #b52525;
-  /* 金色系保留 */
-  --gold      : #c9a84c;
+  /* 金色系：text 用深金確保對比度 ≥4.5:1；裝飾用 --gold-bright 保留原色 */
+  --gold      : #8a6420;   /* #8a6420 on #fffdf6 ≈ 5.25:1 (WCAG AA) */
+  --gold-bright: #c9a84c;  /* 裝飾保留，勿用於文字 */
+  --gold-text-light: #8a6420;
   --gold-light: #e8d080;
   --gold-dim  : rgba(201,168,76,0.30);
 }
