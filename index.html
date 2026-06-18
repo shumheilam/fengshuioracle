@@ -2677,6 +2677,57 @@
   html.light-mode #ss-earth-circle { fill: #fef9e0; }
   html.light-mode #ss-water-circle { fill: #e3eef8; }
   html.light-mode #ss-metal-circle { fill: #f5ede0; }
+
+  /* 學業職業方向建議卡 */
+  .career-card {
+    margin: 1rem 0;
+    padding: 1rem 1.2rem;
+    background: linear-gradient(135deg, rgba(20,30,15,0.85), rgba(10,20,30,0.85));
+    border: 1px solid rgba(180,150,80,0.35);
+    border-radius: 10px;
+  }
+  .career-card-title {
+    margin: 0 0 0.7rem;
+    font-size: 0.95rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    font-family: serif;
+  }
+  .career-card-section { margin-bottom: 0.6rem; }
+  .career-card-label {
+    font-size: 0.72rem;
+    color: var(--gold);
+    opacity: 0.75;
+    letter-spacing: 0.08em;
+  }
+  .career-card-text {
+    margin: 0.3rem 0 0;
+    font-size: 0.82rem;
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .career-card-divider {
+    border-top: 1px solid rgba(180,150,80,0.2);
+    padding-top: 0.6rem;
+    margin-top: 0.6rem;
+  }
+  .career-card-footer {
+    margin: 0.7rem 0 0;
+    font-size: 0.68rem;
+    color: rgba(180,150,80,0.45);
+    text-align: right;
+  }
+
+  /* Light mode 覆蓋 */
+  html.light-mode .career-card {
+    background: #ffffff;
+    border-color: rgba(138,100,32,0.3);
+  }
+  html.light-mode .career-card-title { color: #8a6420; }
+  html.light-mode .career-card-label { color: #8a6420; opacity: 1; }
+  html.light-mode .career-card-text  { color: #2a1205; }
+  html.light-mode .career-card-divider { border-top-color: rgba(138,100,32,0.2); }
+  html.light-mode .career-card-footer  { color: #8a7560; }
   </style>
 </head>
 <body>
@@ -3907,17 +3958,17 @@ function renderCareerCard(pillars) {
     : '';
 
   wrap.innerHTML = `
-    <div style="margin:1rem 0;padding:1rem 1.2rem;background:linear-gradient(135deg,rgba(20,30,15,0.85),rgba(10,20,30,0.85));border:1px solid rgba(180,150,80,0.35);border-radius:10px;">
-      <p style="margin:0 0 0.7rem;font-size:0.95rem;letter-spacing:0.15em;color:var(--gold);font-family:serif;">📚 學 業 職 業 方 向 建 議</p>
-      <div style="margin-bottom:0.6rem;">
-        <span style="font-size:0.72rem;color:var(--gold);opacity:0.75;letter-spacing:0.08em;">十 神 特 質</span>
-        <p style="margin:0.3rem 0 0;font-size:0.82rem;color:var(--text);line-height:1.7;">${traitText}</p>
+    <div class="career-card">
+      <p class="career-card-title">📚 學 業 職 業 方 向 建 議</p>
+      <div class="career-card-section">
+        <span class="career-card-label">十 神 特 質</span>
+        <p class="career-card-text">${traitText}</p>
       </div>
-      ${industryText ? `<div style="border-top:1px solid rgba(180,150,80,0.2);padding-top:0.6rem;margin-top:0.6rem;">
-        <span style="font-size:0.72rem;color:var(--gold);opacity:0.75;letter-spacing:0.08em;">用 神 方 向</span>
-        <p style="margin:0.3rem 0 0;font-size:0.82rem;color:var(--text);line-height:1.7;">${industryText}</p>
+      ${industryText ? `<div class="career-card-divider">
+        <span class="career-card-label">用 神 方 向</span>
+        <p class="career-card-text">${industryText}</p>
       </div>` : ''}
-      <p style="margin:0.7rem 0 0;font-size:0.68rem;color:rgba(180,150,80,0.45);text-align:right;">純演算法 · 免費顯示</p>
+      <p class="career-card-footer">純演算法 · 免費顯示</p>
     </div>`;
 }
 
