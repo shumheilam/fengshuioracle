@@ -261,9 +261,223 @@ function runDiPanTests() {
   }));
 }
 
+// ══════════════════════════════════════════════════════════════
+// 步驟3：60甲子分旬表
+// ══════════════════════════════════════════════════════════════
+const _TIANGAN = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+const _DIZHI   = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+
+const _JIAZI_60 = (() => {
+  const arr = [];
+  let tg = 0, dz = 0;
+  for (let i = 0; i < 60; i++) {
+    arr.push(_TIANGAN[tg] + _DIZHI[dz]);
+    tg = (tg + 1) % 10;
+    dz = (dz + 1) % 12;
+  }
+  return arr;
+})();
+
+const _XUN_NAMES = ['甲子旬','甲戌旬','甲申旬','甲午旬','甲辰旬','甲寅旬'];
+const _XUN_LIUYI = { '甲子旬':'戊','甲戌旬':'己','甲申旬':'庚','甲午旬':'辛','甲辰旬':'壬','甲寅旬':'癸' };
+
+// 干支 → 旬名
+const _XUN_MAP = {};
+for (let x = 0; x < 6; x++) {
+  _JIAZI_60.slice(x * 10, x * 10 + 10).forEach(gz => { _XUN_MAP[gz] = _XUN_NAMES[x]; });
+}
+
+// 時柱干支 → { xun, liuyi }
+function getXunFirstLiuyi(shizhu) {
+  const xun = _XUN_MAP[shizhu];
+  return xun ? { xun, liuyi: _XUN_LIUYI[xun] } : null;
+}
+
+// ══════════════════════════════════════════════════════════════
+// 步驟4：值符值使
+// ══════════════════════════════════════════════════════════════
+const _JIUXING_BASE = { 1:'天蓬',2:'天芮',3:'天衝',4:'天輔',5:'天禽',6:'天心',7:'天柱',8:'天任',9:'天英' };
+const _BAMEN_BASE   = { 1:'休門',2:'死門',3:'傷門',4:'杜門',5:'（無）',6:'開門',7:'驚門',8:'生門',9:'景門' };
+
+// ══════════════════════════════════════════════════════════════
+// 步驟5：天盤九星、八門排列輔助
+// ══════════════════════════════════════════════════════════════
+const _JIUXING_CYCLE = ['天蓬','天芮','天衝','天輔','天禽','天心','天柱','天任','天英'];
+const _BAMEN_CYCLE   = ['休門','死門','傷門','杜門','開門','驚門','生門','景門'];
+const _BAMEN_PALACES = [1, 2, 3, 4, 6, 7, 8, 9]; // 跳過5中
+
+function _palaceSeq(start, yang) {
+  const seq = [];
+  let p = start;
+  for (let i = 0; i < 9; i++) {
+    seq.push(p);
+    p = yang ? (p % 9) + 1 : ((p - 2 + 9) % 9) + 1;
+  }
+  return seq;
+}
+
+// ══════════════════════════════════════════════════════════════
+// 時柱計算：時辰地支 → 時柱干支
+// ══════════════════════════════════════════════════════════════
+const _DIZHI_SHICHEN = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+
+// 時辰地支：hour 0–1=子, 2–3=丑, 4–5=寅, …
+function _hourToZhi(hour) {
+  return _DIZHI_SHICHEN[Math.floor(((hour + 1) % 24) / 2)];
+}
+
+// 日干（天干）index (0=甲…9=癸) → 時干起始 index（甲己=甲, 乙庚=丙, 丙辛=戊, 丁壬=庚, 戊癸=壬）
+const _SHI_GAN_BASE = [0, 2, 4, 6, 8, 0, 2, 4, 6, 8]; // 甲己子時起甲(0), 乙庚子時起丙(2)…
+
+function calcShizhu(dayGanIdx, hour) {
+  const zhiIdx  = Math.floor(((hour + 1) % 24) / 2);  // 0=子…11=亥
+  const ganBase = _SHI_GAN_BASE[dayGanIdx];
+  const ganIdx  = (ganBase + zhiIdx) % 10;
+  return _TIANGAN[ganIdx] + _DIZHI_SHICHEN[zhiIdx];
+}
+
+// ══════════════════════════════════════════════════════════════
+// 主函數：buildFullQimenChart
+// ══════════════════════════════════════════════════════════════
+/**
+ * 完整奇門遁甲排盤（定局 + 地盤 + 天盤九星 + 天盤八門）
+ *
+ * @param {number} year
+ * @param {number} month   1–12
+ * @param {number} day
+ * @param {number} hour    0–23
+ * @param {number} minute  0–59（預留，暫未影響時辰判斷）
+ * @param {string} [shizhuOverride]  直接傳入時柱干支（如 '戊寅'），跳過自動計算
+ * @returns {{
+ *   dingju:        {yang, ju, jieqi, yuan, desc},
+ *   dipan:         {1:string, …9:string},
+ *   xun:           {shizhu, xunName, liuyi, liuyiGong},
+ *   zhifu:         {star:string, gong:number},
+ *   zhishi:        {men:string, gong:number},
+ *   tianpan_stars: {1:string, …9:string},
+ *   tianpan_men:   {1:string, …9:string}
+ * } | null}
+ */
+function buildFullQimenChart(year, month, day, hour, minute, shizhuOverride) {
+  // ── 1. 定局 ──────────────────────────────────────────────────
+  const dingju = calcDingju(year, month, day);
+  if (!dingju) return null;
+
+  // ── 2. 地盤 ──────────────────────────────────────────────────
+  const dipan = buildDiPan(dingju.yang, dingju.ju);
+
+  // ── 3. 時柱 & 旬首六儀 ───────────────────────────────────────
+  // 若呼叫者直接傳入時柱（驗算用），優先使用；否則按日干+時辰推算
+  let shizhu = shizhuOverride || null;
+  if (!shizhu) {
+    // 需要日柱天干 index：從地盤反推（簡化：日干從外部傳入更準確，
+    // 此處以時辰地支為主，天干需配合實際日干）
+    // 暫時：若未傳 shizhuOverride，傳入 hour 計算地支，天干設為佔位
+    const zhi = _hourToZhi(hour);
+    shizhu = '？' + zhi; // 提示：需傳入日干方可完整計算時干
+  }
+
+  const xunInfo = getXunFirstLiuyi(shizhu);
+  if (!xunInfo) return null; // 時柱不在表中
+
+  // ── 4. 值符值使（旬首六儀在地盤的宮，固定九星/八門）──────────
+  let liuyiGong = null;
+  for (let p = 1; p <= 9; p++) {
+    if (dipan[p] === xunInfo.liuyi) { liuyiGong = p; break; }
+  }
+  if (!liuyiGong) return null;
+
+  const zhifu  = { star: _JIUXING_BASE[liuyiGong], gong: liuyiGong };
+  const zhishi = { men:  _BAMEN_BASE[liuyiGong],   gong: liuyiGong };
+
+  // ── 5. 天盤九星：值符星搬去時干宮，其餘順移 ─────────────────
+  const shiGan = shizhu[0];
+  let shiGanGong = null;
+  for (let p = 1; p <= 9; p++) {
+    if (dipan[p] === shiGan) { shiGanGong = p; break; }
+  }
+  if (!shiGanGong) return null;
+
+  const seqXing     = _palaceSeq(shiGanGong, dingju.yang);
+  const zhifuIdx    = _JIUXING_CYCLE.indexOf(zhifu.star);
+  const tianpan_stars = {};
+  for (let i = 0; i < 9; i++) {
+    tianpan_stars[seqXing[i]] = _JIUXING_CYCLE[(zhifuIdx + i) % 9];
+  }
+
+  // ── 6. 天盤八門：值使門搬去時干宮，其餘順移（方案B）────────
+  const seqMenNo5   = seqXing.filter(p => p !== 5);
+  const zhishiIdx   = _BAMEN_CYCLE.indexOf(zhishi.men);
+  const tianpan_men = { 5: '（無）' };
+  for (let i = 0; i < 8; i++) {
+    tianpan_men[seqMenNo5[i]] = _BAMEN_CYCLE[(zhishiIdx + i) % 8];
+  }
+
+  return {
+    dingju:  { yang: dingju.yang, ju: dingju.ju, jieqi: dingju.jieqi, yuan: dingju.yuan, desc: dingju.desc },
+    dipan,
+    xun:     { shizhu, xunName: xunInfo.xun, liuyi: xunInfo.liuyi, liuyiGong },
+    zhifu:   { star: zhifu.star,  gong: shiGanGong },
+    zhishi:  { men:  zhishi.men,  gong: shiGanGong },
+    tianpan_stars,
+    tianpan_men
+  };
+}
+
+// ─── 回歸測試：Hayley 八字 2003-01-07 寅時（時柱戊寅）────────
+function runFullChartTest() {
+  const result = buildFullQimenChart(2003, 1, 7, 3, 25, '戊寅');
+  if (!result) { console.error('buildFullQimenChart 回傳 null'); return; }
+
+  const PALACE_NAMES = {
+    1:'坎(北)',2:'坤(西南)',3:'震(東)',4:'巽(東南)',5:'中',
+    6:'乾(西北)',7:'兌(西)',8:'艮(東北)',9:'離(南)'
+  };
+
+  console.log('\n══ buildFullQimenChart 回歸測試 ══');
+  console.log(`定局：${result.dingju.desc} | ${result.dingju.jieqi} ${result.dingju.yuan}`);
+  console.log(`時柱：${result.xun.shizhu} → ${result.xun.xunName} → 六儀${result.xun.liuyi}（${result.xun.liuyiGong}宮）`);
+  console.log(`值符：${result.zhifu.star}（${result.zhifu.gong}宮）`);
+  console.log(`值使：${result.zhishi.men}（${result.zhishi.gong}宮）`);
+  console.log(`值符值使同宮：${result.zhifu.gong === result.zhishi.gong ? '✅' : '❌'}`);
+
+  console.log('\n  宮位        地盤  九星(天盤)  八門(天盤)');
+  console.log('  ' + '─'.repeat(48));
+  for (let p = 1; p <= 9; p++) {
+    const flag = (p === result.zhifu.gong) ? ' ← 值符+值使' : '';
+    console.log(`  ${p}宮 ${PALACE_NAMES[p].padEnd(7)} ${result.dipan[p]}  ${(result.tianpan_stars[p]||'').padEnd(6)}  ${result.tianpan_men[p]||''}${flag}`);
+  }
+
+  // 驗證期望值
+  const checks = [
+    [result.dingju.desc === '陽遁二局',       '定局=陽遁二局'],
+    [result.zhifu.star  === '天衝',            '值符=天衝'],
+    [result.zhifu.gong  === 2,                 '值符在2宮'],
+    [result.zhishi.men  === '傷門',            '值使=傷門'],
+    [result.zhishi.gong === 2,                 '值使在2宮'],
+    [result.tianpan_stars[2] === '天衝',       '天盤2宮=天衝'],
+    [result.tianpan_men[2]   === '傷門',       '天盤2宮門=傷門'],
+    [result.tianpan_stars[1] === '天芮',       '天盤1宮=天芮'],
+    [result.tianpan_men[1]   === '死門',       '天盤1宮門=死門'],
+    [result.tianpan_men[5]   === '（無）',     '5中無門'],
+  ];
+  console.log('\n  驗證：');
+  checks.forEach(([pass, label]) => console.log(`    ${pass ? '✅' : '❌'} ${label}`));
+}
+
 // ─── 模組匯出（瀏覽器全域 + ES module 兼容）─────────────────
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { calcDingju, getJieqiDates, JIEQI_JU, runDingjuTests, buildDiPan, runDiPanTests };
+  module.exports = {
+    calcDingju, getJieqiDates, JIEQI_JU, runDingjuTests,
+    buildDiPan, runDiPanTests,
+    getXunFirstLiuyi, calcShizhu,
+    buildFullQimenChart, runFullChartTest
+  };
 } else if (typeof window !== 'undefined') {
-  window.QimenDingju = { calcDingju, getJieqiDates, JIEQI_JU, runDingjuTests, buildDiPan, runDiPanTests };
+  window.QimenDingju = {
+    calcDingju, getJieqiDates, JIEQI_JU, runDingjuTests,
+    buildDiPan, runDiPanTests,
+    getXunFirstLiuyi, calcShizhu,
+    buildFullQimenChart, runFullChartTest
+  };
 }
