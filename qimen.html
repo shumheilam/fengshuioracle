@@ -687,7 +687,7 @@
     <!-- Nine Palace Grid -->
     <div class="card">
       <div class="cc tl"></div><div class="cc tr"></div><div class="cc bl"></div><div class="cc br"></div>
-      <div class="card-title">九 宮 飛 星 盤</div>
+      <div class="card-title">奇 門 遁 甲 · 完 整 排 盤</div>
 
       <div class="palace-wrap">
         <div class="palace-svg-container">
@@ -697,29 +697,28 @@
         </div>
       </div>
 
-      <div style="text-align:center;margin-top:0.6rem">
-        <span style="font-size:0.68rem;color:var(--text-dim);letter-spacing:0.2em">
-          金框高亮 = 您的命宮所在
-        </span>
+      <div style="text-align:center;margin-top:0.8rem;display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap">
+        <span style="font-size:0.65rem;color:var(--text-dim);letter-spacing:0.15em">地盤 = 天干</span>
+        <span style="font-size:0.65rem;color:#c9a84c;letter-spacing:0.15em">◆ 九星</span>
+        <span style="font-size:0.65rem;color:#5aaa5a;letter-spacing:0.15em">■ 吉門</span>
+        <span style="font-size:0.65rem;color:#c05050;letter-spacing:0.15em">■ 凶門</span>
+        <span style="font-size:0.65rem;color:#c9a84c;letter-spacing:0.15em">雙框 = 值符+值使</span>
       </div>
     </div>
 
     <!-- Free result -->
     <div class="card" id="freeResult">
       <div class="cc tl"></div><div class="cc tr"></div><div class="cc bl"></div><div class="cc br"></div>
-      <div class="card-title">命 宮 基 本 分 析</div>
+      <div class="card-title">排 盤 摘 要</div>
 
-      <div class="result-palace-name" id="rPalaceName">坎宮</div>
-      <div class="result-palace-sub" id="rPalaceSub">第一宮 · 坎卦</div>
+      <div class="result-palace-name" id="rDingjuDesc" style="font-size:1.3rem">陽遁二局</div>
+      <div class="result-palace-sub" id="rDingjuSub">節氣 · 元</div>
 
-      <div class="result-section-title">宮 位 主 司</div>
-      <div class="result-text" id="rMeaning">
-        坎卦主水，司智慧、財運與深謀遠慮。命宮居此者，天生心思縝密、善謀多慮，具備化危為機之能。財運方面宜穩健積累，忌冒進投機。
-      </div>
+      <div class="result-section-title">時 柱 資 訊</div>
+      <div class="result-text" id="rShizhuInfo">—</div>
 
-      <div class="result-section-title">今 年 吉 凶 方 位（2026）</div>
-      <div class="direction-row" id="rDirections"></div>
-      <div class="result-text" id="rDirectionDesc"></div>
+      <div class="result-section-title">值 符 · 值 使</div>
+      <div class="direction-row" id="rZhiFuZhiShi"></div>
     </div>
 
     <!-- Locked section -->
@@ -825,6 +824,7 @@
 
 <script src="auth.js"></script>
 <script src="notifications.js"></script>
+<script src="qimen-dingju.js"></script>
 <script>
 // ── Palace data ──────────────────────────────────────────
 const PALACES = {
@@ -933,89 +933,94 @@ const GRID_LAYOUT = [
   daySel.value = 1;
 })();
 
-// ── Calculate palace from birth year ────────────────────
-function calcPalace(year) {
-  // Standard Xuan Kong method: sum digits until single, then map
-  // For year 19XX or 20XX: sum all 4 digits
-  let s = String(year).split('').reduce((a, c) => a + parseInt(c), 0);
-  while (s >= 10) {
-    s = String(s).split('').reduce((a, c) => a + parseInt(c), 0);
-  }
-  // Palace = 10 - s for males (simplified universal version)
-  // We use a gender-neutral popular simplification: palace = (s === 9) ? 9 : s
-  let palace = s === 0 ? 9 : s;
-  return palace;
+// ── JDN helper (mirrors index.html) ─────────────────────
+function _jdn(y, m, d) {
+  const a = Math.floor((14 - m) / 12);
+  const Y = y + 4800 - a;
+  const M = m + 12 * a - 3;
+  return d + Math.floor((153*M+2)/5) + 365*Y
+         + Math.floor(Y/4) - Math.floor(Y/100) + Math.floor(Y/400) - 32045;
 }
 
-// ── Draw SVG nine-palace grid ────────────────────────────
-function drawGrid(activePalace) {
+// ── 八門顏色 ─────────────────────────────────────────────
+const BAMEN_COLOR = {
+  '休門': '#5aaa5a', '生門': '#5aaa5a', '開門': '#5aaa5a',
+  '景門': '#c9a84c',
+  '傷門': '#c05050', '杜門': '#c05050', '死門': '#c05050', '驚門': '#c05050',
+  '（無）': '#504040'
+};
+
+// ── Draw complete Qimen grid ─────────────────────────────
+function drawQimenGrid(chart) {
   const svg = document.getElementById('palaceSvg');
   const W = 420, H = 420;
   const cellW = W / 3, cellH = H / 3;
-  const gold = '#c9a84c';
-  const goldDim = 'rgba(201,168,76,0.35)';
+  const gold  = '#c9a84c';
+  const goldDim = 'rgba(201,168,76,0.32)';
+  const zhiFuGong = chart.zhifu.gong;
 
   let html = '';
-
-  // Background
   html += `<rect width="${W}" height="${H}" fill="#0e0808"/>`;
 
-  // Draw cells
   for (let row = 0; row < 3; row++) {
     for (let col = 0; col < 3; col++) {
-      const palNum = GRID_LAYOUT[row][col];
-      const pd = PALACES[palNum];
-      const x = col * cellW;
-      const y = row * cellH;
-      const cx = x + cellW / 2;
-      const cy = y + cellH / 2;
-      const isActive = palNum === activePalace;
+      const p   = GRID_LAYOUT[row][col];
+      const x   = col * cellW, y = row * cellH;
+      const cx  = x + cellW / 2, cy = y + cellH / 2;
+      const isKey = p === zhiFuGong;
 
-      if (isActive) {
-        // Gold glow background
+      const diPanChar  = chart.dipan[p]        || '';
+      const starName   = chart.tianpan_stars[p] || '';
+      const menName    = chart.tianpan_men[p]   || '—';
+      const menColor   = BAMEN_COLOR[menName]   || goldDim;
+
+      // Cell background
+      if (isKey) {
         html += `<rect x="${x+2}" y="${y+2}" width="${cellW-4}" height="${cellH-4}" rx="4"
-          fill="rgba(201,168,76,0.18)" stroke="${gold}" stroke-width="2.5"/>`;
-        // Glow filter effect via nested rects
-        html += `<rect x="${x+4}" y="${y+4}" width="${cellW-8}" height="${cellH-8}" rx="3"
-          fill="rgba(201,168,76,0.08)"/>`;
+          fill="rgba(201,168,76,0.14)" stroke="${gold}" stroke-width="2.5"/>`;
+        html += `<rect x="${x+6}" y="${y+6}" width="${cellW-12}" height="${cellH-12}" rx="2"
+          fill="none" stroke="${gold}" stroke-width="1" opacity="0.5"/>`;
       }
 
-      // Palace number
-      html += `<text x="${cx}" y="${cy - 22}" text-anchor="middle"
-        font-family="'Noto Serif TC', serif" font-size="22" font-weight="900"
-        fill="${isActive ? gold : goldDim}"
-        style="text-shadow:none">${palNum}</text>`;
+      // Palace number (top-left corner)
+      html += `<text x="${x+9}" y="${y+17}"
+        font-family="'Noto Serif TC', serif" font-size="11" font-weight="900"
+        fill="${isKey ? gold : goldDim}">${p}</text>`;
 
-      // Gua symbol + name
-      html += `<text x="${cx}" y="${cy + 2}" text-anchor="middle"
+      // 地盤天干 (row 1)
+      html += `<text x="${cx}" y="${cy - 24}" text-anchor="middle"
+        font-family="'Noto Serif TC', serif" font-size="13"
+        fill="rgba(200,160,80,0.7)">${diPanChar}</text>`;
+
+      // 九星 (row 2, larger, gold)
+      html += `<text x="${cx}" y="${cy - 4}" text-anchor="middle"
         font-family="'Noto Serif TC', serif" font-size="14" font-weight="700"
-        fill="${isActive ? gold : 'rgba(201,168,76,0.6)'}">${pd.symbol} ${pd.gua}卦</text>`;
+        fill="${gold}">${starName}</text>`;
 
-      // Meaning
-      html += `<text x="${cx}" y="${cy + 20}" text-anchor="middle"
-        font-family="'Noto Serif TC', serif" font-size="10"
-        fill="${isActive ? 'rgba(201,168,76,0.85)' : 'rgba(144,112,80,0.7)'}">${pd.meaning}</text>`;
+      // 八門 (row 3, colored)
+      html += `<text x="${cx}" y="${cy + 17}" text-anchor="middle"
+        font-family="'Noto Serif TC', serif" font-size="13"
+        fill="${menColor}">${menName}</text>`;
 
-      // Active label
-      if (isActive) {
-        html += `<text x="${cx}" y="${cy + 36}" text-anchor="middle"
+      // 值符值使 badge
+      if (isKey) {
+        html += `<text x="${cx}" y="${cy + 35}" text-anchor="middle"
           font-family="'Noto Serif TC', serif" font-size="9"
-          fill="rgba(201,168,76,0.65)">◆ 命 宮 ◆</text>`;
+          fill="${gold}" opacity="0.85">值符 · 值使</text>`;
       }
     }
   }
 
-  // Grid lines (draw after cells so they're on top)
   // Outer border
   html += `<rect x="1" y="1" width="${W-2}" height="${H-2}" rx="6"
     fill="none" stroke="${gold}" stroke-width="1.5" opacity="0.5"/>`;
 
-  // Inner lines
+  // Inner grid lines
   for (let i = 1; i < 3; i++) {
-    html += `<line x1="${i * cellW}" y1="0" x2="${i * cellW}" y2="${H}"
-      stroke="${gold}" stroke-width="1" opacity="0.38"/>`;
-    html += `<line x1="0" y1="${i * cellH}" x2="${W}" y2="${i * cellH}"
-      stroke="${gold}" stroke-width="1" opacity="0.38"/>`;
+    html += `<line x1="${i*cellW}" y1="0" x2="${i*cellW}" y2="${H}"
+      stroke="${gold}" stroke-width="1" opacity="0.35"/>`;
+    html += `<line x1="0" y1="${i*cellH}" x2="${W}" y2="${i*cellH}"
+      stroke="${gold}" stroke-width="1" opacity="0.35"/>`;
   }
 
   svg.innerHTML = html;
@@ -1023,39 +1028,55 @@ function drawGrid(activePalace) {
 
 // ── Main calculate function ──────────────────────────────
 function calculate() {
-  const year = parseInt(document.getElementById('inYear').value);
-  const palace = calcPalace(year);
-  const pd = PALACES[palace];
+  const year   = parseInt(document.getElementById('inYear').value);
+  const month  = parseInt(document.getElementById('inMonth').value);
+  const day    = parseInt(document.getElementById('inDay').value);
+  const shichen = parseInt(document.getElementById('inHour').value); // 0-11
+
+  // Compute day stem index via JDN (anchor: 1900-01-01 = pos 0 = 甲戌, stem=甲=0... pos%10=0)
+  const jdnRef  = _jdn(1900, 1, 1);
+  const dayPos  = ((10 + _jdn(year, month, day) - jdnRef) % 60 + 60) % 60;
+  const dayStem = dayPos % 10; // 0=甲…9=癸
+
+  // Compute shizhu: stem from day stem + shichen; branch from shichen
+  const TIANGAN = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+  const DIZHI   = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+  const hStemBase = [0,2,4,6,8][dayStem % 5];
+  const hStem     = (hStemBase + shichen) % 10;
+  const shizhu    = TIANGAN[hStem] + DIZHI[shichen];
+
+  // Build full chart
+  const chart = QimenDingju.buildFullQimenChart(year, month, day, shichen * 2, 0, shizhu);
+  if (!chart) {
+    alert('排盤失敗，請確認日期是否正確');
+    return;
+  }
 
   // Draw grid
-  drawGrid(palace);
+  drawQimenGrid(chart);
 
-  // Fill result
-  document.getElementById('rPalaceName').textContent = pd.name;
-  document.getElementById('rPalaceSub').textContent = `第${palace}宮 · ${pd.gua}卦 ${pd.symbol}`;
-  document.getElementById('rMeaning').textContent = pd.desc;
+  // Fill summary card
+  document.getElementById('rDingjuDesc').textContent = chart.dingju.desc;
+  document.getElementById('rDingjuSub').textContent =
+    `${chart.dingju.jieqi} · ${chart.dingju.yuan}`;
 
-  // Directions
-  const dirRow = document.getElementById('rDirections');
-  dirRow.innerHTML = '';
-  pd.auspicious.forEach(d => {
-    const chip = document.createElement('div');
-    chip.className = 'dir-chip auspicious';
-    chip.textContent = '↑ ' + d + '（吉）';
-    dirRow.appendChild(chip);
-  });
-  pd.inauspicious.forEach(d => {
-    const chip = document.createElement('div');
-    chip.className = 'dir-chip inauspicious';
-    chip.textContent = '↓ ' + d + '（凶）';
-    dirRow.appendChild(chip);
-  });
-  document.getElementById('rDirectionDesc').textContent = pd.dirDesc;
+  document.getElementById('rShizhuInfo').innerHTML =
+    `時柱：<strong style="color:var(--gold)">${shizhu}</strong>　` +
+    `旬首：${chart.xun.xunName}　六儀：${chart.xun.liuyi}（${chart.xun.liuyiGong}宮）`;
+
+  const zhiFuRow = document.getElementById('rZhiFuZhiShi');
+  zhiFuRow.innerHTML = '';
+  const mkChip = (txt, cls) => {
+    const el = document.createElement('div');
+    el.className = `dir-chip ${cls}`;
+    el.textContent = txt;
+    zhiFuRow.appendChild(el);
+  };
+  mkChip(`值符：${chart.zhifu.star}（${chart.zhifu.gong}宮）`, 'auspicious');
+  mkChip(`值使：${chart.zhishi.men}（${chart.zhishi.gong}宮）`, 'auspicious');
 
   // Show result
   document.getElementById('resultSection').style.display = 'block';
-
-  // Smooth scroll
   setTimeout(() => {
     document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, 100);
