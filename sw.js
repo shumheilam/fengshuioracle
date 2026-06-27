@@ -1,6 +1,6 @@
 /* ── windwaterhk Service Worker ── */
 
-const CACHE_NAME = 'fengshui-oracle-v4';
+const CACHE_NAME = 'fengshui-oracle-v5';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
