@@ -1,6 +1,14 @@
 ﻿<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C92926GR2M"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-C92926GR2M');
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- PWA Manifest -->
@@ -1539,14 +1547,14 @@
             <div class="qa-title">🌙 解夢析夢</div>
             <div class="qa-desc">發過奇夢？神明托夢？輸入夢境，AI即時解讀命理含義</div>
             <textarea class="qa-input" rows="2" placeholder="例如：我夢見飛起嚟／掉牙／見到已故親人..."></textarea>
-            <button class="qa-btn" onclick="alert('即將推出，敬請期待')">HKD$18 即時解析</button>
+            <button class="qa-btn" onclick="if(typeof gtag!=='undefined')gtag('event','click_paywall',{'event_category':'conversion'});alert('即將推出，敬請期待')">HKD$18 即時解析</button>
             <div class="qa-fine-print">Haiku AI · 約30秒 · 一次性，無需訂閱</div>
           </div>
           <div class="quick-ask-card">
             <div class="qa-title">🔮 籤文深度解籤</div>
             <div class="qa-desc">針對今日求得嘅籤，深入解讀感情、事業、財運含義</div>
             <textarea class="qa-input" rows="2" placeholder="輸入你想了解嘅具體問題方向..."></textarea>
-            <button class="qa-btn" onclick="alert('即將推出！升級月費會員可解鎖 AI 深度解籤。')">HKD$18 深度解籤</button>
+            <button class="qa-btn" onclick="if(typeof gtag!=='undefined')gtag('event','click_paywall',{'event_category':'conversion'});alert('即將推出！升級月費會員可解鎖 AI 深度解籤。')">HKD$18 深度解籤</button>
             <div class="qa-fine-print">Haiku AI · 約30秒 · 一次性，無需訂閱</div>
           </div>
         </div>
@@ -1565,7 +1573,7 @@
 
 </main>
 
-<footer><p>風生水起 · FengShui Oracle · 求簽僅供參考，一切決策以理性判斷為主</p><p style="margin-top:0.5rem">本 App 所有分析僅供娛樂及參考，不構成專業命理建議。如需完整分析請諮詢專業命理師。</p></footer>
+<footer><p>風生水起 · FengShui Oracle · 求簽僅供參考，一切決策以理性判斷為主</p><p style="margin-top:0.5rem">本 App 所有分析僅供娛樂及參考，不構成專業命理建議。如需完整分析請諮詢專業命理師。</p><p style="margin-top:0.5rem">本 App 使用 Google Analytics 收集匿名使用數據，以改善用戶體驗。</p></footer>
 
 <script>
 // ── Deities ─────────────────────────────────────────────
@@ -1813,6 +1821,7 @@ function revealLot() {
     return;
   }
   incDailyCount();
+  if (typeof gtag !== 'undefined') gtag('event', 'draw_lot', { 'event_category': 'engagement', 'deity': selectedDeity ? selectedDeity.name : '' });
 
   // Random lot 1-100
   const lotNum = Math.floor(Math.random() * 100) + 1;
