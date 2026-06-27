@@ -1,6 +1,6 @@
 /* ── FengShui Oracle Service Worker ── */
 
-const CACHE_NAME = 'fengshui-oracle-v2';
+const CACHE_NAME = 'fengshui-oracle-v3';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
