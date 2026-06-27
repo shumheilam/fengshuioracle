@@ -1,6 +1,6 @@
 /* ── windwaterhk Service Worker ── */
 
-const CACHE_NAME = 'fengshui-oracle-v6';
+const CACHE_NAME = 'fengshui-oracle-v7';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -8,8 +8,8 @@ const STATIC_ASSETS = [
   '/calendar.html',
   '/qimen.html',
   '/compass.html',
-  '/icon-bagua-192.png',
-  '/icon-bagua-512.png',
+  '/icon-ww-192.png',
+  '/icon-ww-512.png',
   '/manifest.json'
 ];
 
