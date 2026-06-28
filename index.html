@@ -5715,12 +5715,22 @@ function requestDailyNotif() {
 
   if (Notification.permission === 'granted') {
     showNotifEnabled(btn, status);
+    const s = fsoGetNotifSettings();
+    s.dailyHoroscope = true;
+    localStorage.setItem(FSO_NOTIF_SETTINGS_KEY, JSON.stringify(s));
+    if (typeof fsoRegisterSW === 'function') fsoRegisterSW();
+    if (typeof fsoRunNotifChecks === 'function') fsoRunNotifChecks();
     return;
   }
 
   Notification.requestPermission().then(perm => {
     if (perm === 'granted') {
       showNotifEnabled(btn, status);
+      const s = fsoGetNotifSettings();
+      s.dailyHoroscope = true;
+      localStorage.setItem(FSO_NOTIF_SETTINGS_KEY, JSON.stringify(s));
+      if (typeof fsoRegisterSW === 'function') fsoRegisterSW();
+      if (typeof fsoRunNotifChecks === 'function') fsoRunNotifChecks();
     } else {
       alert('未獲授權，請在瀏覽器設定中允許通知。');
     }
