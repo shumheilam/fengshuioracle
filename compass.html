@@ -1239,6 +1239,117 @@
     background: rgba(138,100,32,0.08);
   }
 
+  /* ── 個人化催旺佈局 Card ──────────────────────────── */
+  .boost-subtitle {
+    text-align: center;
+    font-size: 0.68rem;
+    color: var(--text-dim);
+    letter-spacing: 0.18em;
+    margin: -0.8rem 0 1.4rem;
+  }
+  .boost-double-section {
+    margin-bottom: 1.2rem;
+  }
+  .boost-double-item {
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.4);
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    margin-bottom: 0.6rem;
+  }
+  .boost-double-header {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.3rem;
+  }
+  .boost-double-combo {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
+  }
+  .boost-double-tip {
+    font-size: 0.72rem;
+    color: var(--text);
+    letter-spacing: 0.06em;
+    line-height: 1.7;
+    padding: 0.4rem 0.7rem;
+    background: rgba(201,168,76,0.05);
+    border-left: 2px solid var(--gold);
+    border-radius: 0 4px 4px 0;
+  }
+  .boost-no-double {
+    text-align: center;
+    font-size: 0.68rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    padding: 0.6rem;
+    border: 1px dashed rgba(201,168,76,0.2);
+    border-radius: 6px;
+  }
+  .boost-purpose-title {
+    font-size: 0.65rem;
+    color: var(--gold);
+    letter-spacing: 0.4em;
+    margin-bottom: 0.75rem;
+    text-align: center;
+  }
+  .boost-purpose-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .boost-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.55rem 0.75rem;
+    background: rgba(201,168,76,0.04);
+    border: 1px solid rgba(201,168,76,0.18);
+    border-radius: 6px;
+  }
+  .boost-icon { font-size: 0.9rem; flex-shrink: 0; }
+  .boost-label {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    flex-shrink: 0;
+    width: 4.5em;
+  }
+  .boost-dir {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    flex-shrink: 0;
+  }
+  .boost-sep { color: var(--text-dim); font-size: 0.7rem; flex-shrink: 0; }
+  .boost-reason {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+    line-height: 1.55;
+    flex: 1;
+  }
+
+  /* Light mode overrides */
+  html.light-mode .boost-double-item {
+    background: rgba(138,100,32,0.06);
+    border-color: rgba(138,100,32,0.35);
+  }
+  html.light-mode .boost-double-header { color: #8a6420; }
+  html.light-mode .boost-double-combo  { color: #5a3e1b; }
+  html.light-mode .boost-double-tip    { color: #2a1a08; background: rgba(138,100,32,0.05); border-color: #8a6420; }
+  html.light-mode .boost-no-double     { color: #7a6040; border-color: rgba(138,100,32,0.25); }
+  html.light-mode .boost-purpose-title { color: #8a6420; }
+  html.light-mode .boost-row           { background: rgba(138,100,32,0.04); border-color: rgba(138,100,32,0.2); }
+  html.light-mode .boost-dir           { color: #8a6420; }
+  html.light-mode .boost-reason        { color: #5a3e1b; }
+  html.light-mode .boost-sep           { color: #7a6040; }
+
   </style>
 </head>
 <body>
@@ -1434,6 +1545,15 @@
       </div>
 
     </div>
+  </div>
+
+  <!-- ── 個人化催旺佈局 Card ──────────────────────── -->
+  <div class="card" id="boostCard" style="display:none">
+    <div class="cc tl"></div><div class="cc tr"></div>
+    <div class="cc bl"></div><div class="cc br"></div>
+    <div class="card-title">🌟 個 人 化 催 旺 佈 局</div>
+    <div class="boost-subtitle">結合八宅命卦 × 流年飛星</div>
+    <div id="boostContent"></div>
   </div>
 
   <!-- ── Flying Stars Card ─────────────────────────── -->
@@ -2526,6 +2646,7 @@ const BAZHAI_MAP = {
 const KUA_MAP = { 1:'坎', 2:'坤', 3:'震', 4:'巽', 6:'乾', 7:'兌', 8:'艮', 9:'離' };
 const EAST4 = new Set(['坎','震','巽','離']);
 const DIR_TO_TRIGRAM = { '北':'坎','南':'離','東':'震','西':'兌','東南':'巽','西南':'坤','西北':'乾','東北':'艮' };
+const TRIGRAM_TO_DIR = Object.fromEntries(Object.entries(DIR_TO_TRIGRAM).map(([d,t]) => [t,d]));
 const TRIGRAM_TO_GUA  = { '坎':'☵','離':'☲','震':'☳','兌':'☱','巽':'☴','坤':'☷','乾':'☰','艮':'☶' };
 const AUSPICIOUS_LABELS = new Set(['生氣','天醫','延年','伏位']);
 
@@ -2669,6 +2790,114 @@ function calcBazhai() {
   buildBazhaiGrid(trigram, facingDir);
 
   document.getElementById('bazhaiResult').style.display = 'block';
+  buildPersonalBoostCard();
+}
+
+// ── 個人化催旺佈局 ────────────────────────────────────────
+const BOOST_STAR_NAMES = { 1:'一白貪狼', 4:'四綠文曲', 8:'八白左輔', 9:'九紫右弼' };
+const BOOST_PLACEMENT = {
+  '生氣': '此方放辦公桌或書桌面朝此向，事業財運雙催',
+  '天醫': '此方設臥室或床頭朝此向，健康財運同旺',
+  '延年': '此方放夫妻床或客廳主座，感情財運俱旺',
+  '伏位': '此方擺放財神像或錢箱，守財兼催財'
+};
+
+function buildPersonalBoostCard() {
+  const trigram = currentKuaTrigram;
+  if (!trigram) return;
+
+  const currentYear = (() => {
+    const y = new Date().getFullYear();
+    return (y >= 2024 && y <= 2034) ? y : 2026;
+  })();
+  const annualStars = buildAnnualStars(currentYear);
+  const map = BAZHAI_MAP[trigram];
+
+  // 八宅吉方 → 方位 (4吉)
+  const auspLabels = ['生氣','天醫','延年','伏位'];
+  const bazhaiDirLabel = {};
+  auspLabels.forEach(label => {
+    const t = (label === '伏位') ? trigram : map[label];
+    const dir = TRIGRAM_TO_DIR[t];
+    if (dir) bazhaiDirLabel[dir] = label;
+  });
+
+  // 流年吉星方位 (1白/8白/9紫)
+  const goodStarDirs = {};
+  Object.entries(annualStars).forEach(([dir, num]) => {
+    if ([1, 8, 9].includes(num) && dir !== '中') goodStarDirs[dir] = num;
+  });
+
+  // 雙重催旺 = 八宅吉方 ∩ 流年吉星
+  const doubleBoost = [];
+  Object.entries(bazhaiDirLabel).forEach(([dir, label]) => {
+    if (goodStarDirs[dir]) {
+      doubleBoost.push({
+        dir, bazhaiLabel: label,
+        star: goodStarDirs[dir],
+        starName: BOOST_STAR_NAMES[goodStarDirs[dir]] || ''
+      });
+    }
+  });
+
+  // 財位：飛星 8→9→1，排除中宮
+  const findStarDir = nums => {
+    for (const n of nums) {
+      const found = Object.entries(annualStars).find(([d, s]) => s === n && d !== '中');
+      if (found) return { dir: found[0], star: n, name: BOOST_STAR_NAMES[n] || ('星' + n) };
+    }
+    return null;
+  };
+  const wealthDir = findStarDir([8, 9, 1]);
+
+  // 文昌位：飛星4，否則延年位
+  const star4Entry = Object.entries(annualStars).find(([d, s]) => s === 4 && d !== '中');
+  let wenchangDir, wenchangReason;
+  if (star4Entry) {
+    wenchangDir = star4Entry[0];
+    wenchangReason = '流年四綠文曲，主文運學業';
+  } else {
+    const t = map['延年'];
+    wenchangDir = TRIGRAM_TO_DIR[t] || '—';
+    wenchangReason = '八宅延年位（今年無四綠），主文運學業';
+  }
+
+  // 睡眠：天醫位
+  const sleepDir = TRIGRAM_TO_DIR[map['天醫']] || '—';
+  // 辦公桌：生氣位
+  const officeDir = TRIGRAM_TO_DIR[map['生氣']] || '—';
+
+  // 渲染
+  let html = '';
+
+  // A. 雙重催旺
+  if (doubleBoost.length > 0) {
+    html += '<div class="boost-double-section">';
+    doubleBoost.forEach(b => {
+      html += `<div class="boost-double-item">
+        <div class="boost-double-header">✨ 最強催旺：${b.dir}</div>
+        <div class="boost-double-combo">八宅${b.bazhaiLabel} × 流年${b.starName}</div>
+        <div class="boost-double-tip">建議：${BOOST_PLACEMENT[b.bazhaiLabel] || '此方宜多活動停留'}</div>
+      </div>`;
+    });
+    html += '</div>';
+  } else {
+    html += `<div class="boost-no-double">今年八宅吉方與流年吉星未有重疊，以下為各用途最佳方位</div>`;
+  }
+
+  // B. 各用途
+  html += '<div class="boost-purpose-title">各 用 途 最 佳 方 位</div>';
+  html += '<div class="boost-purpose-list">';
+  if (wealthDir) {
+    html += `<div class="boost-row"><span class="boost-icon">💰</span><span class="boost-label">財位</span><span class="boost-dir">${wealthDir.dir}</span><span class="boost-sep">·</span><span class="boost-reason">流年${wealthDir.name}，財運旺位</span></div>`;
+  }
+  html += `<div class="boost-row"><span class="boost-icon">📚</span><span class="boost-label">文昌位</span><span class="boost-dir">${wenchangDir}</span><span class="boost-sep">·</span><span class="boost-reason">${wenchangReason}</span></div>`;
+  html += `<div class="boost-row"><span class="boost-icon">😴</span><span class="boost-label">睡眠方位</span><span class="boost-dir">${sleepDir}</span><span class="boost-sep">·</span><span class="boost-reason">八宅天醫位，主健康安眠</span></div>`;
+  html += `<div class="boost-row"><span class="boost-icon">🏠</span><span class="boost-label">辦公桌</span><span class="boost-dir">${officeDir}</span><span class="boost-sep">·</span><span class="boost-reason">八宅生氣位，主事業進取</span></div>`;
+  html += '</div>';
+
+  document.getElementById('boostContent').innerHTML = html;
+  document.getElementById('boostCard').style.display = 'block';
 }
 
 function buildBazhaiGrid(trigram, currentFacingDir) {
