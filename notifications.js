@@ -336,7 +336,15 @@ function fsoCheckDailyHoroscope() {
 
   if (!user || !user.isPremium) {
     alert('Step 7: about to call fsoShowNotif (non-premium)');
-    var nd = fsoGetNotifDayData(now);
+    var nd;
+    try {
+      alert('Step 7c: calculating nd...');
+      nd = fsoGetNotifDayData(now);
+      alert('Step 7d: nd=' + JSON.stringify(nd));
+    } catch(e) {
+      alert('ERROR in nd calculation: ' + e.message + '\n' + e.stack);
+      return;
+    }
     fsoShowNotif(
       '✨ 今日運勢 · ' + nd.lunarStr,
       nd.jcLabel + ' · 宜' + nd.topYi + '\n升級$48解鎖個人化吉時+旺位 👑',
