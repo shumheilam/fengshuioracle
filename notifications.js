@@ -91,7 +91,12 @@ function fsoRegisterSW() {
 
 // ── Send notification via SW or Notification API ──
 function fsoShowNotif(title, body, url, tag) {
-  if (typeof Notification === 'undefined' || Notification.permission !== 'granted') return;
+  alert('fsoShowNotif: ' + title + '\npermission: ' + Notification.permission + '\nSW controller: ' + !!(navigator.serviceWorker && navigator.serviceWorker.controller));
+
+  if (typeof Notification === 'undefined' || Notification.permission !== 'granted') {
+    alert('BLOCKED: permission not granted');
+    return;
+  }
 
   const opts = {
     body: body,
@@ -103,16 +108,21 @@ function fsoShowNotif(title, body, url, tag) {
   };
 
   if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+    alert('Branch 1: postMessage to SW');
     navigator.serviceWorker.controller.postMessage({
       type: 'SHOW_NOTIFICATION', title: title, body: body, url: url || '/', tag: opts.tag
     });
   } else if ('serviceWorker' in navigator) {
+    alert('Branch 2: SW ready then showNotification');
     navigator.serviceWorker.ready.then(function(reg) {
+      alert('Branch 2a: reg.showNotification');
       reg.showNotification(title, opts);
     }).catch(function() {
+      alert('Branch 2b: fallback new Notification');
       new Notification(title, opts);
     });
   } else {
+    alert('Branch 3: new Notification direct');
     new Notification(title, opts);
   }
 }
