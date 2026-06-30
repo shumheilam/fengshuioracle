@@ -2066,15 +2066,6 @@ document.getElementById('dailyCount').textContent = Math.min(getDailyCount(), FR
 <script src="auth.js"></script>
 <script src="notifications.js"></script>
 
-<!-- ── DEV: Reset daily oracle count (remove before production) ── -->
-<div style="text-align:center;padding:0.6rem 0 1.2rem">
-  <button onclick="localStorage.removeItem('oracle_daily');this.textContent='✓ 已重置';this.style.color='#5a9a6a';this.style.opacity='1';setTimeout(()=>{this.textContent='🔧 重置今日求簽次數（測試用）';this.style.color='';this.style.opacity='0.38'},1500)"
-    style="background:transparent;border:1px dashed #555;color:#777;font-family:'Noto Serif TC',serif;font-size:0.65rem;padding:0.35rem 0.9rem;border-radius:4px;cursor:pointer;letter-spacing:0.12em;opacity:0.38;transition:opacity 0.2s"
-    onmouseenter="this.style.opacity='0.85'" onmouseleave="this.style.opacity='0.38'">
-    🔧 重置今日求簽次數（測試用）
-  </button>
-</div>
-
 <!-- ── Mobile bottom tab bar ── -->
 <nav class="mob-tab-bar">
   <a class="mob-tab-item" href="index.html">
